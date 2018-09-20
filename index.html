@@ -249,6 +249,135 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/数组中未出现的最小正整数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/20/数组中未出现的最小正整数/" itemprop="url">数组中未出现的最小正整数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-20T16:03:15+08:00">
+                2018-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>leetcode: First Missing Positive</p>
+<ul>
+<li><p>首先先拿出最强方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">firstMissingPositive</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        L = <span class="number">0</span></span><br><span class="line">        R = len(nums)</span><br><span class="line">        <span class="keyword">while</span> L &lt; R:</span><br><span class="line">            <span class="keyword">if</span> nums[L] == L + <span class="number">1</span>:</span><br><span class="line">                L += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> nums[L] &gt; R <span class="keyword">or</span> nums[L] &lt;= <span class="number">0</span> <span class="keyword">or</span> nums[L] == nums[nums[L]<span class="number">-1</span>]:</span><br><span class="line">                R = R - <span class="number">1</span></span><br><span class="line">                nums[L], nums[R] = nums[R], nums[L]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp = nums[L] - <span class="number">1</span></span><br><span class="line">                nums[L], nums[tmp] = nums[tmp], nums[L]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> L + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试用例</span></span><br><span class="line">s = Solution()</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">3</span>,<span class="number">4</span>,<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">2</span>,<span class="number">1</span>])</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">2</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/20/数组中未出现的最小正整数/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/tcp连接及常见网络攻击分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1398,136 +1527,11 @@ fastcgi
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/TCP-WRAPPER-TCP包装器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="CHEN">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/myself.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HAPPY'C">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/TCP-WRAPPER-TCP包装器/" itemprop="url">TCP_WRAPPER:TCP包装器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-05T22:11:47+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Tcp-wrapper-tcp包装器"><a href="#Tcp-wrapper-tcp包装器" class="headerlink" title="Tcp_wrapper:tcp包装器"></a>Tcp_wrapper:tcp包装器</h1><p>对于基于tcp协议开发并提供服务的应用程序，提供的一层访问控制工具<br>基于库调用实现其功能<br>    libwrap</p>
-<p>判断服务是否能够由tcp_wrapper进行访问控制<br>    （1）动态编译：ldd命令<br>    （2）静态编译：strings命令查看应用程序文件，其结果中如果出现<br>        hosts.allow<br>        hosts.deny<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/05/TCP-WRAPPER-TCP包装器/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1579,7 +1583,7 @@ fastcgi
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1601,7 +1605,7 @@ fastcgi
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
