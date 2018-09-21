@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据库 数据库解决的问题，E-R模型，三范式 图形界面操作数据库、表、数据 命令行操作数据库、表、数据  创建数据库； create database 数据库名 charset=utf8;创建表； create table 表名(字段 类型 约束);        id int auto_increment primary key not null插入数据； insert into 表名(…) v">
+<meta name="keywords" content="sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/数据库/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="数据库 数据库解决的问题，E-R模型，三范式 图形界面操作数据库、表、数据 命令行操作数据库、表、数据  创建数据库； create database 数据库名 charset=utf8;创建表； create table 表名(字段 类型 约束);        id int auto_increment primary key not null插入数据； insert into 表名(…) v">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T09:17:12.586Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库">
+<meta name="twitter:description" content="数据库 数据库解决的问题，E-R模型，三范式 图形界面操作数据库、表、数据 命令行操作数据库、表、数据  创建数据库； create database 数据库名 charset=utf8;创建表； create table 表名(字段 类型 约束);        id int auto_increment primary key not null插入数据； insert into 表名(…) v">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/17/数据库/"/>
+
+
+
+
+
+  <title>数据库 | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">代码是抽象的生活方法</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T19:08:04+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-20T17:17:12+08:00">
+                2018-09-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/数据库/" class="leancloud_visitors" data-flag-title="数据库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ul>
+<li>数据库解决的问题，E-R模型，三范式</li>
+<li>图形界面操作数据库、表、数据</li>
+<li>命令行操作数据库、表、数据</li>
+</ul>
+<p>创建数据库； create database 数据库名 charset=utf8;<br>创建表； create table 表名(字段 类型 约束);<br>        id int auto_increment primary key not null<br>插入数据； insert into 表名(…) value(…);<br>修改数据； update 表名 set 字段名=值 …<br>删除数据； delete from 表名 …<br>            逻辑删除 定义isDelete字段名，对它进行修改<br><a id="more"></a></p>
+<p>select * from 表名;</p>
+<ul>
+<li>数据库备份<br>  1.进入超级管理员<br>  <code>sudo -s</code><br>  2.进入mysql库目录<br>  3.运行mysqldump命令<br>  <code>mysqldump -uroot -p 数据库名字 &gt; ~/Desktop/bak.sql</code></li>
+<li>数据库恢复<br>  1.连接mysql，创建数据库<br>  2.退出数据库，执行如下命令<br>  <code>mysql -uroot -p 数据库名 &lt; ~/Desktop/bak.sql</code></li>
+</ul>
+<p>实质是生成了 create table 等语句</p>
+<p>CRUD</p>
+<ul>
+<li>查询的基本语法：<br>  <code>select * from 表名;</code></li>
+<li><p>消除重复行：<br>  <code>select distinct gender from students;</code></p>
+</li>
+<li><p>模糊查询<br>  like<br>  % 表示任意多个字符<br>  _ 表示一个任意字符<br>  如查询姓黄的学生：<br>  <code>select * from students where sname like &#39;黄%&#39;;</code><br>  查询姓黄或者叫鑫的学生<br>  <code>select * from students where like &#39;黄%&#39; or sname like &#39;%鑫&#39;；</code></p>
+</li>
+<li><p>范围查询<br>  in 表示在一个非连续的范围内<br>  查询编号是1或3或8的学生<br>  <code>select * from students where id in(1,3,8);</code></p>
+<p>  between … and … 表示在一个连续的范围内<br>  查询学生3至8的男生<br>  <code>select * from students where id between 3 and 8 and gender=1;</code></p>
+</li>
+<li><p>空判断<br>  注意：null与’‘是不同的  (null 不指向内存，’ ‘ 是内存中的一个空字符串)<br>  判空 is null<br>  查询没有填写地址的学生<br>  <code>select * from students where hometown is null;</code></p>
+</li>
+</ul>
+<ul>
+<li><p>聚合<br>  为了快速得到统计数据，提供了5个聚合函数<br>  count(<em>) 表示计算总行数，括号中写</em> 或者列名,结果是相同的<br>  查询学生总数<br>  <code>select count(*) from students;</code><br>  max(列）表示求此列的最小值 min（*）<br>  <code>select min(id) from students where gender=0;</code><br>  sum(列） 表示求此列的和<br>  查询男生的编号纸盒<br>  <code>select sum(id) from students where gender=1;</code><br>  avg(列）表示求此列的平均值<br>  <code>select avg(age) from students where gender=0 and isDelete=0;</code></p>
+</li>
+<li><p>分组<br>按照字段分组，表示此字段相同的数据会被放到一个组中<br>分组后，只能查询出相同的数据列，对于有差异的数据列无法出现在结果集中<br>可以对分组后的数据进行统计，做聚合运算<br>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">select 列1，列2，聚合 ... from 表名 group by 列1，列2，列3 ...</span><br><span class="line">查询那女生总数</span><br><span class="line">select gender as 性别，count(*)</span><br><span class="line">from students</span><br><span class="line">group by gender;</span><br><span class="line">查询各城市人数</span><br><span class="line">select hometown as 家乡，count(*)</span><br><span class="line">from students group by hometown;</span><br><span class="line"></span><br><span class="line">分组后筛选</span><br><span class="line">用法：</span><br><span class="line">select 列1，列2，聚合... from 表名</span><br><span class="line">group by 列1，列2，列3...</span><br><span class="line">having 列1，...聚合...</span><br><span class="line"></span><br><span class="line">查询男生总人数</span><br><span class="line">方案一：</span><br><span class="line">select count(*) from students where gender=1;</span><br><span class="line">方案二：</span><br><span class="line">select count(*) from students group by gender having gender=1;</span><br><span class="line"></span><br><span class="line">对比where和having</span><br><span class="line">   where 是对from后面指定的表进行筛选，属于对原始数据的筛选</span><br><span class="line">   having是对group by 的结果进行筛选</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>排序<br>  语法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select * from 表名 order by 列1 asc|desc，列2 asc|desc，...</span><br><span class="line">默认升序排列</span><br><span class="line">asc 从小到大</span><br><span class="line">desc 从大到小</span><br><span class="line">查询未删除科目的信息，按名称升序</span><br><span class="line">select * from students where isDelest=0 order by stitle asc;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>获取不分行<br>  当数据量过大时，在一页中查看数据是一件特别麻烦的事情<br>  语法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    select * from 表名 </span><br><span class="line">    limit start,count</span><br><span class="line">    从start 开始，获取count条数据</span><br><span class="line">    start索引从0开始</span><br><span class="line">    </span><br><span class="line">示例：分页</span><br><span class="line">    求第N页的数据</span><br><span class="line">    select * from students where isdelete=0</span><br><span class="line">    limit (n-1)*m,m;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>完整的select语句<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select distinct * from 表名 where ... </span><br><span class="line">group by ... having ...</span><br><span class="line">order by ....</span><br><span class="line">limit start,count</span><br><span class="line">执行的顺序为：</span><br><span class="line">from表名</span><br><span class="line">where ...</span><br><span class="line">group by ...</span><br><span class="line">select distinct *</span><br><span class="line">having ...</span><br><span class="line">order by ...</span><br><span class="line">limit start,count</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>实际使用中，只是语句中某些部分的组合，而不是全部</p>
+<ul>
+<li><p>建立关系</p>
+<p>  <code>foreign key(stuid) references stduents(id)</code></p>
+</li>
+<li><p>外键的级联操作<br>  再删除students表的数据时，如果这个id值在scores中已经存在，则会抛出异常<br>  推荐使用逻辑删除，还可以解决这个问题<br>  可以创建表时指定级联操作，也可以在创建表后再修改外键的级联操作<br>  语法<br>  <code>alter table scores add constraint stu_sco foreign key(stuid) references students(id);</code><br>  级联操作的类型包括：</p>
+<pre><code>restrict（限制）：默认值，抛出异常
+cascade（级联）：如果主表的记录删除，则从表中的记录都将被删除
+set null ：将外键设置为空
+no action： 什么都不做
+</code></pre></li>
+<li><p>连接查询<br>  <code>select students.name,subjects.title,scores.score from scores inner join students on scores.stuid = students.id inner join subjects on scores.stuid = subjects.id</code><br>  连接查询的类型：<br>  inner join 两个表都匹配的时候出现在结果集<br>  left join  左表边匹配就出现<br>  right join 右表有的数据都会出现</p>
+</li>
+<li><p>自关联</p>
+</li>
+<li><p>视图<br>  对于复杂的查询，在多次使用后，维护是一件非常麻烦的事情<br>  解决：定义视图<br>  视图本质就是对查询的一个封装<br>  定义视图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create view v_stuscore as </span><br><span class="line">select students.*,score.* from students inner join score on students.id=score.stuid;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>使用show tables； 会出现建立的视图，就可以使用查询语句进行查询
+create 换成alter是修改
+</code></pre><ul>
+<li><p>事物<br>  当一个业务逻辑需要多个sql完成时，如果其中某条sql语句出错，则希望整个操作都退回<br>  使用事物可以完成退回的功能，保证业务逻辑的正确性<br>  事物四大特性（简称ACID）<br>  原子性（A) 业务中的全部操作在数据库中是不可分割的，要么全部做完，要么都不执行<br>  一致性（C) 几个并行执行的业务，其执行结果必须与按某一顺序串行执行的结果一致<br>  隔离性（I） 事物的执行不受其他事物的干扰，事物执行的中间结果对其他事物必须是透明的<br>  持久性（D） 对于任意已提交事物，系统必须保证该事物对数据库的修改不被丢失，及时数据库出现故障</p>
+<p>  要求： 表的类型必须是innodb 或 bdb 类型，才可以对此表使用事物<br>  查看创表语句：<br>  <code>show create table students;</code><br>  修改表的类型：<br>  <code>alter table ’表名‘ engine=innodb;</code></p>
+</li>
+<li><p>索引<br>  当数据量很大的时候，查找数据就会变得很慢<br>  索引能提高数据访问性能<br>  主键和唯一索引，都是索引，可以提高查询速度<br>  下面在mysql实现索引</p>
+<p>  选择列的数据类型</p>
+<pre><code>越少的数据类型通常更好：越小的数据类型通常在磁盘、内存和cpu缓存中都需要更少的空间，处理起来更快
+简单的数据类型更好：整型数据比起字符，处理开销更小，因为字符串的比较更复杂
+尽量避免NULL： 应该制定列为NOT NULL ，除非你想存储NULL。 在MYSQL中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用0、一个特殊的值或者一个字符串代替空值
+</code></pre><p>  操作：</p>
+<pre><code>索引分单列索引和组合索引
+</code></pre><p>  查看索引：</p>
+<pre><code>`show index from  table_name;`
+</code></pre><p>  创建索引：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create index indexname ON</span><br><span class="line"> mytable(username(length))</span><br></pre></td></tr></table></figure>
+<p>  删除索引：</p>
+<pre><code>`drop index [indexName] on mytable;`
+</code></pre></li>
+</ul>
+<p>缺点：<br>    虽然索引大大提高了查询速度，同时却会降低更新表的速度</p>
+<p>开启时间检测：<br>    <code>set profiling=1;</code><br>执行查询语句：<br>    …….<br>查看执行时间：<br>    <code>show profiles;</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sql/" rel="tag"># sql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/花生壳内网穿透-mosh/" rel="next" title="花生壳内网穿透+mosh">
+                <i class="fa fa-chevron-left"></i> 花生壳内网穿透+mosh
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/20/kali中的mysql无法远程访问/" rel="prev" title="kali中的mysql无法远程访问">
+                kali中的mysql无法远程访问 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-number">1.</span> <span class="nav-text">数据库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
