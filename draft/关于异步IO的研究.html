@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content=",," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于 select 、poll 、 epoll 的研究异步 I/O为什么要采用 异步 I/O ，想象这样一个场景，浏览器向服务器请求一个资源，如果采用同步方式，那么 12345678910111213同步方式：// 消耗时间Mget image1// 消耗时间Nget image2// 获取完 image1 和 image2 所花时间为 M+N异步方式：// 消耗时间Mget image1// 消">
+<meta name="keywords" content="linux,I&#x2F;O">
+<meta property="og:type" content="website">
+<meta property="og:title" content="异步 I&#x2F;O 研究">
+<meta property="og:url" content="http://yoursite.com/draft/关于异步IO的研究.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="关于 select 、poll 、 epoll 的研究异步 I/O为什么要采用 异步 I/O ，想象这样一个场景，浏览器向服务器请求一个资源，如果采用同步方式，那么 12345678910111213同步方式：// 消耗时间Mget image1// 消耗时间Nget image2// 获取完 image1 和 image2 所花时间为 M+N异步方式：// 消耗时间Mget image1// 消">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-29T09:05:01.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="异步 I&#x2F;O 研究">
+<meta name="twitter:description" content="关于 select 、poll 、 epoll 的研究异步 I/O为什么要采用 异步 I/O ，想象这样一个场景，浏览器向服务器请求一个资源，如果采用同步方式，那么 12345678910111213同步方式：// 消耗时间Mget image1// 消耗时间Nget image2// 获取完 image1 和 image2 所花时间为 M+N异步方式：// 消耗时间Mget image1// 消">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/draft/关于异步IO的研究.html"/>
+
+
+
+
+
+  <title>异步 I/O 研究 | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">异步 I/O 研究</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <h1 id="关于-select-、poll-、-epoll-的研究"><a href="#关于-select-、poll-、-epoll-的研究" class="headerlink" title="关于 select 、poll 、 epoll 的研究"></a>关于 select 、poll 、 epoll 的研究</h1><h2 id="异步-I-O"><a href="#异步-I-O" class="headerlink" title="异步 I/O"></a>异步 I/O</h2><p>为什么要采用 异步 I/O ，想象这样一个场景，浏览器向服务器请求一个资源，如果采用同步方式，那么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">同步方式：</span><br><span class="line">// 消耗时间M</span><br><span class="line">get image1</span><br><span class="line">// 消耗时间N</span><br><span class="line">get image2</span><br><span class="line">// 获取完 image1 和 image2 所花时间为 M+N</span><br><span class="line"></span><br><span class="line">异步方式：</span><br><span class="line">// 消耗时间M</span><br><span class="line">get image1</span><br><span class="line">// 消耗时间N</span><br><span class="line">get image2</span><br><span class="line">// 获取完 image1 和 image2  所花时间为 max(M, N) 即M和N中间的较大值</span><br></pre></td></tr></table></figure>
+<p>如果网站资源很多，现在已经很常见，同步方式所花费的时间将是 A+B+C+….+….Z  而异步所花的时间取决于其中加载最慢的那一个资源。</p>
+<ul>
+<li>不同 I/O 类型及其对 CPU 的开销</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">I/O 类型</th>
+<th style="text-align:center">花费的 CPU 时钟周期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CUP一级缓存</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">CPU二级缓存</td>
+<td style="text-align:center">14</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">250</td>
+</tr>
+<tr>
+<td style="text-align:center">硬盘</td>
+<td style="text-align:center">41000000</td>
+</tr>
+<tr>
+<td style="text-align:center">网络</td>
+<td style="text-align:center">240000000</td>
+</tr>
+</tbody>
+</table>
+<p><em>此值取自： 《 深入浅出 NODE.JS 》</em></p>
+<p>从此图可以看出 I/O 是非常昂贵的。</p>
+<p>如果要完成一组互不相关的任务，比如读取每一张图片：</p>
+<p>​    单线程串行依次执行。</p>
+<p>​    多线程并行完成。</p>
+<p>要选择哪种去完成，取决于具体开销大小。 多线程的代价在于创建线程和执行期线程上下文切换的开销较大。在某些复杂的地方，多线程会存在资源竞争，状态同步的等等问题。</p>
+<h2 id="异步-I-O-操作系统"><a href="#异步-I-O-操作系统" class="headerlink" title="异步 I/O 操作系统"></a>异步 I/O 操作系统</h2><p>操作系统内核对于 I/O 只有两种方式：阻塞与非阻塞。在调用阻塞 I/O 时， 应用程序需要等待 I/O 完成后才返回结果。在此期间，此线程必须等到操作系统内核层面完成所有操作之后，调用才结束，才可以继续向后执行程序。</p>
+<p>阻塞 I/O 造成的 CPU 等待 I/O ，浪费等待时间， CPU 的处理能力不能得到充分利用。为了提高性能， 内核提供了非阻塞 I/O。</p>
+<p>非阻塞 I/O 调用之后会立即返回，这个立即返回到底什么意思呢，就是接下来 I/O 的事情就交给操作系统去做了，我们可以继续向后执行程序，当 I/O 准备好后，操作系统就会通知我们，我们就可以不需要等待直接去获取结果，这样性能提升是明显的。</p>
+<p>但是，说是留给了操作系统去做，那么操作系统到底如何实现的呢？</p>
+<h2 id="操作系统异步-I-O-的实现"><a href="#操作系统异步-I-O-的实现" class="headerlink" title="操作系统异步 I/O 的实现"></a>操作系统异步 I/O 的实现</h2><p>操作系统对计算机进行了抽象，所有输入输出设备抽象为文件。内核在进行文件 I/O 操作时，通过文件描述符进行管理，而文件描述符类似于应用程序与系统内核之间的凭证。应用程序如果要进行 I/O 调用，需要先打开文件描述符，然后再根据文件描述符去实现文件的数据读写。此处非阻塞 I/O 与阻塞 I/O 的区别在于阻塞 I/O 完成整个获取数据的过程，而非阻塞 I/O 则不带数据直接返回，要获取数据，还需要通过文件描述符再次读取。</p>
+<p>为了获取有效完整的数据，应用程序需要重复调用 I/O 操作来确认是否完成。这种重复调用判断操作是否完成的技术叫轮询。阻塞 I/O 造成 CPU 等待浪费，非阻塞带来 CPU 循环判断，对 CPU 的资源浪费。下面说一下 在 *unix 系统上面的一些轮询机制实现：</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>通过文件描述符上的时间状态来进行判断。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于-select-、poll-、-epoll-的研究"><span class="nav-number">1.</span> <span class="nav-text">关于 select 、poll 、 epoll 的研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异步-I-O"><span class="nav-number">1.1.</span> <span class="nav-text">异步 I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步-I-O-操作系统"><span class="nav-number">1.2.</span> <span class="nav-text">异步 I/O 操作系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统异步-I-O-的实现"><span class="nav-number">1.3.</span> <span class="nav-text">操作系统异步 I/O 的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">1.3.1.</span> <span class="nav-text">select</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

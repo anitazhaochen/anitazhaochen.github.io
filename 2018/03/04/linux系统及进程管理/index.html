@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,进程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Systemd：POST –&amp;gt; Boot Sequence –&amp;gt; Bootloader –&amp;gt; kernel + initramfs(initrd) –&amp;gt; rootfs –&amp;gt; /sbin/init    init:        CentOS 5 : SysV init        CentOS 6: Upstart        CentOS 7: Systemd">
+<meta name="keywords" content="linux,进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux系统及进程管理">
+<meta property="og:url" content="http://yoursite.com/2018/03/04/linux系统及进程管理/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="Systemd：POST –&amp;gt; Boot Sequence –&amp;gt; Bootloader –&amp;gt; kernel + initramfs(initrd) –&amp;gt; rootfs –&amp;gt; /sbin/init    init:        CentOS 5 : SysV init        CentOS 6: Upstart        CentOS 7: Systemd">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T09:24:57.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux系统及进程管理">
+<meta name="twitter:description" content="Systemd：POST –&amp;gt; Boot Sequence –&amp;gt; Bootloader –&amp;gt; kernel + initramfs(initrd) –&amp;gt; rootfs –&amp;gt; /sbin/init    init:        CentOS 5 : SysV init        CentOS 6: Upstart        CentOS 7: Systemd">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/04/linux系统及进程管理/"/>
+
+
+
+
+
+  <title>linux系统及进程管理 | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/04/linux系统及进程管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux系统及进程管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-04T16:38:12+08:00">
+                2018-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/04/linux系统及进程管理/" class="leancloud_visitors" data-flag-title="linux系统及进程管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Systemd："><a href="#Systemd：" class="headerlink" title="Systemd："></a>Systemd：</h1><p>POST –&gt; Boot Sequence –&gt; Bootloader –&gt; kernel + initramfs(initrd) –&gt; rootfs –&gt; /sbin/init<br>    init:<br>        CentOS 5 : SysV init<br>        CentOS 6: Upstart<br>        CentOS 7: Systemd</p>
+<pre><code>Systemd新特性：
+    系统引导时实现服务并行启动：
+    按需激活进程：
+    系统状态快照：
+    基于依赖关系定义服务控制逻辑：
+</code></pre><a id="more"></a>
+<pre><code>核心概念： unit
+    配置文件进行表示和配置： 文件中主要包含了系统服务、监听socket、保存的系统快照以及其他与init相关的信息：
+    保存至：
+    /usr/lib/systemd/system
+    /run/systemd/system
+    /etc/systemd/system
+Unit 的类型：
+    Service unit： 文件扩展名为.service ，用于定义系统服务
+    Target unit：文件扩展名为.target,用于模拟实现“运行级别”：
+    Device unit： .mount，定义文件系统挂载点：
+    Socket unit： .socket,用于标识进程间通信用的socket文件：
+    Snapshot unit： .snapshot，管理系统快照
+    Swap unit： .swap,用于标识swap设备
+    Automount： .automount,文件系统的自动挂载点：
+    Path unit： .path，用于定义文件系统中的一个文件或目录
+</code></pre><p>关键特性：<br>    基于socket的激活机制：socket与服务程序分离：<br>    基于bus的激活机制<br>    基于device的激活机制<br>    基于path的激活机制：<br>    系统快照：保存各unit的当前状态信息于持久化存储设备中<br>    向后兼容sysv init脚本</p>
+<p>不兼容：<br>    systemctl命令固定不变<br>    非由systemd启动的服务，systemctl无法与之通信</p>
+<p>管理系统服务：<br>    CentOS 7： service unit<br>        注意：能兼容早起的服务脚本</p>
+<pre><code>    命令：systemctl COMMAND name.service 
+
+启动： service name start ==&gt; systemctl start name.service
+停止： service name stop ==&gt; systemctl stop name.service
+重启： service name restart ==&gt; systemctl restart name.service
+状态： service name status ==&gt; systemctl status name.service
+条件式重启： service name condrestart ==&gt; systemctl try-restart name.service 服务启动了，就重启，服务没启动就不启动
+重载或重启服务： systemctl reload-or-restart name.service
+重载或条件式重启服务： systemctl reload-or-try-restart name.service    
+禁止设定为开机自启：systemctl mask name.service
+取消禁止设定为开机自启：systemctl unmask name.service
+
+查看某服务当前激活与否的状态： systemctl is-active name.service
+查看所有已激活的服务：
+    systemctl list-units --type service 
+查看所有服务
+    systemctl list-units --type service --all
+
+chkconfig 命令的对应关系：
+    设定某服务开机自启： chkconfig name on ==&gt; systemctl enable name.service
+查看服务是否开机自启：
+    systemctl is-active name
+
+其他命令：
+    查看服务的依赖关系：systemctl list-dependencies name
+</code></pre><p>target units:<br>    unit 配置文件： .target </p>
+<pre><code>运行级别：
+    0 ==&gt; runlevel0.target,poweroff.target 设定为关机
+    1 ==&gt; runlevel1.target, rescue.target 单用户模式
+    2 ==&gt; runlevel2.target , multi-user.target 
+    3 ==&gt; runlevel3.target , multi-user.target 
+    4 ==&gt; runlevel4.target , multi-user.target
+    5 ==&gt; runlevel5.target , graphical.target
+    6 ==&gt; runlevel6.target , reboot.target
+
+级别切换：
+    init N ==&gt; systemctl isolate name.target
+    systemctl isolate graphical.target
+查看级别：
+    runlevel ==&gt; systemctl list-units --type target
+
+默认运行级别：
+    /etc/inittab ==&gt; systemctl get-default
+
+修改默认级别：
+    /etc/inittab ==&gt; systemctl set-default multi-user.target
+
+切换至紧急救援模式：
+    systemctl rescue
+
+切换至emergency模式：
+    systemctl emergency  比rescue更彻底，如连驱动都不加载
+</code></pre><p>其他常用命令：<br>    关机：systemctl halt<br>    重启：systemctl reboot<br>    挂起：systemctl suspend<br>    快照：systemctl hibernate<br>    快照并挂起：systemctl hybrid-sleep</p>
+<p>函数： 模块化编程</p>
+<pre><code>function f_name {
+    ...函数体...
+}
+
+f_name() {
+    ...函数体...
+}
+
+return 命令：
+参数：
+    函数体中调用参数：$1,$2,...
+    $*,$@,$#
+    向函数传递参数：
+        函数名 参数列表
+</code></pre><p>systemd:系统及服务<br>    unit：<br>        类型：service,target<br>        .service,.target<br>    systemctl</p>
+<p>bash脚本编程：</p>
+<pre><code>变量：存储单个元素的内存空间：
+数组：存储多个元素的连续的内存空间：
+    数组名
+    索引：编号从0开始，属于数值索引
+        注意：索引页支持使用自定义的格式，而不仅仅是数值格式：
+
+    引用数组中的元素： ${ARRAY_NAME[INDEX]}
+
+声明数组：
+    declare -a ARRAY_NAME
+    declare -A ARRAY_NAME: 关联数组：kv 键值列表
+
+数组元素的赋值：
+    （1）一次只赋值一个元素：
+        ARRAY_NAME[INDEX]=VALUE
+     (2)一次赋值全部元素：
+        ARRAY_NAME=(&quot;VAL1&quot; VAL2&quot;...)
+     (3)只赋值特定元素：
+        ARRAY_NAME=([0]=&quot;VAL1&quot; [3]=&quot;VAL2&quot;)
+
+引用数组元素： ${ARRAY_NAME[INDEX]}
+    注意： 省略[INDEX]表示引用下标为0的元素：
+
+数组的长度： ${#ARRAY_NAME[*]}, ${#ARRAY_NAME[@]}
+
+引用数组中的元素：
+    所有元素： ${ARRAY[@]} , ${ARRAY[*]}
+
+    数组切片： ${ARRAY[@]:offset:number}
+        offset:要跳过的元素个数
+        number：要取出的元素个数
+
+    ${ARRAY[@]:offset}： 取偏移量之后的所有元素
+
+想数组中追加元素：
+    ARRAY[${#ARRAY[*]}]
+
+删除数组中的某元素：
+    unset ARRAY[INDEX]
+关联数组：
+    declare -A ARRAY_NAME
+    ARRAY_NAME=([index_name1]=&quot;VAL1&quot; [index_name2]=&quot;VAL2&quot; ...)
+
+bash字符串处理工具：
+    字符串切片：
+        ${var:offset:number}
+        取字符串的最右侧几个字符：${var: -lengh}
+            注意：冒号后必须有一个空字符：
+
+基于模式取子串：
+    ${var#*word} ：其中word可以是指定的任意字符：功能：自左而右查找var变量所存储的字符串中，第一次出现的word，删除字符串开头至第一次出现word字符之间的所有字符：
+    ${var##*word} 同上，不过，删除的是字符串开头至最后一次由word指定的字符之间的所有内容：
+    ${var%word*}: 同上相反，自右向左
+
+查找替换：
+    ${var/pattern/substi}:查找var所表示的字符串中，第一次被pattern所匹配到的的字符串，以substi替换之;
+    ${var//pattern/substi}:查找var所表示的字符中，所有能被pattern所匹配到的字符，以substi替换之。
+    ${var/#pattern/substi}:查找var所表示的字符中，行首被pattern所匹配到的字符串，以substi替换
+    ${var/%pattern/substi}:查找var锁表是的字符中，行尾被pattern所匹配到的字符串，以substi替换
+
+查找并删除：
+    ${var/pattern}:查找var字符中，第一次匹配到的pattern，然后删除
+    ${var//pattern}:查找var字符中，所有匹配到pattern，删除所有
+    ${var/#pattern}：同上行首        
+    ${var/%pattern}：同上行尾
+
+字符大小写转换：
+    ${var^^}:把var所有字符转换为大写
+    ${var,,}:把var所有字符转换为小写
+
+变量赋值：
+    ${var:-value}:如果var为空或未设置，那么返回value，否则，返回var的值
+    ${var:=value}:如果var为空或者未设置，那么返回value，并且把var设置为value
+    ${var:+value}:如果var不空，则返回value
+    ${var:?error_info}:如果var为空或者未设置，返回error_info到错误信息流中,否则返回val自身的值
+
+命令：
+    mktemp命令：
+        mktemp [OPTION] ... [TEMPLATE]
+            TEMPLATE: filename.XXX
+                XXX至少出现三个
+            OPTION:
+                -d:创建临时目录：
+                --tmpdor :指明临时文件目录位置
+
+    install命令: 文件复制命令
+        install [OPTION]... [-T] SOURCE DEST
+        install [OPTION]... SOURCE... DIRECTORY
+        install [OPTION]... -t DIRECTORY source...
+        install [OPTION]... -d DIRECTORY...
+            选项：
+                -m MODE
+                -o OWNER
+                -g GROUP
+</code></pre><p>​<br>​    </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/进程/" rel="tag"># 进程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/06/mysql架构/" rel="next" title="mysql架构">
+                <i class="fa fa-chevron-left"></i> mysql架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/05/linux编辑器/" rel="prev" title="linux编辑器">
+                linux编辑器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Systemd："><span class="nav-number">1.</span> <span class="nav-text">Systemd：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
