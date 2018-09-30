@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,scrpy," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="初学python 因为以前有写过C语言，和java的经验，上手python就比较快  我嫌麻烦，因为看一些公开课的课，时间又比较长，老师讲的又慢，与编程无关的话一大堆，我无法静下心来听他一直扯下去，然后学到的东西还很少，所以就准备找了本书看了一下，我在kindle 上直接搜索的，一本 编程小白的第一本Python入门书 大概花了三个小时跟着把习题都做一遍，把代码都打一遍，差不多就已经入门了。  然">
+<meta name="keywords" content="python,scrpy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python实现校园网模拟登陆">
+<meta property="og:url" content="http://yoursite.com/2017/04/20/Python实现校园网模拟登陆/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="初学python 因为以前有写过C语言，和java的经验，上手python就比较快  我嫌麻烦，因为看一些公开课的课，时间又比较长，老师讲的又慢，与编程无关的话一大堆，我无法静下心来听他一直扯下去，然后学到的东西还很少，所以就准备找了本书看了一下，我在kindle 上直接搜索的，一本 编程小白的第一本Python入门书 大概花了三个小时跟着把习题都做一遍，把代码都打一遍，差不多就已经入门了。  然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i2.muimg.com/567571/17960e1977e0f09c.png">
+<meta property="og:image" content="http://i4.buimg.com/567571/b7bec97646b5e12b.png">
+<meta property="og:updated_time" content="2018-09-20T09:29:10.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python实现校园网模拟登陆">
+<meta name="twitter:description" content="初学python 因为以前有写过C语言，和java的经验，上手python就比较快  我嫌麻烦，因为看一些公开课的课，时间又比较长，老师讲的又慢，与编程无关的话一大堆，我无法静下心来听他一直扯下去，然后学到的东西还很少，所以就准备找了本书看了一下，我在kindle 上直接搜索的，一本 编程小白的第一本Python入门书 大概花了三个小时跟着把习题都做一遍，把代码都打一遍，差不多就已经入门了。  然">
+<meta name="twitter:image" content="http://i2.muimg.com/567571/17960e1977e0f09c.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>Python实现校园网模拟登陆 | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/20/Python实现校园网模拟登陆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python实现校园网模拟登陆</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T11:42:30+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/20/Python实现校园网模拟登陆/" class="leancloud_visitors" data-flag-title="Python实现校园网模拟登陆">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="初学python"><a href="#初学python" class="headerlink" title="初学python"></a>初学python</h2><ul>
+<li><p>因为以前有写过C语言，和java的经验，上手python就比较快</p>
+<p> 我嫌麻烦，因为看一些公开课的课，时间又比较长，老师讲的又慢，与编程无关的话一大堆，我无法静下心来听他一直扯下去，然后学到的东西还很少，所以就准备找了本书看了一下，我在kindle 上直接搜索的，一本 <strong>编程小白的第一本Python入门书</strong> 大概花了三个小时跟着把习题都做一遍，把代码都打一遍，差不多就已经入门了。</p>
+</li>
+<li><p>然后开始准备安装ide，刚接触vim深感其强大，都说vim 是神一样的编辑器 ，emace是神的编辑器，开始打代码都是在vim里打，然后发现一个ide其实也挺不错的，就在ide里用了。毕竟完成一个工作，选择最有利的工具才能事半功倍。</p>
+<p>在知乎上看到一款公认很好的ide <strong>pycharm</strong> 然后就下载试了试，在mac上，界面比较简洁，还不错。</p>
+<h2 id="开始编程"><a href="#开始编程" class="headerlink" title="开始编程"></a>开始编程</h2><p>准备写个东西练练手，然后就想到我们学校的校园网，一般登陆不需要验证码，那就用python写个模拟登陆页面吧。然后就开始疯狂的查资料，查python常用的库函数，然后看看官方文档，英文有时候实在看不下去了，就去找了一个<a href="http://python.usyiyi.cn" target="_blank" rel="noopener">python中文api翻译的网站</a>，也还不错，选择你需要查看的版本即可查阅。</p>
+</li>
+<li><p>因为以前用JSP写过校园网模拟登陆的代码，所以就想当然的用同样的思路，移植到python，不一会，也就五六分钟，把代码全部搞定，准备实现模拟登陆，眼看就要大功告成了，可是让我没想到的却是一个星期每天五六个小时的研究为何一直无法登陆成功，效率确实很低，还好我不弄好誓不罢休，别人都能做出来，自己也肯定能做出来。</p>
+<p>开始，先用一款抓包工具进行抓包，查看到底发了什么包，然后与正常登陆的包对比，有一点很重要，每次正常登陆的时候一定要先清除浏览器数据，否则抓到的包有可能不完整，我就是被这一点搞得，所以导入 模拟登陆时时无法成功，浪费了很多的时间。</p>
+<p>因为对python了解的不深，我就尽量对比每个细节，查找可能出错的地方，在包里我发现，他的form数据提交的顺序不一致，因为没有其他办法，我也只能一点一点找差异，一点一点改，利用控制变量法，争取早点把错误找出来，不放过每一点可疑之处    .</p>
+<p>正常浏览器请求数据的顺序：</p>
+<p><img src="http://i2.muimg.com/567571/17960e1977e0f09c.png" alt="正常的浏览器请求"></p>
+<p>​</p>
+<p>使用python请求数据的顺序：</p>
+<p><img src="http://i4.buimg.com/567571/b7bec97646b5e12b.png" alt=""></p>
+<p>查了一下，是因为python字典默认是无序排列的，但是这并不影响数据的提交，这才松了口气，准备查找另一个不同。</p>
+<p>我的mac用的是<strong>charles</strong> 抓包工具，然后，又发现，在Headers 里的 Connection：close 查了查 Http Connection 的资料，并没有找到我想要的。</p>
+<p>实在没办法， 我就准备动手做实验，所谓实践出真理嘛，因为一般的抓包工具都会有修改请求重新发送的功能，并且python2.7  urllib2 里面默认就是 close无法修改。</p>
+<p>所以，我就只能从抓包工具那里改了把http请求头Connection改成 Connection：close，然后还有其他数据也要改一下，否则请求不一定成功，比如说我的这个网站，每次登陆的时候他都会在你访问那个登陆页面的时候给你一个checkcode 的值，然后你登陆的时候需要把checkcode一同带上 post上去，否则不会成功，一般而言，本机有cookie，所以cookie应该不用改，先通过浏览器访问登陆页面，在抓包工具里，看看cookie等等和以前一样不，如果不一样，也需要修改cookie，然后再把checkcode改成他给的，然后在抓包工具上，修改上一次登陆成功的包，改变一些值的内容，看看能否成功登陆。每个网站视具体情况而定。</p>
+<p>然后，我都改了，执行，成功登陆了，那么，我就想那就不是 Connection 的值的问题了，然后我就又在苦苦思索，到底是什么让我无法成功登陆。</p>
+<p>接下来的就是枯燥的，分析每一个抓包工具了，我居然都准备拿出抓包顶级神器了，<strong>wireshark</strong> ，通过wirshark抓包抓，通过过滤筛选，还是一大堆的东西，没办法，只能硬着头皮去一个一个分析，最后还是无果告终。</p>
+<p>继续查看 <strong>charles</strong> 发现有一个问题，为什么每次 python发的请求，他的response都有一个 set cookie ，这个时候我仿佛就明白了，估计问题就出在这里了，我通过我的经验，想了想，估计有点像局域网arp请求那样，需要确认cookie被使用了，所以，我就查找了cookie的方法，然后进行手动，提取cookie，然后发送和浏览器登录一摸一样的请求，最后发现还是不行，又在想，是不是因为页面请求的多了， 都错乱了，每次发的信息都不一致， 例如这次请求发的是上一次的checkcode，cookie却是这次的，这样就导致了失败，但是，我把他们全部搞的意志，怀着非常期待的心情准备再一次实验的时候，无情的告诉我，又一次失败了，还是老样子。</p>
+<p>彻底奔溃了。这个时候我想，一定是代码的问题。</p>
+<p>我就查阅别人的代码，发现有一个cookie自动处理的东西，不要自己在请求头Headers 里面写cookie，因为初学，有点不太相信，能做到这么只能，当初就没管它，但是还是有些印象的，因为毕竟那是一个我心中的疑问， 所以就怀着半信半疑的心情试了一下，丢弃了JSP拼接的思想，就把好像一个很无关的代码扔了进去，效果很奇特，然后经过重新理清思路，在从浏览器里登陆，分析一个完整过程，调整代码访问顺序，</p>
+<p>当我点开那个请求的response的心情是万分激动的。哇，哈哈哈， 终于这次没有失败了，完成了。那种心情简直能跟表白成功了一样的激动。</p>
+<h2 id="进入正题，源代码："><a href="#进入正题，源代码：" class="headerlink" title="进入正题，源代码："></a>进入正题，源代码：</h2></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> HTMLParser</span><br><span class="line"><span class="keyword">import</span> urlparse</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> md5</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">#   我那个网站是使用md5加密完在post出去的，大家可以查看网页源代码查看加密的代码</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">passwordmd5</span><span class="params">(src)</span>:</span></span><br><span class="line"></span><br><span class="line"> m1 = md5.new()</span><br><span class="line"> m1.update(src)</span><br><span class="line"> <span class="keyword">print</span> m1.hexdigest()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#    开始就很无知，写了一个手动提取cookie，导致费了很对时间，别人搞好的给你，你都不会用，深感学会使用工具的重要性呀</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_cookie</span><span class="params">()</span>:</span></span><br><span class="line">    cookie = cookielib.CookieJar()</span><br><span class="line">    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))</span><br><span class="line">    response = opener.open(<span class="string">'*********'</span>)</span><br><span class="line">    list = []</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> cookie:</span><br><span class="line">        <span class="keyword">if</span> item.name == <span class="string">'JSESSIONID'</span>:</span><br><span class="line">            list.append(<span class="string">'JSESSIONID'</span>)</span><br><span class="line">            a = <span class="string">'='</span></span><br><span class="line">            list.append(item.value)</span><br><span class="line">            str = a.join(list)</span><br><span class="line">            <span class="keyword">return</span> str</span><br><span class="line"></span><br><span class="line"> <span class="comment">#               这个是登陆前请求，应该是要确认cookie，Post的时候带上cookie </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">random</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'*****'</span></span><br><span class="line">    req = urllib2.Request(url)</span><br><span class="line">    res_data = urllib2.urlopen(req)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hosturl = <span class="string">'登陆url'</span></span><br><span class="line">posturl = <span class="string">'发送请求的链接，抓包工具可以抓到，也可以分析网页源码，不过比较麻烦'</span></span><br><span class="line"></span><br><span class="line">cj = cookielib.LWPCookieJar()</span><br><span class="line">cookie_support = urllib2.HTTPCookieProcessor(cj)</span><br><span class="line">opener = urllib2.build_opener(cookie_support, urllib2.HTTPHandler)</span><br><span class="line">urllib2.install_opener(opener)</span><br><span class="line">h = urllib2.urlopen(hosturl)</span><br><span class="line">html = h.read()</span><br><span class="line"><span class="comment"># 截取 checkcode 笨方法，其他网站视情况而定</span></span><br><span class="line">checkcode = html[<span class="number">2990</span>:<span class="number">2994</span>]  </span><br><span class="line">random()</span><br><span class="line">headers = &#123;<span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8'</span>,</span><br><span class="line">           <span class="string">'Accept-Language'</span>: <span class="string">'zh-cn'</span>,</span><br><span class="line">           <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</span><br><span class="line">           <span class="string">'User-Agent'</span>: <span class="string">'**************'</span>,</span><br><span class="line">           &#125;</span><br><span class="line"><span class="comment"># 看你要登陆的网站用什么加密代码，我这里是md5</span></span><br><span class="line">passwordmd5(<span class="string">'password'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 视情况而定，你要登陆的网站需要提交什么数据</span></span><br><span class="line"></span><br><span class="line">postData = &#123;<span class="string">'account'</span>: <span class="string">'账号'</span>, <span class="string">'password'</span>: <span class="string">''</span>, <span class="string">'code'</span>: <span class="string">''</span>, <span class="string">'checkcode'</span>: checkcode, <span class="string">'Submit'</span>: <span class="string">'登 录'</span>&#125;</span><br><span class="line"></span><br><span class="line">postData = urllib.urlencode(postData)</span><br><span class="line">request = urllib2.Request(posturl, postData, headers)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line">text = response.read()</span><br><span class="line"><span class="keyword">print</span> text</span><br></pre></td></tr></table></figure>
+<p>注：python2.7</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/scrpy/" rel="tag"># scrpy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/java连接orcale数据库/" rel="next" title="java连接orcale数据库">
+                <i class="fa fa-chevron-left"></i> java连接orcale数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/20/HTMLstudy/" rel="prev" title="HTML学习笔记">
+                HTML学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">82</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初学python"><span class="nav-number">1.</span> <span class="nav-text">初学python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始编程"><span class="nav-number">2.</span> <span class="nav-text">开始编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入正题，源代码："><span class="nav-number">3.</span> <span class="nav-text">进入正题，源代码：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
