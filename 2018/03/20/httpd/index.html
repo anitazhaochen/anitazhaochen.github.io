@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,httpd," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="httpd常用配置：    1.修改监听的IP和Port        Listen [ip:]Port        省略ip表示监听本机所有IP；Listen可重复出现多次； 2.持久化连接     Persistent Connection：连接建立，每个资源获取完成之后不会断开连接，而是继续等待其他请求完成     如何断开？         数量限制：100         时间限制：可">
+<meta name="keywords" content="linux,httpd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="httpd">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/httpd/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="httpd常用配置：    1.修改监听的IP和Port        Listen [ip:]Port        省略ip表示监听本机所有IP；Listen可重复出现多次； 2.持久化连接     Persistent Connection：连接建立，每个资源获取完成之后不会断开连接，而是继续等待其他请求完成     如何断开？         数量限制：100         时间限制：可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T09:27:16.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="httpd">
+<meta name="twitter:description" content="httpd常用配置：    1.修改监听的IP和Port        Listen [ip:]Port        省略ip表示监听本机所有IP；Listen可重复出现多次； 2.持久化连接     Persistent Connection：连接建立，每个资源获取完成之后不会断开连接，而是继续等待其他请求完成     如何断开？         数量限制：100         时间限制：可">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>httpd | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/httpd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">httpd</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T22:06:35+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/20/httpd/" class="leancloud_visitors" data-flag-title="httpd">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="httpd"><a href="#httpd" class="headerlink" title="httpd"></a>httpd</h1><p>常用配置：<br>    1.修改监听的IP和Port<br>        Listen [ip:]Port<br>        省略ip表示监听本机所有IP；Listen可重复出现多次；</p>
+<pre><code>2.持久化连接
+    Persistent Connection：连接建立，每个资源获取完成之后不会断开连接，而是继续等待其他请求完成
+    如何断开？
+        数量限制：100
+        时间限制：可配置
+    副作用：对并发访问量较大的服务器，持久连接功能会使有些请求得不到响应
+    折中：使用较短的持续连接时间
+        http-2.4 支持毫秒级持久时间
+</code></pre><a id="more"></a>
+<pre><code>    非持久连接
+
+    KeepAlive On|Off
+    MaxKeepAliveRequests #
+    KeepAliveTimeout #
+
+    测试：
+        telnet HOST PORT
+        GET /URL HTTP/1.1
+        Host: HOSTNAME or IP
+
+
+3.MPM
+    prefork :多进程模型，一个进程响应一个请求
+    worker： 多线程模型（多进程生成，一个进程生成多个线程），一个线程响应一个请求（linux进程本来就很轻量）
+    evernt：事件驱动模型，一个线程响应多个请求
+
+    并发服务器响应模型：
+        单进程的I/O模型
+        多进程I/O模型
+        复用的I/O模型
+            多线程模型
+            事件驱动
+
+
+    CentOS 6:
+        程序环境
+            配置文件：
+                /etc/httpd/conf/httpd.conf
+                /etc/httpd/conf.d/*.conf
+            服务脚本：
+                /etc/rc.d/init.d/httpd
+                配置文件： /etc/sysconfig/httpd
+            主程序配置文件：
+                /usr/sbin/httpd
+                /usr/sbin/httpd.event
+                /usr/sbin/httpd.worker
+            日志文件目录：
+                /var/log/httpd
+                    access_log:访问日志
+                    error_log:错误日志
+            站点文档目录：
+                /var/www/html
+            配置文件组成：
+                [root@localhost ~]# grep &quot;Section&quot; /etc/httpd/conf/httpd.conf
+                    ### Section 1: Global Environment
+                    ### Section 2: &apos;Main&apos; server configuration
+                    ### Section 3: Virtual Hosts
+            常用配置
+    CentOS 7:
+
+
+    Multipath Process Module: 多道处理模块
+    prefork, worker, event
+
+    http-2.2不支持同时编译多个模块，所以只能编译时选定一个；rpm安装的包提供三个二进制程序文件，分别用于实现
+
+    默认为/usr/sbin/httpd,其使用prefork
+    查看模块列表：
+        查看静态编译的模块
+    # httpd -l
+        Compiled in modules:
+        core.c
+        mod_so.c
+        http_core.c
+    查看静态编译及动态装载的模块
+        # httpd -M
+
+更换使用的httpd程序
+    /etc/sysconfig/httpd
+
+    &lt;IfModule prefork.c&gt;
+</code></pre><p>StartServers       8<br>MinSpareServers    5<br>MaxSpareServers   20<br>ServerLimit      256<br>MaxClients       256<br>MaxRequestsPerChild  4000<br></p>
+<ifmodule worker.c=""><br>StartServers         4<br>MaxClients         300<br>MinSpareThreads     25<br>MaxSpareThreads     75<br>ThreadsPerChild     25<br>MaxRequestsPerChild  0<br></ifmodule>
+
+<p>PV,UV<br>    PV: Page View<br>    UV: User View<br>        独立IP量</p>
+<pre><code>300*86400 = 40W+
+</code></pre><p>4.DSO<br>    配置指定实现模块加载<br>        LoadModule &lt;mod_name&gt; &lt;mod_path&gt;</p>
+<pre><code>模块路径可使用相对地址
+    相对于ServerRoot(/etc/httpd)指向的路径而言
+</code></pre><p>5.定义‘Main’ server的文档页面路径<br>    DocumentRoot</p>
+<pre><code>文档路径映射：
+    DocumentRoot指向的路径为URL路径的起始位置
+        DocumentRoot &quot;/var/www/html&quot;
+            test/index.html --&gt; http://HOST:PORT/test/index.html
+</code></pre><p>6.站点访问控制<br>    可基于两种类型的路径指明对哪种资源进行访问控制<br>        文件系统类型：<br>            <directory ""="">  </directory><br>            <file ""=""> </file><br>            <filematch ""=""> </filematch><br>        URL路径：<br>            <location ""=""> </location><br>            …<br>        访问控制机制：<br>            基于来源地址<br>            基于账号</p>
+<p>7.Directory 中 “基于来源地址”实现访问控制</p>
+<pre><code>(1) Options
+    所有可用特性: Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+                None，All
+    indexes: 索引
+    FollowSyLinks：允许跟踪符号链接文件
+    SymLinksifOwnerMatch：符号链接的属组和文件的属组一样可以访问
+
+（2）基于来源地址的访问控制机制
+    Order：检查次序
+        Order allow，deny 白名单
+        Order deny，allow 黑名单
+    Allow from
+    Deny from
+        来源地址：
+            IP
+            NetAddr：
+                172.16
+                172.16.0.0
+                172.16.0.0/16
+</code></pre><p>8.定义默认主页面<br>    DirectoryIndex index.html index.html.var</p>
+<p>9.日志设定</p>
+<pre><code>错误日志
+    ErrorLog logs/error_log
+    LogLevel warn
+
+     debug, info, notice, warn, error, crit 默认是warn
+
+     访问日志:
+     CustomLog logs/access_log combined(combined日志的格式)
+     LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
+
+     %h:客户端IP地址
+     %l:Remote logname (from identd,if supplied) -表示为空
+     %u：remote user， （from user） - 为空
+     %t：Time the request was received 服务器收到请求的时间
+     %r：请求报文的首行信息
+     %&gt;s：响应状态码
+     %b：响应报文主体部分大小，单位byte，不包含响应首部
+     %{Referer}i：请求报文当中“referer”首部的值：当前资源的访问入口，即从哪个页面的超链接跳转页面而来
+     %{User-Agent}：请求报文中”User-Agent“首部的值：即发出请求用到的应用程序
+</code></pre><p>10.路径别名<br>    DocumentRoot ”/www/htocs”<br>        <a href="http://localhost/download/bash-5.5.rpm" target="_blank" rel="noopener">http://localhost/download/bash-5.5.rpm</a><br>       –&gt; /www/htdocs/download/bash-5.5.rpm<br>    Alias /URL/ “/PATH/to/SOMEDIR/“<br>        Alias /bbs/ “/forum/htdocs”<br>            –&gt; /www/htdocs/bbs/</p>
+<p>11.设置默认字符集<br>    AddDefaultCharset UTF-8</p>
+<pre><code>GBL，GB2312，GB18030
+</code></pre><p>12.基于用户的访问控制<br>    认证质询：<br>        WWW-Authenticate： 响应码为401，拒绝客户端请求，并说明要求客户端提供账号和密码<br>    认证：<br>        Authenticate：客户端用户填入账号和密码后再次发送请求报文:认证通过，则服务器发送响应的资源<br>    认证方法:<br>        basic:明文<br>        digest：消息摘要（如MD5）</p>
+<pre><code>安全域：需要用户认证后方能访问的路径
+    应该通过名称对其进行表示，并用于告知用户认证的原因
+
+用户的账号密码存储于何处？
+    虚拟账号：仅用于访问某服务时用到的认证标识
+    存储：
+        文本文件
+        SQL数据库
+        ldap
+        nis
+
+basic认证：
+    （1）定义安全域
+        &lt;Directory &quot;&quot;&gt;
+            Options None
+            AllowOverride None
+            AuthType Basic
+            AuthName &quot;STRING&quot;
+            AuthUserFile &quot;/PATH/TO/HTTPD_USER_PASSWD_FILE&quot;
+            Require user username1 username2 ...
+        &lt;/Directory&gt;
+            允许账号文件中所有用户登陆
+            Require valid-user
+    （2）提供账号和密码存储（文本文件）
+            使用htpasswd命令进行管理
+                htpasswd [option] passwordfile username
+                -c :自动创建passwordfile，因此，仅应该在添加第一个用户时使用
+                -m：md5加密密码
+                -s：sha1加密用户密码
+                -D：删除指定用户
+    （3）实现基于组进行认证
+                &lt;Directory &quot;&quot;&gt;
+            Options None
+            AllowOverride None
+            AuthType Basic
+            AuthName &quot;STRING&quot;
+            AuthUserFile &quot;/PATH/TO/HTTPD_USER_PASSWD_FILE&quot;
+            AuthGroupFile “/PATH/TO/HTTP_GROUP_FILE&quot;
+            Require group GROUP1 GROUP2
+        &lt;/Directory&gt;
+
+        要提供：用户账号文件和组文件
+
+            组文件：每一行定义一个组
+                GRP_NAME： user1 user2 user3 ...
+</code></pre><p>13.虚拟主机<br>​<br>    有三种实现方案：<br>        基于IP：<br>            为每个虚拟主机准备至少一个IP地址<br>        基于port<br>            为每个虚拟主机准备至少一个专用port：实践中很少使用<br>        基于hostname<br>            为每个虚拟主机准备至少一个专用hostname<br>        可混合使用上述三种方式中任意方式</p>
+<pre><code>注意：一般虚拟主机不与中心主机混用，所以，要使用虚拟主机，先禁用中心主机
+    禁用中心主机：注释DocumentRoot
+
+每个虚拟主机都有专用配置：
+    &lt;VirtualHost &quot;IP:PORT&quot;&gt;
+        ServerName
+        DocumentRoot &quot;&quot;
+    &lt;/VirtualHost&gt;
+</code></pre><p>14.内置的status页面</p>
+<pre><code>&lt;Location /server-status&gt;
+    SetHandler server-status
+    Order deny,allow
+    Deny from all
+    Allow from .example.com
+&lt;/Location&gt;
+</code></pre><p>实现：基于账号实现访问控制</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/httpd/" rel="tag"># httpd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/Ubuntu使用docker/" rel="next" title="docker使用">
+                <i class="fa fa-chevron-left"></i> docker使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/24/LAMP/" rel="prev" title="LAMP">
+                LAMP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#httpd"><span class="nav-number">1.</span> <span class="nav-text">httpd</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
