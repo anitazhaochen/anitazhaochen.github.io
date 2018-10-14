@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mosh,ssh," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ssh连接电脑，在网络不好的时候，总是会有延迟，而且有的时候延迟直接到达输入字符半天才回显，有的时候体验极差，ssh利用的是tcp协议，自然没有udp快。 注意Mosh 目前不支持端口映射或代理功能，也不能使用 Mosh 来复制文件或挂载远程目录。您仍然需要 SSH 来完成这些事情。">
+<meta name="keywords" content="mosh,ssh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mosh的使用方法">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/mosh的使用方法/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="ssh连接电脑，在网络不好的时候，总是会有延迟，而且有的时候延迟直接到达输入字符半天才回显，有的时候体验极差，ssh利用的是tcp协议，自然没有udp快。 注意Mosh 目前不支持端口映射或代理功能，也不能使用 Mosh 来复制文件或挂载远程目录。您仍然需要 SSH 来完成这些事情。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T09:23:42.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mosh的使用方法">
+<meta name="twitter:description" content="ssh连接电脑，在网络不好的时候，总是会有延迟，而且有的时候延迟直接到达输入字符半天才回显，有的时候体验极差，ssh利用的是tcp协议，自然没有udp快。 注意Mosh 目前不支持端口映射或代理功能，也不能使用 Mosh 来复制文件或挂载远程目录。您仍然需要 SSH 来完成这些事情。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>mosh的使用方法 | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/mosh的使用方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mosh的使用方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T18:40:30+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-20T17:23:42+08:00">
+                2018-09-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/11/17/mosh的使用方法/" class="leancloud_visitors" data-flag-title="mosh的使用方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ssh连接电脑，在网络不好的时候，总是会有延迟，而且有的时候延迟直接到达输入字符半天才回显，有的时候体验极差，ssh利用的是tcp协议，自然没有udp快。</p>
+<p>注意<br>Mosh 目前不支持端口映射或代理功能，也不能使用 Mosh 来复制文件或挂载远程目录。您仍然需要 SSH 来完成这些事情。</p>
+<a id="more"></a>
+<p>有一个Mosh的连接工具，可能会替代ssh，<br><a href="https://mosh.org/" target="_blank" rel="noopener">https://mosh.org/</a>  Mosh官网<br>说了很多特性，可以自己去看，英文网站<br>具体有以下优点：<br>1.可以延迟更低，ssh需要等待服务器响应后，才显示您输入的内容。而mosh会马上显示您的输入，编辑，删除登内容。<br>2.在网络差的时候没有ssh容易断线，常常一个连接能保持很久，即使你合上笔记本，打开笔记本连接依旧在。</p>
+<p>3.对于移动网络，常常更换ip的情况下也能保持连接，断网后，mosh将会在新网可用的时候自动连接服务器，<br>等等，有兴趣了解的可以自己去官方网站看，</p>
+<p>因为这方面的安装还不多，在我查阅了中文资料之后，依旧一头雾水，或者资料太少，无法多个比对，理解作者真正意图，鉴于英文文档，自然就有抵触的情绪，实在无奈，又深爱计算机，所以，还是读一遍吧。</p>
+<p>下面开始说正事，我尽量达到每一步都为读者考虑的心情。</p>
+<p>首先，像这样的服务，肯定都有服务端和客户端，<br>服务端是开启服务，供客户端连接的，<br>而客户端是连接服务端的工具。</p>
+<p>我想配置一台服务器，或者是我自己的电脑，我该怎么做才能像ssh一样连接到它呢。</p>
+<p>首先，我们先从ssh讲起，这是基础。</p>
+<p>一般linux版本的系统都装有ssh服务，只是没有开启罢了，所以，我们先服务启动,因为本文的重点是mosh，所以ssh 已经有很多资料了，不会的同学，可以google一下，亦或百度一下，自行搞定吧，不管什么系统，应该都有方法。</p>
+<p>当我们ssh配置成功之后，并且成功连接了 服务器之后，下面就可以进行mosh的配置了。</p>
+<p>当时我看到mosh的这些特性，在想为什么它不会断呢，<br>难道中间接了一个中间服务器？<br>我身处学校内网，服务器没有公网ip，那么如果这样的话，我岂不是我的内网的电脑就无法连接到我的内网服务器了嘛， 并且，如果接一个中间人的话，安全也是一个问题，能有人信任然后用它吗？<br>带着种种疑问，查资料，也查不到，只能看官网文档，<br>又有一个疑问，我的服务器有没有配置过防火墙，我的ip需不需要转发，我的udp端口用不用手动开放等等，因为知识还不太全面，总是带着种种疑问，没办法，只能试一试了</p>
+<p>首先，假设我的疑问全不在，它就像ssh一样，可以内网连接，官网说mosh的操作其实和ssh 非常相似。</p>
+<p>1.在服务器上安装mosh，具体安装方法有 apt-get install mosh ，等等，在官网上都可以找到，安装应该不成为问题。首先不必考虑服务端、客户端的问题，其实它是默认都装了的。<br>mosh 是客户端， mosh-server是服务端。<br>用不用自己开启端口啊，什么的东西呢？<br>自己折腾了一阵子，其实都不是这些原因，而是工具不会使用造成的连接不了， 我用ps查看服务端怎么一会就自己没了呢，官网说没人连接服务端会自动quit，我想服务端没运行，那还连个什么呀！！<br>然后又想，官网不说说mosh事基于ssh嘛，可不能只要ssh开启成功就可以自动转接成mosh呢？<br>抱着疑问，看了看FAQ，做了一个连接试验一下：<br>下面把这个里程碑式的实验拿出来，是它解决了我一些疑惑！！！</p>
+<p>Q: How do I run the mosh client and server separately?<br>If the mosh wrapper script isn’t working for you, you can try running the mosh-client and mosh-server programs separately to form a connection. This can be a useful debugging technique.</p>
+<ol>
+<li>Log in to the remote host, and run mosh-server.<br>It will give output like:<br>$ mosh-server </li>
+</ol>
+<p>MOSH CONNECT 60004 4NeCCgvZFe2RnPgrcU1PQw</p>
+<p>mosh-server (mosh 1.1.3)<br>Copyright 2012 Keith Winstein <a href="mailto:&#x6d;&#x6f;&#115;&#104;&#45;&#x64;&#101;&#x76;&#101;&#108;&#x40;&#x6d;&#x69;&#116;&#x2e;&#101;&#x64;&#117;" target="_blank" rel="noopener">&#x6d;&#x6f;&#115;&#104;&#45;&#x64;&#101;&#x76;&#101;&#108;&#x40;&#x6d;&#x69;&#116;&#x2e;&#101;&#x64;&#117;</a><br>License GPLv3+: GNU GPL version 3 or later <a href="http://gnu.org/licenses/gpl.html" target="_blank" rel="noopener">http://gnu.org/licenses/gpl.html</a>.<br>This is free software: you are free to change and redistribute it.<br>There is NO WARRANTY, to the extent permitted by law.</p>
+<p>[mosh-server detached, pid = 30261]</p>
+<ol start="2">
+<li>On the local host, run:<br>$ MOSH_KEY=key mosh-client remote-IP remote-PORT<br>where “key” is the 22-byte string printed by mosh-server (in this example, “4NeCCgvZFe2RnPgrcU1PQw”), “remote-PORT” is the port number given by the server (60004 in this case), and “remote-IP” is the IP address of the server. You can look up the server’s IP address with “host remotehost”.</li>
+<li>If all goes well, you should have a working Mosh connection. Information about where the process fails can help us debug why Mosh isn’t working for you.</li>
+</ol>
+<p>这是原文，<br>1.首先在服务器上运行 mosh-server<br>然后会出现一大堆的东西，这些东西有些将可以为接下来的连接做为资源的。<br>2.在客户机上运行这段代码<br>MOSH_KEY=key mosh-client remote-IP remote-PORT</p>
+<p>其中，key 是服务端给的4NeCCgvZFe2RnPgrcU1PQw<br>remote-IP 是你的服务器的ip地址，remote-PORT 是端口号，服务器给了是 60004  然后要快，因为过一会就掉了吧，反正我是第一次没成功，立马就想到是速度的问题，会不会服务器没人连接又自动结束了。然后又来了第二次，这次信息写的很快，一个回车，激动人心的时刻到了，连接成功了。<br>这一次的成功连接打消了几个大问题：<br>1.mosh在内网是可以使用的<br>2.mosh是不存在中间人的<br>3.mosh和ssh基本是一样的，只是性能不一样，所以我选择用mosh。</p>
+<p>我弄计算机的时候，其实最怕的不是它的配置有多难，而是我的想法能不能实现，它支不支持这样的操作，如果因为没有理解好文档的意思，最后做了一个根本无法实现的配置，那将是徒劳，而且一路失败，很难受的， 只要别人可以实现，那么我也可以和他一样，查资料，看文档来实现，我不需要一个人遇到了点问题就去问他，而是只要告诉我可以做到，接下来，所有的事情，都是google去吧。</p>
+<p>好了，回到正题上，mosh说它的操作基本和ssh一样，那么就很简单了。</p>
+<p>我们ssh每次都输入密码很麻烦，可以查一下，如何生成一个公钥和一个私钥，然后每次就不用输入一大堆东西了。<br>在ssh上，我配置好了所有<br>然后输入<br>ssh kali 就可以直接连接到我的主机，在mosh中，只要你的ssh连接没问题，那么<br>mosh kali 这条命令也应该是没问题的，还有一些其他的命令，也都类似ssh，就不多说了。</p>
+<p>看过的mosh文章;<a href="https://meiriyitie.com/2015/05/28/mosh/" target="_blank" rel="noopener">https://meiriyitie.com/2015/05/28/mosh/</a></p>
+<p><a href="http://itindex.net/detail/54505-ssh-%E5%B7%A5%E5%85%B7-mosh" target="_blank" rel="noopener">http://itindex.net/detail/54505-ssh-%E5%B7%A5%E5%85%B7-mosh</a><br>结合一下</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mosh/" rel="tag"># mosh</a>
+          
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/mac使用vim安装youcompleteme补全python/" rel="next" title="mac使用vim安装youcompleteme(YCM)补全python">
+                <i class="fa fa-chevron-left"></i> mac使用vim安装youcompleteme(YCM)补全python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/17/花生壳内网穿透-mosh/" rel="prev" title="花生壳内网穿透+mosh">
+                花生壳内网穿透+mosh <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
