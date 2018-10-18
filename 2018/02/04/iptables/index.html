@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,iptables,防火墙," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="iptableiptables：    Firewall：防火墙，隔离工具：工作于主机或网络的边缘，对于进出本主机或网络的报文根据事先定义好的检查规则作匹配检测，对于能够被规则匹配到的报文做出相应的处理的组件        主机防火墙        网络防火墙 iptables/netfilter    framwork: netfilter">
+<meta name="keywords" content="linux,iptables,防火墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iptables">
+<meta property="og:url" content="http://yoursite.com/2018/02/04/iptables/index.html">
+<meta property="og:site_name" content="HAPPY&#39;C">
+<meta property="og:description" content="iptableiptables：    Firewall：防火墙，隔离工具：工作于主机或网络的边缘，对于进出本主机或网络的报文根据事先定义好的检查规则作匹配检测，对于能够被规则匹配到的报文做出相应的处理的组件        主机防火墙        网络防火墙 iptables/netfilter    framwork: netfilter">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-20T09:27:06.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iptables">
+<meta name="twitter:description" content="iptableiptables：    Firewall：防火墙，隔离工具：工作于主机或网络的边缘，对于进出本主机或网络的报文根据事先定义好的检查规则作匹配检测，对于能够被规则匹配到的报文做出相应的处理的组件        主机防火墙        网络防火墙 iptables/netfilter    framwork: netfilter">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>iptables | HAPPY'C</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HAPPY'C</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/04/iptables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CHEN">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HAPPY'C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iptables</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-04T22:10:52+08:00">
+                2018-02-04
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-20T17:27:06+08:00">
+                2018-09-20
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/04/iptables/" class="leancloud_visitors" data-flag-title="iptables">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="iptable"><a href="#iptable" class="headerlink" title="iptable"></a>iptable</h1><p>iptables：<br>    Firewall：防火墙，隔离工具：工作于主机或网络的边缘，对于进出本主机或网络的报文根据事先定义好的检查规则作匹配检测，对于能够被规则匹配到的报文做出相应的处理的组件<br>        主机防火墙<br>        网络防火墙</p>
+<p>iptables/netfilter<br>    framwork: netfilter<br><a id="more"></a><br>        hook function<br>    rule utils: iptables</p>
+<p>功能：<br>    filter：过滤，防火墙<br>    nat：network address translation，网络地址转换<br>    mangle：拆解报文，做出修改，封装报文<br>    raw：关闭nat表上启用的连接追踪机制</p>
+<p>链（内置）：<br>    PREROUTING<br>    INPUT<br>    FORWARD<br>    OUTPUT<br>    POSTROUTING</p>
+<p>流入：PREROUTING –&gt; INPUT<br>流出：OUTPUT –&gt; POSTROUTING<br>转发：PREROUTING –&gt; FORWARD –&gt; POSTROUTING</p>
+<p>各功能的分别实现：<br>    filter：INPUT，FORWARd，OUTPUT<br>    nat：PREROUTING（DNAT），OUTPUT，POSTROUTING（SNAT）<br>    mangle：PREROUTING，INPUT，FORWARD，OUTPUT，POSTROUTING<br>    raw：PREROUTING，OUTPUT</p>
+<p>路由发生的时刻：<br>    报文进入本机后：<br>        判断目标主机<br>    报文发出之前：<br>        判断经由哪个接口送往下一跳</p>
+<p>iptables：四表五链<br>    添加规则时的考量点：<br>        （1）要实现哪种功能：判断添加在那张表上<br>        （2）报文流经的路径：判断添加在哪个链上</p>
+<pre><code>链：链上的规则的次序，即为检查的次序，因此隐含一定的法则
+    （1）同类规则（访问同一应用），匹配范围小的放上面：
+    （2）不同类规则（访问不同应用），匹配到报文频率较大的放上面
+    （3）合并可以由一条规则描述的多个规则合并为一个
+    （4）设置默认策略
+功能优先级次序：raw--&gt; mangle --&gt; nat --&gt; filter
+</code></pre><p>规则：<br>    组成部分：报文的匹配条件，配到到之后的处理动作<br>        匹配条件：根据协议报文特征指定匹配条件<br>            基本匹配条件<br>            扩展匹配条件<br>        处理动作：<br>            內建处理机制<br>            自定义处理机制</p>
+<pre><code>注意：报文不会经过自定义链，只能在内置链上通过规则引用后生效
+</code></pre><p>iptables：规则管理工具<br>    添加、修改、删除、显示等</p>
+<pre><code>规则和链有计数器：
+    pkts：有规则或链所匹配到的报文的个数
+    bytes：由规则或链匹配到的所有报文大小之和
+</code></pre><p>iptables命令：<br>       iptables [-t table] {-A|-C|-D} chain rule-specification</p>
+<pre><code>ip6tables [-t table] {-A|-C|-D} chain rule-specification
+
+iptables [-t table] -I chain [rulenum] rule-specification
+
+iptables [-t table] -R chain rulenum rule-specification
+
+iptables [-t table] -D chain rulenum
+
+iptables [-t table] -S [chain [rulenum]]
+
+iptables [-t table] {-F|-L|-Z} [chain [rulenum]] [options...]
+
+iptables [-t table] -N chain
+iptables [-t table] -X [chain]
+
+iptables [-t table] -P chain target
+
+iptables [-t table] -E old-chain-name new-chain-name
+
+rule-specification = [matches...] [target]
+
+match = -m matchname [per-match-options]
+
+target = -j targetname [per-target-options]
+</code></pre><p>​<br>       -t table:<br>            filter,nat,mangle,raw<br>       链管理：<br>            -F: flush，清空规则链，省略链表示清空所有表上的所有链<br>            -N: new，创建新的自定义规则链<br>            -X: delete 删除用户自定以的规则连（空链才行，先使用-F清空规则）<br>            -Z: zero，清零，置零规则计数器<br>            -P: Policy，为指定链设置默认策略，对filter表中的链而言，默认策略通常有ACCEPT，DROP，REJECT<br>            -E: rEname，重命名自定义链，引用计数不为0的自定义链，无法改名，也无法删除</p>
+<pre><code>规则管理：
+     -A: append, 将新规则追加于指定链尾部
+     -I: insert，将规则插入到指定链的指定位置
+     -D: delete，删除指定链上的指定规则
+         有两种指定方式：
+             （1）指定匹配条件
+             （2）指定规则编号
+     -R：replace，替换指定链上的指定规则
+ 查看：
+     -L：list，列出指定链上的所有规则
+         -n：number，以数字格式显示地址和端口号
+         -v：verbose，显示详细信息
+                 -vv，-vvv （v越多显示结果更详细）
+         --line-numbers:显示规则编号
+         -x：exactly，显示计数器计数结果的精确值
+
+ 匹配条件：
+     基本匹配：
+         [!] -s, --src, --source IP|Netaddr：检查报文中源IP地址是否符合此处指定的地址范围
+         [!] -d, --dst, --destination IP|Netaddr: 检查报文中目标IP地址是否符合此处指定的地址范围
+         -p， --protocol {tcp|udp|icmp}:检查报文中的协议，即ip首部中的protocols所标识的协议
+         -i, --in-interface IFACE: 数据报文的流入接口，仅能用于PREROUTING，INPUT及FORWARD链上
+         -o，--output-interface IFACE：数据报文的流出接口：仅能用于FORWARD，OUTPUT及POSTROUTING链上
+
+     扩展匹配：-m match_name --spec_options
+             例如：-m tcp --dport 22
+         隐式扩展：对-p protocol指明的协议进行扩展，可省略-m选项
+             -p tcp
+                 --dport PORT [-PORT]:目标端口，可以是单个端口或者多个端口
+                 --sport PORT [-PORT]
+                 --tcp-flags LIST1 LIST2: 检查LIST1所指明的所有标志位，且这其中，LIST2所表示出的标志位必须为1，而余下的必须为0：没有LIST1中指明的，不做检查
+                 SYN，ACK，FIN，RST，PSH，URG
+
+                 --tcp-flags SYN，ACK，FIN，RST，SYN  检查是否为新建tcp连接的第一次连接
+                 --syn
+             -p udp
+                 --dport
+             -p icmp
+                 --icmp-type
+                     可用数字表示其类型：
+                         0：echo-reply
+                         8：echo-request
+
+ 目标：
+     -j TARGET： jump至指定的TARGET
+         ACCEPT：接受
+         DROP：丢弃
+         REJECT：拒绝
+         RETURN：返回调用链
+         REDIRECT：端口重定向
+         LOG：记录日志
+         MARK：做防火墙标记
+         DNAT：目标地址转换
+         SNAT：源地址转换
+         MASQUERADE: 地址伪装
+         ...
+         自定义链：由自定义链上的规则进行匹配检查
+</code></pre><p>复习：<br>    iptables/netfilter<br>        netfilter: kernel framwork<br>        iptables</p>
+<pre><code>    四表：filter，nat，mangle，raw
+    五链：PREROUTING，INPUT，FORWARD，OUTPUT，POSTROUTING
+
+iptables：
+    子命令：
+        链： -F -X -N -E -Z -P -L
+        规则： -A -I -D -R
+
+        -j TARGET:
+            ACCEPT,DROP,REJECT,RETURN,LOG,MARK,DNAT,SNAT,MASQEARDE,...
+
+        匹配标准：
+            通用匹配： -s，-d，-p，-i，-o
+                扩展匹配：
+                    隐含扩展：
+                        -p tcp --dport, --sport, --tcp-flag, --syn (--tcp-flags SYN,ACK,FIN,RST SYN)
+                        -p icmp --icmp-type
+                显式扩展： -m
+
+iptables：
+
+        显式扩展：必须显式指明使用的扩展模块（rpm -ql iptables | grep &quot;\.so&quot;)
+
+            CentOS 6: man iptables
+            CentOS 7: man iptables-extensions
+
+    1.multiport扩展
+        以离散方式定义多端口匹配：最多定义15个端口
+
+        [!] --source-ports,--sports port[,port|,port:port]...
+        [!] --destination-ports,--dports port[,port|,port:port]...
+        [!] --ports port[,port|,port:port]...
+
+    2.iprange扩展
+        指明连续的（但一般是不能扩展为真个网络）ip地址范围时使用
+        [!] --src-range from[-to]
+        [!] --dst-range from[-to]
+</code></pre><p>​<br>​<br>​<br>​        </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/iptables/" rel="tag"># iptables</a>
+          
+            <a href="/tags/防火墙/" rel="tag"># 防火墙</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/04/linux文件共享服务/" rel="next" title="linux文件共享服务">
+                <i class="fa fa-chevron-left"></i> linux文件共享服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/04/linux系统及进程管理/" rel="prev" title="linux系统及进程管理">
+                linux系统及进程管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="CHEN" />
+            
+              <p class="site-author-name" itemprop="name">CHEN</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iptable"><span class="nav-number">1.</span> <span class="nav-text">iptable</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
