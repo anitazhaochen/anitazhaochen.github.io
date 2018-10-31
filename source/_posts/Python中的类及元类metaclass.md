@@ -1,0 +1,484 @@
+---
+title: Python中的类及元类metaclass
+tags: [Python, metaclass]
+date: 2018-10-15
+---
+
+# Python中的类及元类metaclass
+
+> 先来说说 Python 中最基本的类。
+
+### 类也是对象
+
+在 Python 中，类也是一种对象。在 Python 解释器执行的时候，就会创建一个对象。这个对象（类对象）拥有创建对象（实例对象）的能力。但是，它的本质仍然是一个对象所以，我们可以：
+
+- 将它赋值给一个变量
+- 拷贝它
+- 为它增加属性
+- 将它作为函数参数进行传递
+<!-- more -->
+
+```python
+class A(object):
+    pass
+>>> print A     # 你可以打印一个名为A的类，因为它其实也是一个对象
+<class '__main__.A'>
+>>> def echo(o):
+…       print o
+…
+>>> echo(A)                 # 你可以将类做为参数传给函数
+<class '__main__.A'>
+>>> print hasattr(A, 'new_attribute')
+Fasle
+>>> A.new_attribute = 'foo' #  你可以为类增加属性
+>>> print hasattr(A, 'new_attribute')
+True
+>>> print A.new_attribute
+foo
+>>> ObjectCreatorMirror = A # 你可以将类赋值给一个变量
+>>> print ObjectCreatorMirror()
+<__main__.ObjectCreator object at 0x8997b4c>
+```
+
+> 那么类既然也是对象，那么我们岂不是可以像创建对象一样，在需要的时候创建它，就像其他任何对象一样。
+
+### 动态地创建类
+
+首先，可以在函数中创建类，使用 class 关键字即可。
+
+```python
+>>> def choose_class(name):
+…       if name == 'foo':
+…           class Foo(object):
+…               pass
+…           return Foo     # 返回的是类，不是类的实例
+…       else:
+…           class Bar(object):
+…               pass
+…           return Bar
+…
+>>> MyClass = choose_class('foo')
+>>> print MyClass              # 函数返回的是类，不是类的实例
+<class '__main__'.Foo>
+>>> print MyClass()            # 你可以通过这个类创建类实例，也就是对象
+<__main__.Foo object at 0x89c6d4c>
+```
+
+但这还不够动态，仍然需要自己编写整个类的代码。由于类也是对象，所以它们必须是通过什么东西来生成才对。当我们使用 class 关键字时，Python 解释器自动创建这个对象。但 Python 仍然提供给你手动处理的方法。(可以通过后面的元类来更改类对象的创建方式)
+
+内建函数 type() ：
+
+```python
+>>> print type(1) #数值的类型
+<type 'int'>
+>>> print type("1") #字符串的类型
+<type 'str'>
+>>> print type(A()) #实例对象的类型
+<class '__main__.ObjectCreator'>
+>>> print type(A) #类的类型
+<type 'type'>
+```
+
+仔细观察上面的运行结果，发现使用 type 对 A类的查看类型是 type。
+
+### 可以使用 type 创建类
+
+type 还有一种完全不同的功能，动态的创建类。
+
+type 可以接受一个类的描述作为参数，然后返回一个类。（要知道，根据传入参数的不同，同一个函数拥有两种完全不同的用法是一件很傻的事情，但这在 Python 中是为了保持向后兼容性）
+
+##### type 可以像这样工作：
+
+type (类名, 由父类名称组成的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+
+##### 也可以使用 type 创建带有属性的类
+
+type 接受一个字典来为类定义属性，因此
+
+```python
+>>> Foo = type('Foo', (), {'bar':True})
+```
+
+> 注意：
+>
+> - type的第2个参数，元组中是父类的名字，而不是字符串
+> - 添加的属性是类属性，并不是实例属性
+
+##### 使用 type 创建带有方法的类
+
+最终你会希望为你的类增加方法。只需要定义一个有着恰当签名的函数并将其作为属性赋值就可以了。
+
+###### 添加实例方法：
+
+```python
+In [46]: def echo_bar(self): #定义了一个普通的函数
+    ...:     print(self.bar)
+    ...:
+
+In [47]: FooChild = type('FooChild', (Foo,), {'echo_bar': echo_bar}) #让FooChild类中的echo_bar属性，指向了上面定义的函数
+
+In [48]: hasattr(Foo, 'echo_bar') #判断Foo类中，是否有echo_bar这个属性
+Out[48]: False
+
+In [49]:
+
+In [49]: hasattr(FooChild, 'echo_bar') #判断FooChild类中，是否有echo_bar这个属性
+Out[49]: True
+
+In [50]: my_foo = FooChild()
+
+In [51]: my_foo.echo_bar()
+True
+```
+
+###### 添加静态方法
+
+```python
+In [36]: @staticmethod
+    ...: def testStatic():
+    ...:     print("static method ....")
+    ...:
+
+In [37]: Foochild = type('Foochild', (Foo,), {"echo_bar":echo_bar, "testStatic":
+    ...: testStatic})
+
+In [38]: fooclid = Foochild()
+
+In [39]: fooclid.testStatic
+Out[39]: <function __main__.testStatic>
+
+In [40]: fooclid.testStatic()
+static method ....
+
+In [41]: fooclid.echo_bar()
+True
+```
+
+###### 添加类方法
+
+```python
+In [42]: @classmethod
+    ...: def testClass(cls):
+    ...:     print(cls.bar)
+    ...:
+
+In [43]:
+
+In [43]: Foochild = type('Foochild', (Foo,), {"echo_bar":echo_bar, "testStatic":
+    ...: testStatic, "testClass":testClass})
+
+In [44]:
+
+In [44]: fooclid = Foochild()
+
+In [45]: fooclid.testClass()
+True
+```
+
+### 元类
+
+元类就是用来创建类的“东西”。创建类就是为了创建类的实例对象，我们已经知道Python 中的类也是对象。
+
+元类就是用来创建这些类（对象）的，元类就是类的类，可以理解为：
+
+```python
+MyClass = MetaClass() #使用元类创建出一个对象，这个对象称为“类”(在解释器质性的时候就已经创建)
+MyObject = MyClass() #使用“类”来创建出实例对象
+```
+
+type 可以这样做：
+
+```python
+MyClass = type('MyClass', (), {})
+```
+
+这是因为函数 type 实际上是一个元类。type 就是 Python 在背后用来创建所有类的元类。Python 中所有的东西，注意，我是指所有的东西——都是对象。这包括整数、字符串、函数以及类。它们全部都是对象，而且它们都是从一个类创建而来，这个类就是type。
+
+```python
+>>> age = 35
+>>> age.__class__
+<type 'int'>
+>>> name = 'bob'
+>>> name.__class__
+<type 'str'>
+>>> def foo(): pass
+>>>foo.__class__
+<type 'function'>
+>>> class Bar(object): pass
+>>> b = Bar()
+>>> b.__class__
+<class '__main__.Bar'>
+```
+
+现在，对于任何一个`__class__`的`__class__`属性又是什么呢？
+
+```python
+>>> a.__class__.__class__
+<type 'type'>
+>>> age.__class__.__class__
+<type 'type'>
+>>> foo.__class__.__class__
+<type 'type'>
+>>> b.__class__.__class__
+<type 'type'>
+```
+
+因此，元类就是创建类这种对象的东西。type 就是 Python 的内建元类，当然了，也可以创建自己的元类。
+
+> 通过设置 `__metaclass__` 属性
+
+### `__metaclass__` 属性
+
+我们可以在定义一个类的时候为其添加`__metaclass__` 属性。
+
+```python
+class Foo(object):
+    __metaclass__ = something…
+    ...省略...
+```
+
+Python 就会用元类来创建类 Foo。
+
+Python 创建一个类（对象）的时候做了如下的操作：
+
+1. Foo 中有`__metaclass __`这个属性吗？如果有，Python 会根据`__metaclass__`指向的内容创建一个名字为 Foo 的类(对象)
+2. 如果Python没有找到`__metaclass__`，它会继续在 Bar（父类）中寻找`__metaclass__`属性，并尝试做和前面同样的操作。
+3. 如果 Python 在任何父类中都找不到`__metaclass__`，它就会在模块层次中去寻找`__metaclass__`，并尝试做同样的操作。
+4. 如果还是找不到`__metaclass__`,Python 就会用内置的 type 来创建这个类对象。
+
+可以在`__metaclass__`中放置些什么代码呢？答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到 type 或者子类化 type 的东西都可以。
+
+### 自定义元类
+
+元类的主要目的就是为了当创建类时能够手动地改变类。
+
+假想一个很傻的例子，你决定在你的模块里所有的类的属性都应该是大写形式。有好几种方法可以办到，但其中一种就是通过在模块级别设定`__metaclass__`。采用这种方法，这个模块中的所有类都会通过这个元类来创建，我们只需要告诉元类把所有的属性都改成大写形式就万事大吉了。
+
+幸运的是，`__metaclass__`实际上可以被任意调用，它并不需要是一个正式的类。所以，我们这里就先以一个简单的函数作为例子开始。
+
+##### python2 中
+
+```python
+#-*- coding:utf-8 -*-
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+
+    #遍历属性字典，把不是__开头的属性名字变为大写
+    newAttr = {}
+    for name,value in future_class_attr.items():
+        if not name.startswith("__"):
+            newAttr[name.upper()] = value
+
+    #调用type来创建一个类
+    return type(future_class_name, future_class_parents, newAttr)
+
+class Foo(object):
+    __metaclass__ = upper_attr #设置Foo类的元类为upper_attr
+    bar = 'bip'
+
+print(hasattr(Foo, 'bar'))
+print(hasattr(Foo, 'BAR'))
+
+f = Foo()
+print(f.BAR)
+```
+
+##### python3 中
+
+```python
+#-*- coding:utf-8 -*-
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+
+    #遍历属性字典，把不是__开头的属性名字变为大写
+    newAttr = {}
+    for name,value in future_class_attr.items():
+        if not name.startswith("__"):
+            newAttr[name.upper()] = value
+
+    #调用type来创建一个类
+    return type(future_class_name, future_class_parents, newAttr)
+
+class Foo(object, metaclass=upper_attr):
+    bar = 'bip'
+
+print(hasattr(Foo, 'bar'))
+print(hasattr(Foo, 'BAR'))
+
+f = Foo()
+print(f.BAR)
+```
+
+现在让我们再做一次，这一次用一个真正的class来当做元类。
+
+```python
+#coding=utf-8
+
+class UpperAttrMetaClass(type):
+    # __new__ 是在__init__之前被调用的特殊方法
+    # __new__是用来创建对象并返回实例对象的方法
+    # 而__init__只是用来将传入的参数初始化给对象
+    # 使用__new__，可以用来实现单例模式
+    # 这里，创建的对象是类，我们希望能够自定义它，所以我们这里改写 __new__
+    # 如果你希望的话，你也可以在 __init__ 中做些事情
+    # 还有一些高级的用法会涉及到改写 __call__ 特殊方法，但是我们这里不用
+    def __new__(cls, future_class_name, future_class_parents, future_class_attr):
+        #遍历属性字典，把不是__开头的属性名字变为大写
+        newAttr = {}
+        for name,value in future_class_attr.items():
+            if not name.startswith("__"):
+                newAttr[name.upper()] = value
+
+        # 方法1：通过'type'来做类对象的创建
+        # return type(future_class_name, future_class_parents, newAttr)
+
+        # 方法2：复用type.__new__方法
+        # 这就是基本的OOP编程，没什么魔法
+        # return type.__new__(cls, future_class_name, future_class_parents, newAttr)
+
+        # 方法3：使用super方法
+        return super(UpperAttrMetaClass, cls).__new__(cls, future_class_name, future_class_parents, newAttr)
+
+#python2的用法
+class Foo(object):
+    __metaclass__ = UpperAttrMetaClass
+    bar = 'bip'
+
+# python3的用法
+# class Foo(object, metaclass = UpperAttrMetaClass):
+#     bar = 'bip'
+
+print(hasattr(Foo, 'bar'))
+# 输出: False
+print(hasattr(Foo, 'BAR'))
+# 输出:True
+
+f = Foo()
+print(f.BAR)
+# 输出:'bip'
+```
+
+就是这样，除此之外，关于元类真的没有别的可说的了。但就元类本身而言，它们其实是很简单的：
+
+1. 拦截类的创建
+2. 修改类
+3. 返回修改之后的类
+
+### 深入元类 metaclass
+
+用过 Django 的都写过模型类吧，但是注意到竟然可以这样实例化对象了吗。它绝不是简简单单的继承。
+
+自己动手试一试创建一个 class 然后发现却无法实例化出来，也无法调用例如 Django 那样提供的模型类方法，如 xxx.save()。
+
+研究之后，才发现，这是一种魔法，就是元类。才能让我们那么方便的写模型类，就可以实现不用一条 SQL 语句就可以实现与数据库的交互。
+
+下面通过代码来查看元类的创建过程，及 Python orm 模型的简单分析。
+
+```python
+#coding:utf8
+
+class C(type):
+    def __new__(cls, name, bases, attrs):
+        for key in attrs.keys():
+            attrs.pop(key)
+        #print attrs
+        #print str(bases)+"new 执行完毕"
+        return type.__new__(cls, name, bases, attrs)
+    def __init__(cls, name, bases, attrs):
+        print "i am metaclass init"
+        #print 'and'+ str(kwargs)
+        super(C,cls).__init__(name, bases, attrs)
+
+    #def __call__(cls, *args, **kwargs):
+    #    print "I am call"
+    #    print kwargs
+
+class E(object):
+    def __init__(self,*args, **kwargs):
+        print "EEEEEEEEEEEEEEEEEEE"
+
+    def __call__(cls, *args, **kwargs):
+        print "E call"
+        print kwargs
+
+
+
+class A(E):
+    __metaclass__ = C
+    a = 1
+    def __init__(self, **args):
+        #super(A, self,).__init__()
+        print "AAAAAAAAAAAAA"
+        #print "开始执行 A的 init"
+        #print args
+        #super(A, self).__init__(**kw)
+
+    def __call__(cls, *args, **kwargs):
+        print "A  call"
+        print kwargs
+
+
+
+
+class B(A):
+    name = 1
+
+    def __init__(self,*args,**kwargs):
+        print "BBBBB"
+
+
+#class D(B):
+#    pass
+
+b = B(name='111')
+#b =  B.__new__()
+#print id(B.__new__)
+#print id(A.__new__)
+#print C.__init__ is B.__init__
+
+
+'''
+__metaclass__ 属性在 django 的 orm 中用的比较多。
+他的调用顺序是，在解释器发现 class 关键字后，就进行类对象的实例化，注意，这不是实例对象的初始化。(而是创建实例对象的对象的初始化)
+如果找到了 __metaclass__ 属性，会去根据 __metaclass__ 来对象。
+然后就像我们平时的 __init__ 方法一样，开始对对象赋值。
+那么，有了 __metaclass__ 属性后，还会继续调用自己的 __init__ 方法吗？ 答案不会，它会调用 __metaclass__ 指向类的 __call__ 方法，如果此方法不存在，则调用 类自己的父类的 __init__ 方法。
+'''
+```
+
+关于定义了 `__metaclass__` 后， 创建类对象的调用流程，可以看这个
+
+[Python metaclasses by example](https://eli.thegreenplace.net/2011/08/14/python-metaclasses-by-example)
+
+### 接下来，可以再看看 Python 的其他 `__ xxx__` 方法
+
+如果我们想要限制实例的属性怎么办？比如，只允许对 Person 实例添加 name 和 age 属性。
+
+为了达到限制的目的，Python 允许在定义 class 的时候，定义一个特殊的 `__slots__` 变量，来限制该 class 实例对象能添加的属性：
+
+```python
+>>> class Person(object):
+    __slots__ = ("name", "age")
+
+>>> P = Person()
+>>> P.name = "小明"
+>>> P.age = 20
+>>> P.score = 100
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+AttributeError: Person instance has no attribute 'score'
+>>>
+```
+
+> - 使用**slots**要注意，**slots**定义的属性仅对当前类实例起作用，对继承的子类是不起作用的
+
+```python
+In [67]: class Test(Person):
+    ...:     pass
+    ...:
+
+In [68]: t = Test()
+
+In [69]: t.score = 100
+```
+
+引用阮一峰老师的 ORM 实现代码:
+[简易ORM模型](https://github.com/anitazhaochen/nowcoder/blob/master/ORM.py)
