@@ -1,0 +1,62 @@
+---
+title: HEXO源文件备份
+tags: [Blog]
+category: Mac
+date: 2018-10-28
+---
+
+
+
+首先，不得不吐糟 18MBP 的突然无法开机，导致我对苹果产生的种种负面情绪。
+<!--more -->
+
+事情是这样，买的苹果两万左右的 15寸 一般顶配，然后升级 10.14 Mojave 系统的时候，直接就关机了，然后再也无法开机，拿去检测说要换主板，我说主板坏了，那硬盘没事吧，他说得换整个主板，我说换主板关硬盘毛事，他说因为硬盘集成在主板上面，我说那还有什么集成在上面，他说还有显卡。我当时那个心情，我擦了，最后一部分代码还没提，数据照片全丢失，不到三个月就出现这么大的问题。这一换就剩下个显示屏和外壳了，为何不直接换新？
+
+打电话给客服，客服说数据丢失不承担赔偿，因为是电子产品，说我要及时做好备份，态度一般，就是不给解决事情。
+
+然后，苦苦等了一个星期，代码全丢，笔记丢了一部分，其他数据等等全无。
+
+今日又再次拿到了我的笔记本，说一说备份的重要性。
+
+对计算机颇感兴趣，只能说颇感，因为感兴趣的人太多了，我已经不好意思说我感什么兴趣了。
+
+研究过一阵子运维的东西，对 Linux 也算是轻车熟路，能解决大部分问题， 也知道数据备份的重要性，再改一些配置文件的时候，先把文件备份了再操作。
+
+当我们安装 hexo 后，就可以进行自动的备份了。
+
+首先在博客仓库建立新的分支，然后 在 主目录的 `_config.yml` 进行配置 deploy：
+
+````yaml
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+- type: git
+  repo: git@39.106.141.99:/home/git/hexo.git
+  branch: master
+- type: git
+  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+  branch: master
+- type: git
+  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+  branch: dev
+  extend_dirs: /
+  ignore_hidden: false
+  ignore_pattern:
+      public: .
+````
+
+对配置解释一下：
+
+第一个 (type,repo,branch) 是我自己的服务器配置，这样可以加快访问速度，然后在加一个域名指向自己的服务器，利用服务器开一个 Web 服务器，就可以在国内获得比 Github 快的速度。（如果只是想换个域名来访问，可以在仓库添加 CNAME 文件来实现）
+
+第二个配置是 github 的静态文件配置，我把我生成完后的配置在 github 上面也放一份，这样别人也可以根据我的 github 博客来进行访问（速度不如第一种）
+
+第三个配置，注意只有分支不同，我在 dev 分支放的是我自己的源文件，这样就可以避免电脑损坏，或者数据丢失，而导致无法再继续进行我的博客。
+
+[Hexo d 的解释官方](https://hexo.io/docs/deployment.html) 
+
+其中，它提供了 git 的组件，就不需要诸如 git-backup 等非官方插件了。
+
+> You can use multiple deployers. Hexo will execute each deployer in order.
+
+官方说，可以定义多个发布，这样，我们在执行 `hexo d` 的时候就可以同时发布我们的服务，和把源文件也一并发布到 github 上面了。  

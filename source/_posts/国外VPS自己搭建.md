@@ -1,0 +1,126 @@
+---
+title: 国外VPS自己搭建
+tags: [Shadowsocks]
+category: Shadowsocks
+date: 2018-3-2
+---
+
+首先需要一台国外的 VPS ，可以在阿里云买，也可以在国外的网站买，可以使用 PayPal，或者信用卡。
+
+我用的是 DigitalOcean 的主机，按时间收费，一个月 `5$`，主要是使用的 github education 认证，然后通过推广链接，然后花了 `5$` 把账号激活了，然后账户里就有 `65$` 了。
+
+https://m.do.co/c/cdd31cc97a15  可以通过这个链接注册，可以多得  `10$`
+
+主机选择的是 旧金山的。
+
+ubuntu  16.04 操作系统
+
+如果选择 18.04 的话，可能会出点问题，因为它的 openssl 升级了，而我们即将安装的东西，他是依赖于 openssl ，需要改一些文件。
+
+首先安装 python (如果VPS上面没有 python)
+<!--more -->
+
+apt-get install python 
+
+然后安装 pip 
+
+pip install shadowsocks
+
+然后通过 pip 安装 shadowsocks
+
+创建一个配置文件如下随便取个名字，我的是 config.json：
+
+{
+​	"server":"138.197.216.93",
+​	"server_port":8080,
+​	"local_address":"127.0.0.1",
+​	"local_port":1080,
+​	"password":"Zc19951213",
+​	"timeout":300,
+​	"method":"aes-256-cfb",
+​	"fast_open":false,
+​	"workers":5
+}
+
+然后启动它
+
+`ssserver -c config.json start `
+
+第一次可以先这样启动，然后看看显示出来的信息是否有错误。如果一切 ok
+
+那就可以后台启动了。之后就可以退出终端了。
+
+`ssserver -c config.json -d start `
+
+
+
+另一种方法：
+
+方便的话，直接上最新版本的 ubuntu , 自 ubuntu 17.04 he  17.10 自带 Shadowsocks-libev ，可以直接安装。并且主要是它支持  `chacha20-ietf-poly1305` 加密，这种加密效率比 ssserver 的加密高效的多。
+
+```
+sudo apt update
+sudo apt install shadowsocks-libev
+```
+
+
+
+安装完毕后已自配号称最安装和快速的ChaCha20-Poly1305加密方式。
+
+```
+sudo nano /etc/shadowsocks-libev/config.json
+```
+
+修改后为如下配置：注意后面的
+
+```
+"fast_open": true
+```
+
+如果 ubuntu 报错 [看看这个](https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/)
+
+
+## 为VPS开启BBR拥塞控制算法
+
+BBR是来自于Google的黑科技，目的是通过优化和控制TCP的拥塞，充分利用带宽并降低延迟，起到神奇般的加速效果。 在BBR之前，比较有名的就是国产的锐速了，不过，由于锐速是个国产的闭源软件，所以一直纠结不想装在VPS上。正好，BBR的出现，又成为一个可供折腾的对象。
+
+BBR 这个特性其实是在 Linux 内核 4.9 才计划加入的。所以，要开启BBR，需要内核版本在Linux kernel 4.9以上。下面纪录一下如何升级Linux内核，并且开启BBR：
+
+**如果安装最新的Ubuntu 17版本，有可能内核已经为4.10了，可以不用再升级内核了**
+
+[需要升级内核看这里](https://www.dz9.net/blog/4246.html)
+
+[这里也可以](https://blog.csdn.net/haha_ym/article/details/78440415)
+
+
+
+下面针对 系统本来就已经支持的来进行操作：
+
+## 开启BBR
+
+执行 `uname -r` 看看是不是内核4.9、4.10或4.11
+
+执行 `lsmod | grep bbr`，如果结果中没有 `tcp_bbr` 的话就先执行
+
+```shell
+modprobe tcp_bbr
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+// 保存生效
+sysctl -p
+
+// 然后在执行：
+sysctl net.ipv4.tcp_available_congestion_control
+sysctl net.ipv4.tcp_congestion_control
+
+```
+
+再次执行 `lsmod | grep bbr`  如果有 tcp_bbr 就开启成功了。 
+
+如果结果都有bbr, 则证明你的内核已开启bbr。看到有 tcp_bbr 模块即说明bbr已启动，这样，就可以开始体验Google的黑科技加速了……
+
+
+
+[BBR](https://blog.csdn.net/dog250/article/details/52830576)

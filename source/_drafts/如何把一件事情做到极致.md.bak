@@ -1,0 +1,277 @@
+---
+title: 通过不起眼的脚本做到极限全自动实现
+tags: [Docker, Script, MongoDB]
+category: 极客
+date: 2018-10-15
+---
+
+## 前言
+
+
+
+数据丢失后如何快速恢复？
+
+项目丢失后，如何快速拉取源码部署？
+
+如何把工具发挥到极致？
+
+
+
+## 一次迁移数据库
+<!--more -->
+情况是这样的，公司内部 CRM 系统因为换了其他厂商开发的产品，所以数据库里面的字段要改一下，映射关系变得跟以前大不一样了，以前的数据还是需要的，所以得写脚本来处理这些数据，以便能够迁移到新的系统上面。
+
+数据库采用 MongoDB。 写的处理脚本用的是 Python。
+
+还有一个需求是某个部门的要求，新的系统尚未完工，旧的系统存在诸多问题，只有我来写一个脚本，把数据库里的数据导出为 Excel 文件，然后发给需要的部门。
+
+一个开发流程：
+
+1. 编写各个表的脚本，进行处理。
+
+2. 从线上数据库拷贝数据下载到本机。
+3. mongorestore 到本地数据库，然后对数据进行操作。
+4. 把处理结果发送给相关部门。
+
+期待达成的效果： 根本不需要人工参与
+
+​	什么都不需要做，只需要留意下自己有没有收到邮件即可。
+
+我的思路是： 把每个表模块化，把共用函数抽离，加一个 SMTP 发送邮件的功能，然后为了线上容易部署，使用 Docker 容器，自己写 Dockerfile，提供源文件，也可以制作好镜像放到公司的容器平台上面，然后把镜像从服务器上拉下来，镜像内建立一个 cron 任务，让它定时执行，每周五晚上 00：00 开始对数据进行操作，为了数据的安全，使用特殊的账户来直接连接线上数据库进行导出数据（创建一个用户，只有只读权限）。当时也想先从数据库里拉数据，然后把数据传回本地，然后在 Docker 里面建立一个数据库，然后对这个副本来操作，保证安全性，但是公司无法支持这样做。
+
+
+
+
+
+## Dockerfile 部分
+
+> 我接触的工具还是挺多，极客精神，要干一个事情就干到最好，不会就查资料，先找已有的优化方案，再自己写。
+
+### 目标:
+
+- 更快的构建速度
+- 更小的Docker镜像大小
+- 更少的Docker镜像层
+- 充分利用镜像缓存
+- 增加Dockerfile可读性
+- 让Docker容器使用起来更简单
+
+```dockerfile
+FROM ubuntu
+
+COPY sources.list /etc/apt/sources.list
+
+RUN  apt-get update \
+    && apt-get install -y python3 python3-pip rsyslog \
+    && apt-get clean \
+    && apt-get autoclean \
+    && mkdir -p /script \
+    && touch /var/log/cron.log 
+
+COPY customers.py events.py clues.py start.py send_email.py config.ini \
+yewu_chances.py yewu_products_chance.py crontabfile run.sh requirements.txt /script/
+
+RUN pip3 install -r /script/requirements.txt \
+    && rm -rf /var/lib/apt/lists/* \
+    && crontab /script/crontabfile \
+    && cp /script/crontabfile /etc/crontab \
+    && chmod +x /script/run.sh 
+
+WORKDIR /script
+
+CMD ["bash","/script/run.sh"]
+```
+
+crontabfile 文件：
+
+```cron
+00 00  * * 5  python3 /script/start.py cron >> /var/log/cron.log 2>&1
+```
+
+run.sh:
+
+```shell
+rsyslogd
+cron
+touch /var/log/cron.log
+tail -F /var/log/syslog /var/log/cron.log
+```
+
+因为 cron 任务是后台运行，需要另外一个进程来保持容器的运行。
+
+
+
+上面是 Dockerfile，然后，通过 docker 基于此镜像创建一个容器，让它运行，在每周五 00：00 就会把导好的文件自动发送到配置文件里写的邮箱里面。
+
+![image-20181122174324451](../images/image-20181122174324451-2879804.png)
+
+
+
+
+
+Docker 通过 --volume  把本机的配置文件映射到 Docker 容器里面，
+
+然后就可以用本机的配置文件来控制。
+
+至此，Docker 服务启动容器，就可以完美实现自动化了。
+
+[如何编写最佳的Dockerfile](https://blog.fundebug.com/2017/05/15/write-excellent-dockerfile/)
+
+
+
+## 遇到的困难
+
+```python
+oot@d74b94ad4d50:/script# python3
+Python 3.5.2 (default, Nov 12 2018, 13:43:14)
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+```
+
+如果安装 Python3 ，请使用 python3 来运行文件，同样 pip3 来安装依赖。
+
+ubunut 16.04
+
+Docker 需要添加国内源，否则很容易出一堆问题，基本都是网络所导致的。
+
+可以搜索阿里云的 Docker 源。
+
+安装完 ubuntu 后，它的默认编码不是 UTF-8 ，如果自动化脚本存在中文，则会出错。
+
+```
+locale -a
+显示如下：
+C
+C.UTF-8
+POSIX
+
+说明支持 UTF-8
+
+```
+
+需要在 Dockerfile 中 加入  
+
+`ENV LANG C.UTF-8`
+
+然后还是发现，cron 任务怎么没有执行。
+
+通过 
+
+`docker log -f container_id `
+
+可以像 `tail -f xx.log` 一样动态监控 log 日志。
+
+然后我发现报了错误:
+
+```
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+```
+
+想了一下，这不是 Python3 嘛，怎么 Python2 常见的问题又出现了。
+
+通过实验，手动进入 docker 然后运行时可以的，并不报错。
+
+所以目光转移到 cron 身上。
+
+
+
+## crontab 使用注意事项
+
+### 注意环境变量问题
+
+有时我们创建了一个 crontab，但是这个任务却无法自动执行，而手动执行这个任务却没有问题，这种情况一般是由于在crontab文件中没有配置环境变量引起的。
+
+在 crontab 文件中定义多个调度任务时，需要特别注环境变量的设置，因为我们手动执行某个任务时，是在当前shell环境下进行的，程序当然能找到环境变量，而系统自动执行任务调度时，是不会加载任何环境变量的，因此，就需要在 crontab 文件中指定任务运行所需的所有环境变量，这样，系统执行任务调度时就没有问题了。
+
+不要假定 cron 知道所需要的特殊环境，它其实并不知道。所以你要保证在 shell 脚本中提供所有必要的路径和环境变量，除了一些自动设置的全局变量。所以注意如下3点：
+
+1. 脚本中涉及文件路径时写全局路径；
+
+2. 脚本执行要用到 java 或其他环境变量时，通过source命令引入环境变量，如:
+
+   ```
+   cat start_cbp.sh
+   !/bin/sh
+   source /etc/profile
+   export RUN_CONF=/home/d139/conf/platform/cbp/cbp_jboss.conf
+   /usr/local/jboss-4.0.5/bin/run.sh -c mev &
+   ```
+
+3. 当手动执行脚本OK，但是 crontab 死活不执行时,很可能是环境变量惹的祸，可尝试在 crontab 中直接引入环境变量解决问题。如:
+
+   ```
+   0 * * * * . /etc/profile;/bin/sh /var/www/java/audit_no_count/bin/restart_audit.sh
+   ```
+
+------
+
+上面是对 crontab 的介绍。
+
+改之后的 crontabfile 
+
+```
+LC_CTYPE="C.UTF-8"
+33 15 * * *  python3 /script/start.py cron >> /var/log/cron.log 2>&1
+```
+
+Simply set the `LC_CTYPE` variable in your cron definition, either on a line on it's own preceding the time entry, or as part of the command to execute:
+
+[Python3: UnicodeEncodeError only when run from crontab](https://stackoverflow.com/questions/11735363/python3-unicodeencodeerror-only-when-run-from-crontab)
+
+此时 cron 的文件好了。基本已经没有什么问题了。
+
+
+
+接下来，还有一个就是时间问题：
+
+它显示的是 UTC 时间，和我们的时间差 8 小时。
+
+apt-get 的时候，安装一个 tzdata 。
+
+然后
+
+`echo 'Asia/Shanghai' > /etc/timezone`
+
+刚开始的本机上面是没有 /usr/share/zoneinfo 这个文件夹的。
+
+安装完 tzdata 就有了，然后执行：
+
+` ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime`
+
+下面是最终的 Dockerfile:
+
+```dockerfile
+FROM ubuntu:16.04
+
+ENV LANG C.UTF-8
+
+COPY sources.list /etc/apt/sources.list
+
+COPY utils.py customers.py events.py clues.py start.py send_email.py config.ini \
+yewu_chances.py yewu_products_chance.py crontabfile run.sh requirements.txt /script/
+
+RUN  mkdir -p /script \
+    && apt-get update \
+    && apt-get install -y python3 python3-pip rsyslog language-pack-zh-hans tzdata \
+    && apt-get clean \
+    && apt-get autoclean \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo 'Asia/Shanghai' > /etc/timezone \
+    && echo "export LC_ALL='zh_CN.UTF-8'" >> /etc/bash.bashrc \
+    && locale-gen zh_CN.UTF-8 \
+    && rm -rf /var/lib/apt/lists/* \
+    && touch /var/log/cron.log \
+    && pip3 install -r /script/requirements.txt \
+    && crontab /script/crontabfile \
+    && cp /script/crontabfile /etc/crontab \
+    && chmod +x /script/run.sh
+
+WORKDIR /script
+
+CMD ["bash","/script/run.sh"]
+```
+
+
+
+至此，完工。

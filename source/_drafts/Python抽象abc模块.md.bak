@@ -1,0 +1,231 @@
+---
+title: Python抽象abc模块
+date: 2019-09-10 15:23:31
+tags: [Python, abc, api]
+category: Python
+---
+
+## ABC -抽象基类
+
+以下仅仅个人见解。
+
+首先 Python2 的写法和 Python3 的写法不同，这个不是重点。
+
+当我第一次读别人源码看到ABC这个东西时，发现竟然是一个内置模块，一定要搞清楚这个东西是干什么的，为什么存在？解决了哪些问题，还有到底为什么要用它？
+
+参考谋篇Blog的解释：Python 中并没有提供抽象类与抽象方法，但是提供了内置模块 abc （abstract base class）来模拟实现抽象类。
+
+有了上面这个解释，我自然联想到 Java 中的抽象类或者接口的概念。
+
+而在某些项目中，使用抽象类的好处： 通过定义抽象基类，可以为一组子类定义公共 API。
+<!--more -->
+
+就是说，使用抽象类的优点之一是，写出来的代码很有利于组织，并且利于以后阅读。
+
+那 abc-----抽象基类的目的是什么？
+
+目的： 在代码中为 API 检查定义和使用抽象基类。
+
+为什么要使用抽象基类？
+
+抽象基类是一种接口检查形式，比单独的 hasattr() 检查特定方法更严格（这里我的理解是要求子类全部实现父类的抽象方法，否则编译都无法通过）。通过定义抽象基类，可以为一组子类定义公共 API。此功能在第三方将要提供实现的情况下特别有用，例如使用插件到应用程序。
+
+**ABC 如何工作**？
+
+ab的工作原理是将基类的方法标记为抽象，然后将具体类注册为抽象类的实现。如果你的代码需要特定的 API，则可以使用 issubclass() 或 isinstance() 来检查抽象类的对象。
+
+abc.ABCMeta 是一个 metaclass，用于在 Python 程序中创建抽象基类。
+
+其他简单的例子可以看后文给的链接，这里写一个。
+
+## 不完整的实现
+
+
+
+```python
+#!/usr/bin/python env
+# coding:utf8
+
+import abc
+from io import StringIO  #  python3 
+#from cStringIO import StringIO   python2使用方式
+
+class ABCWithConcreteImplementation(metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def retrieve_values(self, input):
+        print("base class reading data")
+        return input.read()
+
+class ConcreteOverride(ABCWithConcreteImplementation):
+
+    def retrieve_values(self, input):
+        base_data = super(ConcreteOverride, self).retrieve_values(input)
+        print('subclass sorting data')
+        response = sorted(base_data.splitlines())
+        return response
+
+input = StringIO("""line one
+                 line two
+                 line three
+                 """)
+
+reader = ConcreteOverride()
+print(reader.retrieve_values(input))
+print()
+
+```
+
+
+
+
+
+
+
+直接从您的抽象类集成子类的另一个好处是，除非它完全实现 API 的抽象部分，否则无法实例化子类。这可以防止半生不熟的实现在运行时触发意外错误。
+
+```python
+import abc
+
+class PluginBase(metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def load(self):
+        print('父类 load')
+        return
+    @abc.abstractmethod
+    def save(self):
+        return
+
+class SubclassImplementation(PluginBase):
+
+    def load(self):
+        print('子类load')
+        return 
+    def save(self):
+        print('save')
+        return
+
+a = SubclassImplementation()
+a.load()
+
+执行结果:
+  子类load
+  
+
+# 如果子类不完全实现方法：
+import abc
+
+class PluginBase(metaclass=abc.ABCMeta):
+
+    @abc.abstractmethod
+    def load(self):
+        print('父类 load')
+        return
+    @abc.abstractmethod
+    def save(self):
+        return
+
+class SubclassImplementation(PluginBase):
+
+    def load(self):
+        print('子类load')
+        return 
+    #def save(self):
+    #    print('save')
+    #    return
+
+a = SubclassImplementation()
+a.load()
+
+输出结果：
+  Traceback (most recent call last):
+  File "demo1.py", line 25, in <module>
+    a = SubclassImplementation()
+TypeError: Can't instantiate abstract class SubclassImplementation with abstract methods save
+```
+
+结论： 如果使用了     @abc.abstractmethod 标注， 并且子类通过 class xxxx(father) 这样的形式继承，那么一定要实现继承父类的所有抽象方法。
+
+如直接注册成子类:
+
+```python
+from abc import ABC
+
+class MyABC(ABC):
+    pass
+
+MyABC.register(tuple)
+
+assert issubclass(tuple, MyABC)
+assert isinstance((), MyABC)
+```
+
+则不需要实现所有方法。
+
+但是这样的有什么意义呢？ 
+
+个人认为，这样可以强行的让一个子类继承于一个父类，并且可以让子类某些方法重写父类方法，扩展子类？
+
+python中并没有提供抽象类与抽象方法，但是提供了内置模块abc(abstract base class)来模拟实现抽象类。
+
+以下摘自
+
+[Python module ---- abc](https://www.wandouip.com/t5i209520/)
+
+ **ABC，Abstract Base Class（抽象基类）**，主要定义了基本类和最基本的抽象方法，可以为子类定义共有的API，不需要具体实现。相当于是Java中的接口或者是抽象类。
+
+Python 对于ABC的支持模块是abc模块，定义了一个特殊的metaclass：ABCMeta 还有一些装饰器：@abstractmethod 和 @abstarctproperty 。
+
+abc.ABCMeta 用于在Python程序中创建抽象基类。如果抽象基类如果想要声明“抽象方法”，可以使用 @abstractmethod；如果想声明“抽象属性”，可以使用 @abstractproperty 。
+
+ 
+
+**抽象基类**
+
+------
+
+ 
+
+**抽象基类**可以不实现具体的方法（当然也可以实现，只不过子类如果想调用抽象基类中定义的方法需要使用super()）而是将其留给派生类实现。抽象基类提供了逻辑和实现解耦的能力，即在不同的模块中通过抽象基类来调用，可以用最精简的方式展示出代码之间的逻辑关系，让模块之间的依赖清晰简单。同时，一个抽象类可以有多个实现，让系统的运转更加灵活。而针对抽象类的编程，让每个人可以关注当前抽象类，只关注其方法和描述，而不需要考虑过多的其他逻辑，这对协同开发有很大意义。极简版的抽象类实现，也让代码可读性更高。
+
+ 
+
+**抽象基类的使用：**
+
+​    1：直接继承
+
+​        直接继承抽象基类的子类就没有这么灵活，抽象基类中可以声明”抽象方法“和“抽象属性”，只有完全覆写（实现）了抽象基类中的“抽象”内容后，才能被实例化，而虚拟子类则不受此影响。
+
+​    2：虚拟子类
+
+​    将其他的类”注册“到抽象基类下当虚拟子类（调用register方法），虚拟子类的好处是你实现的第三方子类不需要直接继承自基类，可以实现抽象基类中的部分API接口，也可以根本不实现，但是issubclass(), issubinstance()进行判断时仍然返回真值。
+
+ 
+
+**抽象基本类的几大特点：**
+
+1. 要定义但是并不完整的实现所有方法
+
+2. 基本的意思是作为父类
+
+3. 父类需要明确表示出那些方法的特征，这样在写子类时更加简单明白
+
+**用抽象基本类的地方：**    
+
+1. 用作父类
+
+2. 用作检验实例类型 
+
+3. 用作抛出异常说明
+
+
+
+[abc – Abstract Base Classes](https://pymotw.com/2/abc/)
+
+[Python装饰器、metaclass、abc模块学习笔记](https://www.cnblogs.com/Security-Darren/p/4094959.html)
+
+[Python模块文档学习之抽象基类abc模块](https://segmentfault.com/a/1190000007921371)
+
+[官方文档](https://docs.python.org/3/library/abc.html#module-abc)
+

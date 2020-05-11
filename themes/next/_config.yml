@@ -72,7 +72,6 @@ index_with_subtitle: false
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, question icon will be loaded.
 menu:
   主页: / || home
-  #about: /about/ || user
   标签: /tags/ || tags
   分类: /categories/ || th
   归档: /archives/ || archive
@@ -201,7 +200,7 @@ auto_excerpt:
 post_meta:
   item_text: true
   created_at: true
-  updated_at: true
+  updated_at: false
   categories: true
 
 # Post wordcount display settings
@@ -531,7 +530,7 @@ busuanzi_count:
   # custom uv span for the whole site
   site_uv: true
   site_uv_header: <i class="fa fa-user"></i>
-  site_uv_footer:
+  site_uv_footer: <a href="http://www.beian.miit.gov.cn">辽ICP备16009154号-1</a>
   # custom pv span for the whole site
   site_pv: true
   site_pv_header: <i class="fa fa-eye"></i>

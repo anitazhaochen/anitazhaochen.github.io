@@ -1,0 +1,207 @@
+---
+title: HTTP缓存处理
+tags: [HTTP]
+category: HTTP
+date: 2018-11-6
+---
+
+## 浏览器取缓存过程
+
+先来一个大体流程，某些名词看不懂下面会解释。
+
+![image-20181108151526380](../images/image-20181108151526380.png)
+
+##  HTTP 缓存涉及的名词
+
+* 缓存命中
+
+  如果缓存中有可用的副本，则会直接使用缓存中的副本，并且浏览器上面显示的响应状态码是 200  (from disk cache) 。
+
+* 缓存未命中
+<!--more -->
+
+  如果缓存中没有可用的副本或者副本已经过期，则会将请求转发至原始服务器。
+
+* 再验证命中和再验证未命中
+
+  虽然缓存并没有过期，但是由于原始服务器上的内容可能会随时发生变化，仍然需要请求服务器，是否可以使用缓存，如果可以服务器返回 304 否则 返回 200 和新的数据。
+
+  缓存可以随时对副本进行再验证，但大部分缓存只在客户端发起请求，并且副本旧得足以需要检测的时候，才会对副本进行再验证。
+
+* 强缓存
+
+  如果缓存未过期，则直接使用缓存。并不向服务器发起任何请求。
+
+* 协商缓存
+
+  需要发送请求给服务器，让服务器判断是否可以使用缓存。（无论缓存是否过期都需要发请求）
+
+  缓存协商会发生在：
+
+  1. 缓存过期，询问服务器是否可以继续使用缓存。
+  2. 在上一次访问服务器的时候，服务器 Response 带有 Cache-Control：no-cache 的时候，会直接绕过强缓存，直接进行缓存协商。
+
+下面通过一个流程来说明：
+
+## 首次访问服务器：
+
+我们以首次访问百度为例：
+
+```http
+Response Headers
+HTTP/1.1 200 OK
+Bdpagetype: 1
+Bdqid: 0x8f44ad0000019457
+Cache-Control: private  //缓存相关
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Type: text/html
+Cxy_all: baidu+b696ca63868252dd2802b1fea2d4ac63
+Date: Thu, 08 Nov 2018 05:16:04 GMT
+Expires: Thu, 08 Nov 2018 05:15:14 GMT   //缓存相关
+Server: BWS/1.1
+Set-Cookie: delPer=0; path=/; domain=.baidu.com
+Set-Cookie: BDSVRTM=6; path=/
+Set-Cookie: BD_HOME=0; path=/
+Set-Cookie: H_PS_PSSID=26523_1464_27215_21122_27400; path=/; domain=.baidu.com
+Strict-Transport-Security: max-age=172800  //缓存有点相关
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+X-Ua-Compatible: IE=Edge,chrome=1
+```
+
+其中，我们可以看看与缓存相关的头，然后我一个一个说明
+
+`Cache-Control: private`
+
+这个表示缓存只能被浏览器缓存，不能被代理服务器缓存，如果是 public 那么代理服务器也可以进行缓存。
+
+关于代理服务器缓存，可以自行研究。
+
+其他常见的值：
+
+max-age:  表示这个缓存的最大生存时间，以秒为单位。
+
+x-max-age:  只对代理服务器有效，它的优先级高于 max-age。
+
+no-cache:  告诉浏览器可以缓存，但是在下一次请求的时候如果需要使用缓存，先询问服务器缓存是否可用。（即直接绕过强缓存，进行协商缓存）
+
+no-store:  告诉浏览器不要缓存任何内容，即禁止缓存。
+
+[Cache-control MDN详细](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control)
+
+Expires: Thu, 08 Nov 2018 05:15:14 GMT
+
+告诉浏览器缓存的到期时间为 2018年11月8号 5：15：14 GMT 时间，如果当前时间超过这个时间了，则缓存无效。
+
+`Strict-Transport-Security: max-age=172800`
+
+关于这个字段，它的时间单位是秒，也就是表示 2 天。
+
+它表示服务器在两天内，如果有人访问了这个域名，如果浏览器支持 HSTS ，并且用户通过 http 访问，那么强制使用 HTTPS 发送请求。但是如果用户清空了浏览器缓存，或者缓存过期则无效。（配置过 HTTPS 服务器的应该都知道，如果用户使用 HTTP 进行访问，最简单的办法就是服务器返回一个 302 状态码，然后重定向到 HTTPS，但是这样是存在安全风险的。）
+
+[为什么我们要使用HTTP Strict Transport Security？](https://www.freebuf.com/articles/web/66827.html)
+
+
+
+baidu.com 的 Expires 值直接就比当前日期早，应该是主页不想被缓存吧。
+
+
+
+接下来，我们来分析一下其他的网站，来把没有讲到的类型讲一下：
+
+这个是我自己的博客网站：
+
+```http
+Response Headers
+content-encoding: gzip
+content-type: text/html; charset=UTF-8
+date: Thu, 08 Nov 2018 05:41:30 GMT
+etag: W/"5bdda2bb-df6d"  //缓存相关
+last-modified: Sat, 03 Nov 2018 13:29:31 GMT  //缓存相关
+server: nginx/1.14.0
+status: 200
+vary: Accept-Encoding
+```
+
+其中 ETag、Last-modified 和缓存相关。
+
+ETag： 是以文档内容进行编码，可以使用资源的 hash 值。
+
+它分为强验证器和弱验证器，
+
+强验证器要求文档的每个字节都相等，而弱验证器只要求文档的含义相等。
+
+而我这个则属于弱验证器。（比如我修改了文档，但是只是添加了一些注释，浏览器并不需要重新请求，就可以使用弱验证器来避免不必要的流量传输）
+
+[ETag MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/ETag)
+
+last-modified: Sat, 03 Nov 2018 13:29:31 GMT
+
+服务器会带上此资源上一次文件修改的日期，然后浏览器进行缓存，并记录下这个时间。
+
+在浏览器下一次请求这个网页的时候，如果进行协商缓存则会带上
+
+If-Modified-Sice:  Sat, 03 Nov 2018 13:29:31 GMT
+
+供服务器进行确认，是否此资源是从上一次这个日期之后就没有改动过。
+
+如果没有改动过，服务器会返回 304 状态码，告诉浏览器直接用缓存吧。
+
+如果改动过，服务器会直接返回 200 状态码，并且把最新的资源发送给服务器。
+
+
+
+
+
+### 新鲜度检测
+
+HTTP通过缓存将服务器文档的副本保留一段时间。在这段时间里， 都认为文档是“新鲜的”，缓存可以在不联系服务器的情况下，直接提供该文档。但一旦已缓存副本停留的时间太长，超过了文档的新鲜度限值(freshness limit), 就认为对象“过时”了，在提供该文档之前，缓存要再次与服务器进行确认，以查看文档是否发生了变化。
+
+
+
+###  缓存处理步骤
+
+首先是当用户请求资源时，会判断是否有缓存，如果没有，则会向原服务器请求资源。
+
+如果有缓存，则会进入强缓存的范畴，判断缓存是否新鲜，如果缓存新鲜，则会直接返回缓存副本给客户端。如果缓存不新鲜了，则表示强缓存失败，将会进入到协商缓存。
+
+协商缓存将判断是否存在 Etag 和 Last-Modified 首部，通过这些首部验证资源是否发生过变化，如果未发生变化，则表示命中了协商缓存，会重定向到缓存副本，将资源返回给客户端，否则的话表示协商缓存未命中，服务器会返回新的资源。
+
+### 强缓存和协商缓存的实现原理
+
+强缓存是通过 Expires 首部或 Cache-Control: max-age 来实现的。
+
+Expires 和 Cache-Control: max-age 都是用来标识资源的过期时间的首部。
+
+> 如果使用强缓存，客户端是不会发送请求的，并且从浏览器看到的响应码 是 200 OK from disk cache (使用Chrome)
+
+#### 过程说明：
+
+当我们首次请求资源时，服务器在返回资源的同时，会在 Response Headers 中写入expires 首部或 cache-control，标识缓存的过期时间，缓存副本会将该部分信息保存起来。
+
+当再次请求该资源的时候，缓存会对 date(Date) 是一个通用首部，表示原始服务器消息发出的时间。即表示的是首次请求某个资源的时间。)和 expires/cache-control 的时间进行对比，从而判断缓存副本是否足够新鲜。
+
+#### 协商缓存实现原理：
+
+协商缓存是通过请求头 Last-Modified 或 Etag 来实现的。
+
+Last-Modified 标识的是文档最后修改时间，Etag 则是以文档内容来进行编码的。
+
+过程：
+
+首次请求资源时，服务器在返回资源的同时，会在 Response Headers 中写入 Last-Modified 首部，表示该资源在服务器上的最后修改时间。
+
+当再次请求该资源时，会在 Request Headers 中写入 If-Modified-Since 首部，此时的 If-Modified-Since 的值是首次请求资源时所返回的 Last-Modified 的值。
+
+服务器接收到请求后，会根据 If-Modified-Since 的值判断资源在该日期之后是否发生过变化。
+
+如果没有，则会返回 304 Not Modified; 如果变化了，则会返回变化过后的资源，同时更新 Last-Modified 的值。
+
+> ETag 同样的流程。但是 Last-Modified 只能精确到秒，无法观察到微秒的变化，在某些行业，如监控系统，要求较高，就可以使用 ETag ，并且 ETag 更加准确，可以避免没有必要的重新请求。
+
+![image-20181108171752237](../images/image-20181108171752237.png)
+
+[MDN讲解缓存](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ)
+
+[HTTP缓存](https://juejin.im/post/5bdeabbbe51d4505466cd741)

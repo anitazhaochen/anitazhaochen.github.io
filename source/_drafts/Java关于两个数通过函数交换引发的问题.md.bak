@@ -1,0 +1,361 @@
+---
+title: Java关于两个数通过函数交换引发的问题
+date: 2019-03-04 00:55:54
+tags: [Java, 面试]
+category: Java
+---
+
+## Java中交换两个数字的一般方法
+
+* 借助中间变量交换
+
+  ```java
+  int x = 10;
+  int y = 20;
+  int temp = x;
+  x = y;
+  y = temp;
+  ```
+
+* 位移运算交换
+<!--more -->
+
+  ```java
+  int x = 10;
+  int y = 20;
+  x = x ^ y;
+  y = x ^ y;
+  x = x ^ y;
+  ```
+
+  此种方法运行原理：一个数对另一个数异或两次，该数不变。
+
+* 数值加减交换
+
+  ```java
+  int x = 10;
+  int y = 20;
+  x = x + y;
+  y = x - y;
+  x = x - y;
+  ```
+
+##  如果必须使用函数进行交换呢
+
+```java
+public class SwapTwoNum {
+
+    public static void main(String[] args) {
+        Integer a = 1;
+        Integer b = 2;
+        System.out.println("a:"+a+"b:"+b);
+        swap(a, b);    // 请实现 swap 方法，使 a 和 b 数值交换
+        System.out.println("a:"+a+"b:"+b);
+    }
+
+    public static void swap(Integer a, Integer b) {
+        // TODO
+    }
+}
+```
+
+看到了这个问题之后，首先想到的是，Java 函数调用采用得是值传递，如果在函数内部直接通过上面写的三种方法里面的任意一种，都无法成功，因为改变的始终是副本的值，并不能改变对象本身的值。
+
+> a = 1, 1 属于 int 基本类型，而 Integer 是一个对象类型，之所以可以 Integer a = 1, 是因为发生了 **自动装箱**，即赋予一个基本数据类型 拥有像对象一样的属性。关于研究 Integer 究竟如何进行自动装箱，调用了哪些函数，可以研究 .class 字节码使用 javap 命令编译成 JVM 指令集，来看看到底发生了什么。
+>
+> 会发现调用了  Integer.valueOf() 方法。
+
+查看 Integer 源码的 valueOf 方法：
+
+```java
+   @HotSpotIntrinsicCandidate
+    public static Integer valueOf(int i) {
+        if (i >= IntegerCache.low && i <= IntegerCache.high)
+            return IntegerCache.cache[i + (-IntegerCache.low)];
+        return new Integer(i);
+    }
+```
+
+会发现还存在一个 IntegerCache 的内部类。大致意思就是：如果 i 的值在 low 和 high 之间，那就返回一个缓存池数组对应位置数值的复制。
+
+## 通过反射技术实现
+
+在 Integer 类里面，关于 value 的定义如下：
+
+```java
+    private final int value;
+```
+
+因为反射可以强制修改一些 private及 final 修饰的变量，而不需要通过 set 方法，所以我们可以通过反射直接对 private final int value 的值进行修改。
+
+```java
+    public static void swap(Integer a, Integer b) {
+
+        int temp = a.intValue();
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.set(a, b);
+            field.set(b, temp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+```
+
+通过以上代码，发现输出结果是
+
+```
+a:1b:2 before swap
+a:2b:2 after swap
+```
+
+其中，交换了 a 的值，但是 b 的值还是没变。
+
+> 补充一下 final 关键字修饰变量的意思。 如果 final 修饰的是一个对象，那么表示这个对象的引用不会变，即这个变量永远指向对应的对象（对象的属性是可以改变的）。如果 final 修饰的是一个基本数据类型，表示这个变量的值永远不会变。
+>
+> 如果强行改变，在编译的时候就无法通过。而通过反射可以做到修改。
+
+而此时，final 修改的是一个基本数据类型，我们通过反射技术，可以轻而易举的修改 value 的值。
+
+但是为什么 b 的值没有改变成功呢？接下来，可以深入研究一下 Integer 自动装箱的原理。
+
+上面已经说了，如果变量的值 在 low 和 high 之间，就会直接返回一个缓存池的数组对应位置的副本。
+
+IntegerCache 类源码：
+
+```java
+  private static class IntegerCache {
+        static final int low = -128;
+        static final int high;
+        static final Integer cache[];
+
+        static {
+            // high value may be configured by property
+            int h = 127;
+            String integerCacheHighPropValue =
+                VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+            if (integerCacheHighPropValue != null) {
+                try {
+                    int i = parseInt(integerCacheHighPropValue);
+                    i = Math.max(i, 127);
+                    // Maximum array size is Integer.MAX_VALUE
+                    h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+                } catch( NumberFormatException nfe) {
+                    // If the property cannot be parsed into an int, ignore it.
+                }
+            }
+            high = h;
+
+            cache = new Integer[(high - low) + 1];
+            int j = low;
+            for(int k = 0; k < cache.length; k++)
+                cache[k] = new Integer(j++);
+
+            // range [-128, 127] must be interned (JLS7 5.1.7)
+            assert IntegerCache.high >= 127;
+        }
+
+        private IntegerCache() {}
+    }
+```
+
+发现 low 为 -128， high 为 127 。
+
+我们此时的变量值 a = 1, b = 2 都会执行下面这个逻辑来返回对象。
+
+即通过下面这句话来返回。
+
+```java
+return IntegerCache.cache[i + (-IntegerCache.low)];
+```
+
+注意到 cache 是一个数组,  static final Integer cache[] 。并且 final 修饰，数组可以看做是一个对象，这个时候，我们如果通过反射修改 value 的值，就相当于修改了 cache[i + 128] 的数值。
+
+分析反射修改的第一句话相当于：
+
+```java
+            field.set(a, b);
+```
+
+将 b 的值赋值给 cache[1 + 128] = 2 ; 而修改前，cache[1 + 128] 的值是 1。
+
+所以，在执行第二句话的时候
+
+```java
+            field.set(b, temp);
+```
+
+相当于执行了： cache[2 + 128] = cache[1 + 128] 。 而此时 cache[1 + 128] 的值已经被修改，已经不是原来的 1 了，而是2，所以就会打印 a = 2, b = 2 after swap 。
+
+> 关于为什么会有 cache[i + 128] 是因为cache 数组是按照 cache[0] = -128 …. cache[129] = 1….cache[254] = 127 。
+
+这个时候，缓存池里已经没有 1 存在了。而是 cache[129] = 2 、 cache[130] = 2 。
+
+需要解决这个问题，我们只需要改一句话：
+
+```java
+field.set(b, new Integer(temp));
+// 或者
+field.setInt(b, temp)
+```
+
+将 temp 改成， new Integer(temp) 即可。其中又蕴含着什么呢。为什么直接写 temp 不行。
+
+如果直接写 temp ，它是一个基本数据类型，照样还是自动完成自动装箱操作，又会执行 valueOf 里面 if 里面的代码，从缓存池中返回数据。而使用 new Integer(temp) 就不会执行 valueOf 方法，就会对 new Integer(temp) 这个匿名变量进行自动拆箱操作，然后把自动拆箱后的值 1 赋值给 cache[130] 。至此，完成了 a 和 b 的交换。而此时，a 和 b 指向的地址根本都没发生变化，发生变化的是地址里保存的值。相当于 cache[129] 和 cache[130] 进行了交换。
+
+可以这样来验证：
+
+```java
+        Integer i = 1;
+        System.out.println(i);  // 输出 2 
+```
+
+在执行过 swap 函数后，赋值一个变量 等于 1 ，会发现打印出来的并不是1，而是 2 。因为还是进行了自动装箱，然后返回了 cache[129]，而此时，cache[129] 的值是 2， 并不是 1。cache[130] 的值才是1 。
+
+## 重点及疑惑
+
+**看到这里，还有一些疑惑。不是说了返回的是数组的值的副本，为什么通过反射进行修改，反而会影响原来的缓存池里的数据呢？ 它这里返回的不是值得副本，而是数组的引用吗？其实它返回的是这个对象引用的副本，而要解释这个问题，需要知道反射到底是修改的是什么**
+
+在这里，我也非常疑惑，并且通过控制变量、结合调试，进行了实验。
+
+发现如论 final 还是 static ，并且完全按照 Integer 类实现类似的情况来进行模拟，发现如下问题：
+
+如果值在 -128 —— 127 之间，无法修改。（注意不要试 1 和 2 ，因为已经修改缓存池。坑）
+
+即使值不在这个区间也无法修改。
+
+```java
+package com.enjoyms.study;
+
+import java.lang.reflect.Field;
+
+public class SwapTwoNum {
+    private static class Cache {
+        static final Integer[] e = new Integer[10];
+    }
+    public static void main(String[] args) {
+        Integer a = 1;
+        Integer b = 2;
+        System.out.println("a:"+a+"b:"+b); // a:1 b:2
+        swap(a, b);
+        System.out.println("a:"+a+"b:"+b);  // a:2 b:1 
+
+        Integer c = 1111;
+        Integer d = 1111;
+        System.out.println(c==d);   // 输出为 False，因为执行了 new ，是两个不同的对象。
+        Cache.e[5] = 3;
+        Integer f = Cache.e[5];
+        System.out.println(f == Cache.e[5]);   // 输出为 True
+        Cache.e[5] = 4;
+        System.out.println(f);    // 输出为 3 
+        Integer i = 1;
+        System.out.println(i);   // 输出的为 2 
+    }
+
+    public static void swap(Integer a, Integer b) {
+
+        int temp = a.intValue();
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.set(a, b);
+            field.set(b, new Integer(temp));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+```
+
+**综上，可以判断，其实每个值的副本的引用都是同一个地址，而通过反射修改，是获取指向的地址，然后进行修改，所以可以实现通过副本也可以修改原始值，而一旦用了反射，则可以越过很多限制**
+
+通过代码验证（数值不在缓存池中）
+
+```java
+    public static void Result() {
+        Integer a = 1000;
+        Integer b = a;
+        System.out.println(a == b);  // true
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.setInt(b, 2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(a); // 输出 2000
+    }
+```
+
+通过这个函数，通过反射，修改 a 的引用的副本 b，查看变量 a 是否被修改，结果 输出 2000 ，证明，通过引用副本被修改。
+
+```java
+    public static void Result() {
+        Integer a = 1000;
+        Integer b = 1000;
+        System.out.println(a == b);  // false
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.setInt(b, 20);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(a); // 输出 1000
+        System.out.println(b); // 输出 20
+        
+    }
+```
+
+这个例子说明：不在缓存池里的数，即使值相同，但是是两个不同的对象，修改其中一个并不会影响另一个的值。
+
+测试缓存池里的情况：
+
+```java
+   public static void Result() {
+        Integer a = 10;
+        Integer b = a;
+        System.out.println(a == b);  // true
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.setInt(b, 20);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(a);  // 输出 20
+        Integer c = 10;
+        System.out.println(c);   // 输出 20
+        
+    }
+```
+
+说明：如果是缓存池里通过引用副本修改。
+
+```java
+    public static void Result() {
+        Integer a = 10;
+        Integer b = 10;
+        System.out.println(a == b);  // true
+        try {
+            Field field = Integer.class.getDeclaredField("value");
+            field.setAccessible(true);
+            field.setInt(b, 20);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(a);  // 输出 20
+        System.out.println(b);  // 输出  20
+        
+    }
+```
+
+说明：通过缓存池里，数值相同，返回对象的地址是相同的。只是两个引用的副本而已。
+
+
+
+**证明：通过反射修改变量的值，可以通过引用的副本来修改源对象的值。**
+
+> 关于判断两个对象的引用是否指向同一个地址，可以使用 == 来判断。

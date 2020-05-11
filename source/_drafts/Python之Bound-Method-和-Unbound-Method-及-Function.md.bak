@@ -1,0 +1,226 @@
+---
+title: Python之Bound Method 和 Unbound Method 及 Function
+date: 2019-11-22 10:15:02
+tags: [Python]
+category: Python
+---
+
+## 交互式环境测试
+
+```python
+Python 2.7.16 (default, Sep  2 2019, 11:59:44)
+>>> class A(object):
+...     def foo(self):
+...         pass
+...
+>>> a = A()
+>>> print A.foo  
+<unbound method A.foo>
+>>> print a.foo
+<bound method A.foo of <__main__.A object at 0x10e767990>>
+<!--more -->
+>>>
+>>>
+>>> print 1, id(a.foo)
+1 4536864272
+>>> print 2, id(a.foo)
+2 4536864272
+>>> print a.__dict__
+{}
+>>> m1 = a.foo
+>>> m2 = a.foo
+>>> print 3, id(m1)
+3 4536864272
+>>> print 4, id(m2)
+4 4537385200
+>>> print 5, id(a.foo)
+5 4536864672
+>>> m2 = None
+>>> m1 = None
+>>> print 6, id(a.foo)
+6 4536864272
+>>> print dir(A)
+['__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'foo']
+>>> m1 = A.foo
+>>> m2 = A.foo
+>>> print 7, id(m1)
+7 4536864272
+>>> print 8, id(m2)
+8 4537385200
+>>> print A.__dict__['foo']
+<function foo at 0x10e76a5f0>
+>>> m1 = A.foo
+>>> m2 = a.foo
+>>> print m1.im_self
+None
+>>> print m2.im_self
+<__main__.A object at 0x10e767990>
+>>> print m1.im_func, m2.im_func
+<function foo at 0x10e76a5f0> <function foo at 0x10e76a5f0>
+>>> print m1.im_class, m2.im_class
+<class '__main__.A'> <class '__main__.A'>
+>>>
+```
+
+* 通过类方法直接调用类里面带 self 的方法，可以看到，显示的是 `<unbound method A.foo>` ，而通过类的实例进行调用，显示的是 `<bound method A.foo of <__main__.A object at 0x10e767990>>` ，Python 告诉我们这是一个绑定了的方法。
+
+  二究竟绑定和未绑定有什么区别呢？下面看一个实例：
+
+  ```python
+  >>> A.foo()
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+  TypeError: unbound method foo() must be called with A instance as first argument (got nothing instead)
+  >>>
+  ```
+
+  此时我们通过类方法执行调用 foo 执行，发现报错了，大致意思就是说  未绑定的方法foo() 必须传入一个实例作为第一个参数。而这个时候，就疑问了，难道是定义的时候 self 参数的锅？
+
+  继续测试： 由于 Python 的类里面的属性都存储在 `__dict__` 字典中，我们查看以下：
+
+  ```python
+  >>> A.__dict__
+  dict_proxy({'__dict__': <attribute '__dict__' of 'A' objects>, '__module__': '__main__', 'foo': <function foo at 0x10e76a5f0>, '__weakref__': <attribute '__weakref__' of 'A' objects>, '__doc__': None})
+  >>>
+  >>> a.__dict__
+  {} # a 没有 foo ，谁创建了 foo 呢？
+  ```
+
+  发现 foo 对应的类型是一个 function 对象。而通过实例来调用和类来调用得出的绑定和未绑定行为，说明 foo 这个 function 是一个具有“绑定” 行为的对象。而在 Python 中使用描述器来表示具有“绑定”行为的对象属性，使用描述器协议方法来控制对具有绑定行为属性的访问，这些描述器协议方法包括: `__get__()`、 `__se__()`、 `__delete__()。`
+
+  [描述器参考链接](https://docs.python.org/zh-cn/3/howto/descriptor.html)
+
+  在文档中定义了
+
+  ```python
+  descr.__get__(self, obj, type=None) -> value
+  
+  descr.__set__(self, obj, value) -> None
+  
+  descr.__delete__(self, obj) -> None
+  ```
+
+  我们尝试使用第一个来获取属性
+
+  ```python
+  >>> A.__dict__['foo'].__get__(None, A)
+  <unbound method A.foo>
+  >>> A.foo
+  <unbound method A.foo>
+  >>>
+  ```
+
+  发现通过这种方式调用，和类名直接调用时一直的。有可能 A.foo 的背后执行的就是 `A.__dict__['foo'].__get__(None, A)`
+
+  而这个函数是需要传递两个参数的，一个是 obj ，一个是 type，但是 type 可以不传默认None。
+
+  而我们这里传递了 obj = None， type = A 这两个参数，最后得出的就是
+
+  `<unbound method A.foo>`
+
+  继续试一下如果 obj 传一个实例会怎么样呢
+
+  ```python
+  >>> A.__dict__['foo'].__get__(a, A)
+  <bound method A.foo of <__main__.A object at 0x10e767990>>
+  >>>
+  ```
+
+  结果不出所料，如果传递一个实例对象，那么得到的就是一个 "绑定的方法"。
+
+  那到这里就不难得出结论，当我们调用类里面的方法的时候，Python 在背后帮我们做了尝试绑定对象的操作。
+
+* 继续往下看:
+
+  ```python
+  >>> print 1, id(a.foo)
+  1 4536864272
+  >>> print 2, id(a.foo)
+  2 4536864272
+  >>> print a.__dict__
+  {}
+  >>> m1 = a.foo
+  >>> m2 = a.foo
+  >>> print 3, id(m1)
+  3 4536864272
+  >>> print 4, id(m2)
+  4 4537385200
+  >>> print 5, id(a.foo)
+  5 4536864672
+  ```
+
+  在这里，我们将实例的 a.foo 所表示的对象赋值给 m1及m2，诡异的就是为什么1,2,3 显示的内存地址都一样说明是同一个对象，而4，5却和前面的都不一样。
+
+  通过第五次 a.foo 和前三次都不一样，可以猜测，a.foo 应该是在每次使用到的时候，才创建出来，不用的时候，就释放掉。
+
+  而如何解释前三次都一样呢，是因为在 Python 中 method 是比较常用的，Python 保存了一份缓存，放在 freelist 中。一般而言，在第三个之前，都是一样的，在引用基数达到2后，在调用 a.foo 就会创建并返回新的对象。
+
+  > 当一个对象创建出来的时候，引用计数为0。这个时候需要一个变量，即一个名字，来指向它，然后这个对象的引用计数才变为1.
+
+* 继续往下看，验证 freelist。
+
+  ```python
+  >>> m2 = None
+  >>> m1 = None
+  >>> print 6, id(a.foo)
+  6 4536864272
+  
+  ```
+
+  发现，此时的 a.foo 的值又变了，发现这时候的值和1，2，3 的值是一模一样的，为什么又会拿到相同的对象呢？这就好解释了，因为当把 m1、m2 赋值为 None 后， Python 就自动将 freelist 中没有被引用的无用变量释放了，所以当我们在次获取 a.foo 的值，就会拿到 freelist 中以前缓存的值。
+
+* 继续往下看，观察 A.foo 会和 a.foo 有和不同
+
+  ```python
+  >>> m1 = A.foo
+  >>> m2 = A.foo
+  >>> print 7, id(m1)
+  7 4536864272
+  >>> print 8, id(m2)
+  8 4537385200
+  >>> print A.__dict__['foo']
+  <function foo at 0x10e76a5f0>
+  >>> m1 = A.foo
+  >>> m2 = a.foo
+  >>> print m1.im_self
+  None
+  >>> print m2.im_self
+  <__main__.A object at 0x10e767990>
+  >>> print a
+  <__main__.A object at 0x10e767990>
+  >>>
+  ```
+
+  发现，在 a.foo 的时候，m1和m2的值是一样的，而A.foo 的时候，m1 和 m2 就不同了。前面也有说过，A.foo 输出的是 "未绑定" 对象，是否与这个原因有关呢。
+
+  通过输出 `m1.im_self` 发现它对应的对象是 None，而 m2.im_self 和 a 是相同的。
+
+  说明了实例对象是共用一个函数地址的。
+
+  
+
+  ## Python 自定义方法属性
+
+  在 Python 中自定义方法中有一些只读属性：
+
+  * im_self 指代类的实例对象
+  * im_func 指代函数对象
+  * im_class 挚爱绑定方法的类或者调用非绑定方法的类
+  * `__doc__`  方法的文档注释
+  * `__name__` 方法名 
+  * `__module__` 方法所在的模块名
+  * `__func__` 等价于 im_func
+  * `__self__` 等价于 im_self
+
+  其中如果通过类直接调用方法时，
+
+   im_self 与 `__self__` 属性都为 None，该方法为非绑定方法(unbound method)
+
+  使用实例调用方法时，
+
+  方法的 im_self 和 `__self__` 属性为实例对象，该方法为绑定方法(bound method)
+
+  但是无论哪种情况，方法的 im_class 都为调用类，而 im_func 为原始的函数对象。
+
+  
+

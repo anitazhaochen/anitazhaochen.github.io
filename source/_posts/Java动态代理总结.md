@@ -1,0 +1,159 @@
+---
+title: Java动态代理
+date: 2019-01-19 18:46:20
+tags: [Java, 设计模式]
+category: Java
+---
+
+
+
+# Java 动态代理
+
+* 动态代理应用场景
+
+  1. 日志集中打印
+  2. 事务
+  3. 权限管理
+  4. AOP
+
+* Spring AOP 当中可以使用的方式实现，和区别。
+
+<!--more -->
+  1. Java Proxy (动态构建字节码)  生成一个全新的 Proxy Class
+
+  2. cglib （动态构建字节码） 生成一个全新的Proxy Class
+
+  3. Aspectj （修改目标类的字节，织入代理的字节，在程序编译的时候）
+
+  4. instrumentation (修改目标类的字节码，在类加载的时候动态拦截去修改，基于 javaagent ) 
+
+     -javaagent:spring-instrument-x.x.x.RELEASE.jar
+
+  > 无论哪种方式实现动态代理，其本质实现都是对字节码的修改。区别是从哪里进行切入修改字节码。
+  >
+  > 修改的工具有 ASM、javaagent
+  >
+  > 可选的方式有：
+  >
+  > 1. java proxy 、Cglib 是基于动态构建 接口实现类字节
+  > 2. Aspectj 是借助 Eclipse 工具在编译时织入代理字节
+  > 3. instrumentation 是基于 javaagent 在类装在时修改 Class 织入代理字节
+  > 4. 使用自定义 ClassLoader 在装载时织入代理字节
+
+使用 Aspectj 和 instrumentation 一般是不会出现 方法区内存溢出的问题。并且性能比较高。
+
+
+
+## Java Proxy 代理详解
+
+### 简介
+
+* 在 Java 中 java.lang.reflect 包下提供了一个 Proxy 类和一个 InvocationHandler 接口
+* 通过使用使用这个类和接口就可以生成动态代理对象
+* JDK 提供的代理（ 即 java proxy）只能针对**接口**做代理。
+
+* Proxy 通过 newProxyInstance(ClassLoader loader,Class<?>[]  interfaces,InvocationHandler  h) 创建代理对象。
+
+参数说明：
+
+loader： 为对象的类加载器，一般为: 对象.getClass().getClassLoader()
+
+interfaces：为对象实现的接口，一般为： 对象.getClass().getInterfaces()
+
+h:  可以直接 通过 new InvocationHandler() 来传入，然后实现里面的方法。
+
+InvocationHandler 的 invoke(proxy, method, args) 方法会拦截对象方法的调用。
+
+### 调用过程
+
+![image-20190305010815160](/images/image-20190305010815160.png)
+
+动态代理，通过 Proxy 里包含的 InvocationHandler 里包含的 target Object 来进行一层一层的调用。
+
+### 示例需求
+
+原来的 UserServiceImpl 需要在 注册和删除用户的时候，做一下权限校验，和日志记录，不能修改源代码。
+
+### 代码
+
+```java
+package com.enjoyms.proxy;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // 1. 创建对象
+        UserServiceImpl usi = new UserServiceImpl();
+
+        //2. 创建代理对象
+        UserService proxy = (UserService) Proxy.newProxyInstance(usi.getClass().getClassLoader(),
+                usi.getClass().getInterfaces(),
+                new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        System.out.println(method);
+                        System.out.println("权限检验.....");
+
+                        // 拦截了方法
+                        Object returnObj = method.invoke(usi, args);
+
+                        System.out.println("日志记录");
+                        return returnObj;
+                    }
+                });
+
+        proxy.registerUser();
+        proxy.deleteUser();
+
+    }
+}
+
+interface UserService{
+
+    public void registerUser();
+    public void deleteUser();
+
+}
+
+class UserServiceImpl implements UserService {
+
+    @Override
+    public void registerUser() {
+
+        System.out.println("注册一个用户");
+
+    }
+
+    @Override
+    public void deleteUser() {
+
+        System.out.println("删除一个用户");
+
+    }
+}
+
+```
+
+这样就可以，通过 
+
+`                        Object returnObj = method.invoke(usi, args);`
+
+来执行原来的方法，并且在方法前面和后面加上一些新增的功能。
+
+## Java Proxy 实现原理
+
+如图：
+
+![image-20190305012723659](/images/image-20190305012723659.png)
+
+1. 生成一个代理对象 newProxyInstance()
+2. 尝试获取 Proxy Class。基于代理接口查找 ClassLoader 当中有没有代理的 class，如果存在，直接返回，如果不存在，则执行下一步
+3. 动态生成一个 Proxy Class 字节码
+4. defineClass()  可以看做是加载 class 
+5. 生成代理对象
+

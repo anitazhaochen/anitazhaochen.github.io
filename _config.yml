@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: HAPPY'C
-subtitle: 这个世界的问题在于聪明人充满疑惑，而傻子们坚信不疑。--罗素
-description:
-author: CHEN
+title: YL
+subtitle: YL
+description: [~~~~~]
+author: ABC
 language: zh-Hans
 timezone: Asia/Shanghai
 
@@ -78,15 +78,21 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-- type: git
-  repo: git@39.106.141.99:/home/git/hexo.git
-  branch: master
-- type: git
-  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
-  branch: master
-- type: git
-  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
-  branch: dev
+#- type: git
+#  repo: ssh://git@39.106.141.99:2222/home/git/hexo.git
+#  branch: master
+- type: rsync
+  host: nas.enjoyms.com
+  user: Blog
+  root: /var/services/homes/Blog/ZBlog/.
+  port: 2233
+  delete: true
+  # - type: git
+ # repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+ # branch: master
+ #- type: git
+ # repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+ # branch: dev
   extend_dirs: /
   ignore_hidden: false
   ignore_pattern:

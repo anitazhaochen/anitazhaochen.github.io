@@ -1,0 +1,52 @@
+---
+title: requests传文件filename为中文服务器报错
+date: 2019-11-06 17:45:24
+tags: [Python, requests]
+category: Python
+---
+
+## 遇到的问题
+
+​	当使用 requests 的 post 进行表单提交的时候，其中包含 file 和 data。 如果 filename 为中文，则会对 filename 进行 编码成：
+
+filename* = utf-8............... 的样子，导致服务器无法正常接收文件。
+
+
+
+## 环境
+
+requests    2.13.0
+
+暂时略去其他环境问题，主要是 requests 库
+<!--more -->
+
+在本机上使用最新版本 requests 2.22.0 进行同样的上传，查看 post body 数据发现，并不会对其做 utf-8 编码。
+
+遂将服务器的 requests 库版本从 2.13.0 升级到 2.22.0 。然后发现还是老样子。
+
+看了 requests 的源码， requests 的底层是 urllib3 来进行实现的， 而在 requests 的更新日志中，某几次更新就是对新版本 urllib3 的支持，本来以为 pip uninstall requests   && pip install requests 可以解决。但是，问题就在这里，这里 并没有对 urllib3 进行升级，所以无论 requests 版本多么新，底层用的还是 urllib3 老版本，依旧会对 filename 进行编码。
+
+在这里猜测 pip 升级某个 库的时候，对其依赖库做的处理：
+
+1. 首先注意屏幕输出的内容，如果他自动帮你升级了，应该会告诉你
+2. 对其依赖的版本如果不是一定需要升级，他就不会帮你升级。
+
+解决方法： 
+
+pip install --upgrade urllib3  
+
+pip install --upgrade requests
+
+就可以了。
+
+
+
+## 为什么会出现这样的错误
+
+[RF2313中文上传](https://github.com/psf/requests/issues/2313)
+
+[Posting a mutipart-encoded file ....](https://github.com/psf/requests/issues/3446)
+
+大致意思就是，在 RF2313 中，urllib3 和服务器不兼容导致的问题。
+
+其中 urllib3 旧版本 不支持 RF2313，  所以 升级 urllib3 即可。
