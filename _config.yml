@@ -81,18 +81,18 @@ deploy:
 #- type: git
 #  repo: ssh://git@39.106.141.99:2222/home/git/hexo.git
 #  branch: master
-- type: rsync
-  host: nas.enjoyms.com
-  user: Blog
-  root: /var/services/homes/Blog/ZBlog/.
-  port: 2233
-  delete: true
-  # - type: git
- # repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
- # branch: master
- #- type: git
- # repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
- # branch: dev
+#- type: rsync
+#  host: nas.enjoyms.com
+#  user: Blog
+#  root: /var/services/homes/Blog/ZBlog/.
+#  port: 2233
+#  delete: true
+- type: git
+  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+  branch: master
+- type: git
+  repo: ssh://git@gitlab.enjoyms.com:20001/zhaochen/blog.git
+  branch: master
   extend_dirs: /
   ignore_hidden: false
   ignore_pattern:
