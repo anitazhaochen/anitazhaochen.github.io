@@ -87,9 +87,9 @@ deploy:
 #  root: /var/services/homes/Blog/ZBlog/.
 #  port: 2233
 #  delete: true
-- type: git
-  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
-  branch: master
+#- type: git
+#  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+#  branch: master
 - type: git
   repo: ssh://git@gitlab.enjoyms.com:20001/zhaochen/blog.git
   branch: master
