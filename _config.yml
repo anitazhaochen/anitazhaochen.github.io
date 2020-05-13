@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: YL测试
+title: YL
 subtitle: YL
 description: [~~~~~]
 author: ABC
@@ -78,9 +78,15 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
+#- type: git
+#  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+#  branch: master
 - type: git
   repo: ssh://git@gitlab.enjoyms.com:20001/zhaochen/blog.git
   branch: master
+#- type: git
+#  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
+#  branch: dev
   extend_dirs: /
   ignore_hidden: false
   ignore_pattern:

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/180x180.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/source/images/myself.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/if_Heart_132612.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="https,群晖,GitLab," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="为什么要使用HTTPS举一个例子，以前自己搭建的http网站，总是遇到js无法正确执行，并且页面里夹杂了本来没有的广告。问题出现在了运营商线路上，比如说我手机网络是移动的，然后用微信访问http绑定页面，偶尔就会出现移动查流量等等的广告。这是因为信息在传递的时候，走运营商网络，因为我的信息是http传递，没有加密，所以运营商在里面嵌入了广告修改后，再把信息传递给我的终端。 并且http本来就是不安">
+<meta property="og:type" content="article">
+<meta property="og:title" content="群晖GitLab创建https访问">
+<meta property="og:url" content="http://yoursite.com/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:site_name" content="YL">
+<meta property="og:description" content="为什么要使用HTTPS举一个例子，以前自己搭建的http网站，总是遇到js无法正确执行，并且页面里夹杂了本来没有的广告。问题出现在了运营商线路上，比如说我手机网络是移动的，然后用微信访问http绑定页面，偶尔就会出现移动查流量等等的广告。这是因为信息在传递的时候，走运营商网络，因为我的信息是http传递，没有加密，所以运营商在里面嵌入了广告修改后，再把信息传递给我的终端。 并且http本来就是不安">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-152450.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-155705.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-154857.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-154939.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-155033.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-160406.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-163456.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-163557.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-163658.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-160406.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Jietu20200412-163834.jpg">
+<meta property="article:published_time" content="2020-04-12T04:18:36.000Z">
+<meta property="article:modified_time" content="2020-05-12T16:11:38.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="https">
+<meta property="article:tag" content="群晖">
+<meta property="article:tag" content="GitLab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/Jietu20200412-152450.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>群晖GitLab创建https访问 | YL</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myself.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">群晖GitLab创建https访问</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T12:18:36+08:00">
+                2020-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BE%A4%E6%99%96/" itemprop="url" rel="index">
+                    <span itemprop="name">群晖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/" class="leancloud_visitors" data-flag-title="群晖GitLab创建https访问">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="为什么要使用HTTPS"><a href="#为什么要使用HTTPS" class="headerlink" title="为什么要使用HTTPS"></a>为什么要使用HTTPS</h2><p>举一个例子，以前自己搭建的http网站，总是遇到js无法正确执行，并且页面里夹杂了本来没有的广告。问题出现在了运营商线路上，比如说我手机网络是移动的，然后用微信访问http绑定页面，偶尔就会出现移动查流量等等的广告。这是因为信息在传递的时候，走运营商网络，因为我的信息是http传递，没有加密，所以运营商在里面嵌入了广告修改后，再把信息传递给我的终端。</p>
+<p>并且http本来就是不安全的，平时在家访问下http没什么事情，但是有时候还是需要在外面访问的，信息安全就得不到保证。</p>
+<h2 id="群晖GitLab-HTTPS-设置"><a href="#群晖GitLab-HTTPS-设置" class="headerlink" title="群晖GitLab HTTPS 设置"></a>群晖GitLab HTTPS 设置</h2><p>这里，演示一下群晖 GitLab 如何设置 HTTPS，其他服务也同理可以参考。</p>
+<p>前言： 我有公网IP，并且路由器可以做端口转发。</p>
+<p>先说下最终实现的功能：</p>
+<a id="more"></a>
+
+<pre><code>1. 外网可以直接通过https访问，不需要加端口号
+ 2. 通过二级子域名进行访问，端口可以复用
+ 3. GitLab 里面clone显示的是我在外网使用的域名</code></pre><h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>关于公网IP及路由转发不在阐述。</p>
+<p>关于群晖安装GitLab不在阐述。</p>
+<h4 id="设置Docker"><a href="#设置Docker" class="headerlink" title="设置Docker"></a>设置Docker</h4><p>GitLab 安装完成后，可以打开Docker，然后在容器里面选择synology_gitlab 进行编辑，在环境变量一栏加入如下参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GITLAB_HTTPS    true</span><br><span class="line">SSL_SELF_SIGNED true</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/Jietu20200412-152450.jpg" alt="Jietu20200412-152450"></p>
+<p>然后找到里面的 GITLAB_PORT  一项，这一项如果你要设置 HTTPS ，请把端口设置成443， 否则你点击 clone 的时候，主域名后面还是会跟着你物理机实际访问的端口，比如我的物理机实际访问端口是 20000，他就会跟一个 xxxx.com:20000。</p>
+<p>打开file station， 准备上传https证书文件，我的证书是在阿里云上面申请的免费个人版。如果你的域名是阿里云的，就可以直接申请免费的个人版，就不需要自己生成。自己生成的证书chrome浏览器会提示是不信任的证书的。</p>
+<p><a href="https://account.aliyun.com/login/login.htm?oauth_callback=https%3A%2F%2Fyundun.console.aliyun.com%2F%3Fspm%3D5176.6660585.774526198.1.10486bf8kbvNs8%26p%3Dcas%26accounttraceid%3D5c1ad0f604244bc5a47ce4c43ce94b6ditsh%23%2Foverview%2Fcn-hangzhou" target="_blank" rel="noopener">阿里云地址</a></p>
+<p>先说阿里云上面的操作：申请方式自己搜一下教程，申请完毕后，下载 Nginx 版本的文件，然后改名gitlab.crt、 gitlab.key，然后打开群晖的 File Station 在docker/gitlab/gitlab/ 这个目录下创建一个文件夹，名字叫 certs，把证书文件上传到这个文件夹里。阿里云没有提供 GitLab 官方文档里说的 dhparam.pem 文件，这个需要我们自己生成一下， 打开电脑自带终端，如果已经安装了 openssl ，则可以直接执行生成，否则请先安装 openssl 。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl dhparam -out dhparam.pem 2048</span><br></pre></td></tr></table></figure>
+
+<p>执行上面的命令就可以在你执行的这个目录下面生成一个 dhparam.pem 文件，然后把这个文件也放到刚才的 certs 目录下。至此，Docker 方面已经设置完毕。</p>
+<p>现在如果我们直接运行Gitlab，可以在通过 </p>
+<p>协议(http或者https)://nas服务器ip:端口号 进行访问到 GitLab，如果访问不到，可以查看下Docker的日志，是否有错误，看下是否nginx没有跑起来，也可以登入Docker控制台，通过 nginx -t 检查 nginx 配置文件是否正确。</p>
+<p>现在已经设置了 Docker 走https， 所以不要用 Chrome 浏览器进行访问，它默认会拦截的，因为证书的域名和你在浏览器输入的不一致，可以用 safari 浏览器访问，然后信任一下就可以了。</p>
+<p>至此，如果我们现在直接把端口代理出去的话，也是可以的，直接路由器 443 端口对应群晖里的GitLab刚才设置的https 端口就可以。但是这样的话是有一个问题的，就是端口无法复用，比如说我的gitlab 域名 <a href="https://gitlab.xxx.com" target="_blank" rel="noopener">https://gitlab.xxx.com</a> 像直接访问gitlab， 另一个服务 <a href="https://myhome.xxx.com" target="_blank" rel="noopener">https://myhome.xxx.com</a> 想访问路由器的控制界面，就无法实现，所以我们接下来通过反向代理工具，让它通过不同的二级域名来进行不同的端口转发。</p>
+<h4 id="设置群晖反向代理"><a href="#设置群晖反向代理" class="headerlink" title="设置群晖反向代理"></a>设置群晖反向代理</h4><p>接下来我们利用群晖自带的反向代理工具来把我们gitlab的20000 端口代理到一个包含有二级域名的域名上面，这样就可以不加端口进行访问。</p>
+<p>首先，打开控制面板—&gt;应用程序门户—&gt;反向代理服务器， 点击新增:</p>
+<p><img src="/images/Jietu20200412-155705.jpg" alt="Jietu20200412-155705"></p>
+<p>描述随便取个名字，协议选择 https, 主机名填写你的域名，比如我的 gitlab.xxxx.com</p>
+<p>端口填写443， 然后目的地： 协议选择https，主机名就是localhost, 端口填写Gitlab内网https访问的端口。</p>
+<p>确定就可以了。</p>
+<p>然后，我们需要先把证书文件也放到群晖里面一份。</p>
+<p>打开控制面板—-&gt; 安全性 —&gt; 证书 ， 点击新增<img src="/images/Jietu20200412-154857.jpg" alt="Jietu20200412-154857"></p>
+<p>下一步：</p>
+<p><img src="/images/Jietu20200412-154939.jpg" alt="Jietu20200412-154939"></p>
+<p>随便写个描述名字，选择导入证书，然后下一步</p>
+<p><img src="/images/Jietu20200412-155033.jpg" alt="Jietu20200412-155033"></p>
+<p>然后把私钥以.key结尾的文件，及证书以.pem结尾的文件放到里面，中间证书可以不填，然后确定就好了。</p>
+<p>然后界面会出现你刚刚添加过的证书，点一下上方第二栏的配置选项，给不同的服务配置不同的证书，找到你刚才在应用程序门户里面加的gitlab服务，应该就是你刚才填写的来源里面的主机名，然后证书选择你刚添加的证书确定。</p>
+<p>操作完成后，开启 GitLab 服务。</p>
+<p>最后一步，设置我们的路由器，DDNS服务假设你已经弄好了，比如 gitlab.xxxx.com 直接就可以解析到我们的公网ip， 然后在路由器面设置端口转发，如果运营商没封你的443端口， 设置转发 443 端口到 群晖主机的443端口</p>
+<p> <img src="/images/Jietu20200412-160406.jpg" alt="Jietu20200412-160406"></p>
+<p>然后，就可以拿域名进行https访问了。</p>
+<p>如果想保留http，只需要在 Docker 里面加入http端口映射，然后反向代理那边加入同样的域名设置，端口80协议设置成http， 路由器开发80端口转发到nas服务器80端口就可以了。 用户通过http访问，会自动重定向到 https 。</p>
+<p>QAQ</p>
+<ol>
+<li><p>通过https加域名显示什么都没有</p>
+<p>首先确保 ddns 是否正常运作，确保有公网ip，ddns的前提是要有公网ip</p>
+<p>确保 GitLab 运行正常，在内网是可以访问到的</p>
+<ol start="2">
+<li>通过https加域名显示证书不受信任</li>
+</ol>
+<p>点开证书看看是不是你刚才添加的那个证书，如果不是的，就说明在安全性那里你没有给GitLab 服务更改默认的证书， 所有服务的默认证书都是 群晖自带的证书。</p>
+<ol start="3">
+<li>证书没问题，但是访问到的页面确实群晖的错误页面</li>
+</ol>
+<p>出现这样的情况主要是因为你的 Docker GitLab 服务没有跑起来，或者说你的反向代理那里设置出错了，端口需要对应。</p>
+</li>
+</ol>
+<h2 id="上面简略说明了一下，我的具体配置参数"><a href="#上面简略说明了一下，我的具体配置参数" class="headerlink" title="上面简略说明了一下，我的具体配置参数"></a>上面简略说明了一下，我的具体配置参数</h2><p>硬件： 蜗牛星际主机8G内存</p>
+<p>黑群晖 + 软路由 Lede + 光猫桥接</p>
+<p>软路由 Lede 拨号有公网IP， 软路由配置 DDNS 服务解析域名 </p>
+<p>gitlab.xxxx.com</p>
+<p>myhome.xxxx.com</p>
+<p>软路由端口映射  443 到 nas 443</p>
+<p>软路由端口映射 80 到  nas 80</p>
+<p>群晖证书设置： 阿里云申请个人免费版证书，这种证书不同通配符证书，所以一个证书只能对应一个子域名，比如我申请一个 gitlab.xxxx.com 的证书，那么这个就只能是 gitlab.xxxx.com 这个域名，myhome.xxxx.com就不行，需要在申请一个 myhome.xxxx.com 就可以了，一共好像可以申请20个。</p>
+<p>先在应用门户中添加反向代理信息，才可以在证书里面进行 配置选项，选择服务对应的证书。</p>
+<p>Docker GitLab ，端口方面 ssh端口自己设置，我这里只展示 http 及https 端口：</p>
+<p>本地端口 20002 对应容器端口 443</p>
+<p>本地端口 20000 对应容器端口 80</p>
+<p>之所以不仅设置了https也设置了http是因为用户使用http地址可以直接跳转到https的地址，而不是直接显示404 not found。</p>
+<p><img src="/images/Jietu20200412-163456.jpg" alt="Jietu20200412-163456"></p>
+<p>Docker 设置</p>
+<p><img src="/images/Jietu20200412-163557.jpg" alt="Jietu20200412-163557"></p>
+<p>反向代理设置</p>
+<p><img src="/images/Jietu20200412-163658.jpg" alt="Jietu20200412-163658"></p>
+<p>证书设置</p>
+<p><img src="/images/Jietu20200412-160406.jpg" alt="Jietu20200412-160406"></p>
+<p>上面路由端口映射设置</p>
+<p><img src="/images/Jietu20200412-163834.jpg" alt="Jietu20200412-163834"></p>
+<p>ddns 设置</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/https/" rel="tag"># https</a>
+          
+            <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"># 群晖</a>
+          
+            <a href="/tags/GitLab/" rel="tag"># GitLab</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/11/%E7%BE%A4%E6%99%96%E6%90%AD%E5%BB%BAgitlab%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="next" title="群晖搭建gitlab服务器">
+                <i class="fa fa-chevron-left"></i> 群晖搭建gitlab服务器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/" rel="prev" title="群晖ssh免密登录问题.md">
+                群晖ssh免密登录问题.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myself.jpg"
+                alt="ABC" />
+            
+              <p class="site-author-name" itemprop="name">ABC</p>
+              <p class="site-description motion-element" itemprop="description">~~~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">95</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">122</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/anitazhaochen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhaochensy@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要使用HTTPS"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用HTTPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#群晖GitLab-HTTPS-设置"><span class="nav-number">2.</span> <span class="nav-text">群晖GitLab HTTPS 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实现"><span class="nav-number">2.1.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Docker"><span class="nav-number">2.1.1.</span> <span class="nav-text">设置Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置群晖反向代理"><span class="nav-number">2.1.2.</span> <span class="nav-text">设置群晖反向代理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上面简略说明了一下，我的具体配置参数"><span class="nav-number">3.</span> <span class="nav-text">上面简略说明了一下，我的具体配置参数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      <a href="http://www.beian.miit.gov.cn" target="_blank" rel="noopener">辽ICP备16009154号-1</a>
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("uBnxAcFsuecugvHmYzh14B5a-gzGzoHsz", "IXL49jazLiN9BYcpjS247SeK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
