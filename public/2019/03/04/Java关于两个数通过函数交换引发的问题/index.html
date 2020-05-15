@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,面试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java中交换两个数字的一般方法 借助中间变量交换 12345int x &#x3D; 10;int y &#x3D; 20;int temp &#x3D; x;x &#x3D; y;y &#x3D; temp;  位移运算交换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java关于两个数通过函数交换引发的问题">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/Java%E5%85%B3%E4%BA%8E%E4%B8%A4%E4%B8%AA%E6%95%B0%E9%80%9A%E8%BF%87%E5%87%BD%E6%95%B0%E4%BA%A4%E6%8D%A2%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="YL">
+<meta property="og:description" content="Java中交换两个数字的一般方法 借助中间变量交换 12345int x &#x3D; 10;int y &#x3D; 20;int temp &#x3D; x;x &#x3D; y;y &#x3D; temp;  位移运算交换">
+<meta property="article:published_time" content="2019-03-03T16:55:54.000Z">
+<meta property="article:modified_time" content="2020-05-12T16:11:38.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/04/Java关于两个数通过函数交换引发的问题/"/>
+
+
+
+
+
+  <title>Java关于两个数通过函数交换引发的问题 | YL</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YL</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/Java%E5%85%B3%E4%BA%8E%E4%B8%A4%E4%B8%AA%E6%95%B0%E9%80%9A%E8%BF%87%E5%87%BD%E6%95%B0%E4%BA%A4%E6%8D%A2%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YL">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java关于两个数通过函数交换引发的问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T00:55:54+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java中交换两个数字的一般方法"><a href="#Java中交换两个数字的一般方法" class="headerlink" title="Java中交换两个数字的一般方法"></a>Java中交换两个数字的一般方法</h2><ul>
+<li><p>借助中间变量交换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> temp = x;</span><br><span class="line">x = y;</span><br><span class="line">y = temp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>位移运算交换</p>
+<a id="more"></a>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = <span class="number">20</span>;</span><br><span class="line">x = x ^ y;</span><br><span class="line">y = x ^ y;</span><br><span class="line">x = x ^ y;</span><br></pre></td></tr></table></figure>
+
+<p>此种方法运行原理：一个数对另一个数异或两次，该数不变。</p>
+</li>
+<li><p>数值加减交换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> y = <span class="number">20</span>;</span><br><span class="line">x = x + y;</span><br><span class="line">y = x - y;</span><br><span class="line">x = x - y;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="如果必须使用函数进行交换呢"><a href="#如果必须使用函数进行交换呢" class="headerlink" title="如果必须使用函数进行交换呢"></a>如果必须使用函数进行交换呢</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwapTwoNum</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        Integer b = <span class="number">2</span>;</span><br><span class="line">        System.out.println(<span class="string">"a:"</span>+a+<span class="string">"b:"</span>+b);</span><br><span class="line">        swap(a, b);    <span class="comment">// 请实现 swap 方法，使 a 和 b 数值交换</span></span><br><span class="line">        System.out.println(<span class="string">"a:"</span>+a+<span class="string">"b:"</span>+b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer a, Integer b)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到了这个问题之后，首先想到的是，Java 函数调用采用得是值传递，如果在函数内部直接通过上面写的三种方法里面的任意一种，都无法成功，因为改变的始终是副本的值，并不能改变对象本身的值。</p>
+<blockquote>
+<p>a = 1, 1 属于 int 基本类型，而 Integer 是一个对象类型，之所以可以 Integer a = 1, 是因为发生了 <strong>自动装箱</strong>，即赋予一个基本数据类型 拥有像对象一样的属性。关于研究 Integer 究竟如何进行自动装箱，调用了哪些函数，可以研究 .class 字节码使用 javap 命令编译成 JVM 指令集，来看看到底发生了什么。</p>
+<p>会发现调用了  Integer.valueOf() 方法。</p>
+</blockquote>
+<p>查看 Integer 源码的 valueOf 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HotSpotIntrinsicCandidate</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">         <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>会发现还存在一个 IntegerCache 的内部类。大致意思就是：如果 i 的值在 low 和 high 之间，那就返回一个缓存池数组对应位置数值的复制。</p>
+<h2 id="通过反射技术实现"><a href="#通过反射技术实现" class="headerlink" title="通过反射技术实现"></a>通过反射技术实现</h2><p>在 Integer 类里面，关于 value 的定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br></pre></td></tr></table></figure>
+
+<p>因为反射可以强制修改一些 private及 final 修饰的变量，而不需要通过 set 方法，所以我们可以通过反射直接对 private final int value 的值进行修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer a, Integer b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> temp = a.intValue();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.set(a, b);</span><br><span class="line">        field.set(b, temp);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过以上代码，发现输出结果是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a:1b:2 before swap</span><br><span class="line">a:2b:2 after swap</span><br></pre></td></tr></table></figure>
+
+<p>其中，交换了 a 的值，但是 b 的值还是没变。</p>
+<blockquote>
+<p>补充一下 final 关键字修饰变量的意思。 如果 final 修饰的是一个对象，那么表示这个对象的引用不会变，即这个变量永远指向对应的对象（对象的属性是可以改变的）。如果 final 修饰的是一个基本数据类型，表示这个变量的值永远不会变。</p>
+<p>如果强行改变，在编译的时候就无法通过。而通过反射可以做到修改。</p>
+</blockquote>
+<p>而此时，final 修改的是一个基本数据类型，我们通过反射技术，可以轻而易举的修改 value 的值。</p>
+<p>但是为什么 b 的值没有改变成功呢？接下来，可以深入研究一下 Integer 自动装箱的原理。</p>
+<p>上面已经说了，如果变量的值 在 low 和 high 之间，就会直接返回一个缓存池的数组对应位置的副本。</p>
+<p>IntegerCache 类源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> Integer cache[];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">static</span> &#123;</span><br><span class="line">          <span class="comment">// high value may be configured by property</span></span><br><span class="line">          <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">          String integerCacheHighPropValue =</span><br><span class="line">              VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>);</span><br><span class="line">          <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">              <span class="keyword">try</span> &#123;</span><br><span class="line">                  <span class="keyword">int</span> i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                  i = Math.max(i, <span class="number">127</span>);</span><br><span class="line">                  <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                  h = Math.min(i, Integer.MAX_VALUE - (-low) -<span class="number">1</span>);</span><br><span class="line">              &#125; <span class="keyword">catch</span>( NumberFormatException nfe) &#123;</span><br><span class="line">                  <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          high = h;</span><br><span class="line"></span><br><span class="line">          cache = <span class="keyword">new</span> Integer[(high - low) + <span class="number">1</span>];</span><br><span class="line">          <span class="keyword">int</span> j = low;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cache.length; k++)</span><br><span class="line">              cache[k] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">          <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>发现 low 为 -128， high 为 127 。</p>
+<p>我们此时的变量值 a = 1, b = 2 都会执行下面这个逻辑来返回对象。</p>
+<p>即通过下面这句话来返回。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br></pre></td></tr></table></figure>
+
+<p>注意到 cache 是一个数组,  static final Integer cache[] 。并且 final 修饰，数组可以看做是一个对象，这个时候，我们如果通过反射修改 value 的值，就相当于修改了 cache[i + 128] 的数值。</p>
+<p>分析反射修改的第一句话相当于：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">field.set(a, b);</span><br></pre></td></tr></table></figure>
+
+<p>将 b 的值赋值给 cache[1 + 128] = 2 ; 而修改前，cache[1 + 128] 的值是 1。</p>
+<p>所以，在执行第二句话的时候</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">field.set(b, temp);</span><br></pre></td></tr></table></figure>
+
+<p>相当于执行了： cache[2 + 128] = cache[1 + 128] 。 而此时 cache[1 + 128] 的值已经被修改，已经不是原来的 1 了，而是2，所以就会打印 a = 2, b = 2 after swap 。</p>
+<blockquote>
+<p>关于为什么会有 cache[i + 128] 是因为cache 数组是按照 cache[0] = -128 …. cache[129] = 1….cache[254] = 127 。</p>
+</blockquote>
+<p>这个时候，缓存池里已经没有 1 存在了。而是 cache[129] = 2 、 cache[130] = 2 。</p>
+<p>需要解决这个问题，我们只需要改一句话：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">field.set(b, <span class="keyword">new</span> Integer(temp));</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">field.setInt(b, temp)</span><br></pre></td></tr></table></figure>
+
+<p>将 temp 改成， new Integer(temp) 即可。其中又蕴含着什么呢。为什么直接写 temp 不行。</p>
+<p>如果直接写 temp ，它是一个基本数据类型，照样还是自动完成自动装箱操作，又会执行 valueOf 里面 if 里面的代码，从缓存池中返回数据。而使用 new Integer(temp) 就不会执行 valueOf 方法，就会对 new Integer(temp) 这个匿名变量进行自动拆箱操作，然后把自动拆箱后的值 1 赋值给 cache[130] 。至此，完成了 a 和 b 的交换。而此时，a 和 b 指向的地址根本都没发生变化，发生变化的是地址里保存的值。相当于 cache[129] 和 cache[130] 进行了交换。</p>
+<p>可以这样来验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer i = <span class="number">1</span>;</span><br><span class="line">System.out.println(i);  <span class="comment">// 输出 2</span></span><br></pre></td></tr></table></figure>
+
+<p>在执行过 swap 函数后，赋值一个变量 等于 1 ，会发现打印出来的并不是1，而是 2 。因为还是进行了自动装箱，然后返回了 cache[129]，而此时，cache[129] 的值是 2， 并不是 1。cache[130] 的值才是1 。</p>
+<h2 id="重点及疑惑"><a href="#重点及疑惑" class="headerlink" title="重点及疑惑"></a>重点及疑惑</h2><p><strong>看到这里，还有一些疑惑。不是说了返回的是数组的值的副本，为什么通过反射进行修改，反而会影响原来的缓存池里的数据呢？ 它这里返回的不是值得副本，而是数组的引用吗？其实它返回的是这个对象引用的副本，而要解释这个问题，需要知道反射到底是修改的是什么</strong></p>
+<p>在这里，我也非常疑惑，并且通过控制变量、结合调试，进行了实验。</p>
+<p>发现如论 final 还是 static ，并且完全按照 Integer 类实现类似的情况来进行模拟，发现如下问题：</p>
+<p>如果值在 -128 —— 127 之间，无法修改。（注意不要试 1 和 2 ，因为已经修改缓存池。坑）</p>
+<p>即使值不在这个区间也无法修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.enjoyms.study;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwapTwoNum</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="keyword">final</span> Integer[] e = <span class="keyword">new</span> Integer[<span class="number">10</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        Integer b = <span class="number">2</span>;</span><br><span class="line">        System.out.println(<span class="string">"a:"</span>+a+<span class="string">"b:"</span>+b); <span class="comment">// a:1 b:2</span></span><br><span class="line">        swap(a, b);</span><br><span class="line">        System.out.println(<span class="string">"a:"</span>+a+<span class="string">"b:"</span>+b);  <span class="comment">// a:2 b:1 </span></span><br><span class="line"></span><br><span class="line">        Integer c = <span class="number">1111</span>;</span><br><span class="line">        Integer d = <span class="number">1111</span>;</span><br><span class="line">        System.out.println(c==d);   <span class="comment">// 输出为 False，因为执行了 new ，是两个不同的对象。</span></span><br><span class="line">        Cache.e[<span class="number">5</span>] = <span class="number">3</span>;</span><br><span class="line">        Integer f = Cache.e[<span class="number">5</span>];</span><br><span class="line">        System.out.println(f == Cache.e[<span class="number">5</span>]);   <span class="comment">// 输出为 True</span></span><br><span class="line">        Cache.e[<span class="number">5</span>] = <span class="number">4</span>;</span><br><span class="line">        System.out.println(f);    <span class="comment">// 输出为 3 </span></span><br><span class="line">        Integer i = <span class="number">1</span>;</span><br><span class="line">        System.out.println(i);   <span class="comment">// 输出的为 2 </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(Integer a, Integer b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> temp = a.intValue();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            field.set(a, b);</span><br><span class="line">            field.set(b, <span class="keyword">new</span> Integer(temp));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>综上，可以判断，其实每个值的副本的引用都是同一个地址，而通过反射修改，是获取指向的地址，然后进行修改，所以可以实现通过副本也可以修改原始值，而一旦用了反射，则可以越过很多限制</strong></p>
+<p>通过代码验证（数值不在缓存池中）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Integer a = <span class="number">1000</span>;</span><br><span class="line">    Integer b = a;</span><br><span class="line">    System.out.println(a == b);  <span class="comment">// true</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.setInt(b, <span class="number">2000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(a); <span class="comment">// 输出 2000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过这个函数，通过反射，修改 a 的引用的副本 b，查看变量 a 是否被修改，结果 输出 2000 ，证明，通过引用副本被修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Integer a = <span class="number">1000</span>;</span><br><span class="line">    Integer b = <span class="number">1000</span>;</span><br><span class="line">    System.out.println(a == b);  <span class="comment">// false</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.setInt(b, <span class="number">20</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(a); <span class="comment">// 输出 1000</span></span><br><span class="line">    System.out.println(b); <span class="comment">// 输出 20</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子说明：不在缓存池里的数，即使值相同，但是是两个不同的对象，修改其中一个并不会影响另一个的值。</p>
+<p>测试缓存池里的情况：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     Integer a = <span class="number">10</span>;</span><br><span class="line">     Integer b = a;</span><br><span class="line">     System.out.println(a == b);  <span class="comment">// true</span></span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">         Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">         field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">         field.setInt(b, <span class="number">20</span>);</span><br><span class="line">     &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">         e.printStackTrace();</span><br><span class="line">     &#125;</span><br><span class="line">     System.out.println(a);  <span class="comment">// 输出 20</span></span><br><span class="line">     Integer c = <span class="number">10</span>;</span><br><span class="line">     System.out.println(c);   <span class="comment">// 输出 20</span></span><br><span class="line">     </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：如果是缓存池里通过引用副本修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Result</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Integer a = <span class="number">10</span>;</span><br><span class="line">    Integer b = <span class="number">10</span>;</span><br><span class="line">    System.out.println(a == b);  <span class="comment">// true</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Field field = Integer.class.getDeclaredField("value");</span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        field.setInt(b, <span class="number">20</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(a);  <span class="comment">// 输出 20</span></span><br><span class="line">    System.out.println(b);  <span class="comment">// 输出  20</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：通过缓存池里，数值相同，返回对象的地址是相同的。只是两个引用的副本而已。</p>
+<p><strong>证明：通过反射修改变量的值，可以通过引用的副本来修改源对象的值。</strong></p>
+<blockquote>
+<p>关于判断两个对象的引用是否指向同一个地址，可以使用 == 来判断。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/01/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E4%B8%AD%E7%9A%84%E6%A0%88%E5%B8%A7/" rel="next" title="JVM 虚拟机栈中的栈帧">
+                <i class="fa fa-chevron-left"></i> JVM 虚拟机栈中的栈帧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/10/Python%E6%8A%BD%E8%B1%A1abc%E6%A8%A1%E5%9D%97/" rel="prev" title="Python抽象abc模块">
+                Python抽象abc模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ABC</p>
+              <p class="site-description motion-element" itemprop="description">~~~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">125</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java中交换两个数字的一般方法"><span class="nav-number">1.</span> <span class="nav-text">Java中交换两个数字的一般方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果必须使用函数进行交换呢"><span class="nav-number">2.</span> <span class="nav-text">如果必须使用函数进行交换呢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过反射技术实现"><span class="nav-number">3.</span> <span class="nav-text">通过反射技术实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重点及疑惑"><span class="nav-number">4.</span> <span class="nav-text">重点及疑惑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABC</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
