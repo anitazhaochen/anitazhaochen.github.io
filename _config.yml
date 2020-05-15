@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: YL
+title: YL测试2
 subtitle: YL
 description: [~~~~~]
 author: ABC
@@ -78,21 +78,9 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-#- type: git
-#  repo: ssh://git@39.106.141.99:2222/home/git/hexo.git
-#  branch: master
-#- type: rsync
-#  host: nas.enjoyms.com
-#  user: Blog
-#  root: /var/services/homes/Blog/ZBlog/.
-#  port: 2233
-#  delete: true
-#- type: git
-#  repo: git@github.com:anitazhaochen/anitazhaochen.github.io.git
-#  branch: master
-- type: git
+  type: git
   repo: ssh://git@gitlab.enjoyms.com:20001/zhaochen/blog.git
-  branch: master
+  branch: dev
   extend_dirs: /
   ignore_hidden: false
   ignore_pattern:
