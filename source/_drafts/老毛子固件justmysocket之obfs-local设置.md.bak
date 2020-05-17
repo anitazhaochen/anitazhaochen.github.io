@@ -18,6 +18,7 @@ category: openwrt
 在页面上建议，直接点击飞机，然后添加节点那里输入如下参数
 
 `  -O origin -o plain --plugin obfs-local --plugin-opts "obfs=tls;obfs-host=www.bing.com"`
+<!--more -->
 
 然后填写节点信息，点加号就可以了。
 
