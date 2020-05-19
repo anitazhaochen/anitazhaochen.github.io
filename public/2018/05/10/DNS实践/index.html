@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="centos,linux,bind,named," />
+  <meta name="keywords" content="linux,centos,bind,named,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="DNS解析类型：    Name –&gt;ip    Ip –&gt; Name 注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树">
+<meta name="description" content="DNS解析类型：    Name –&amp;gt;ip    Ip –&amp;gt; Name 注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树">
+<meta name="keywords" content="linux,centos,bind,named">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNS配置实践">
-<meta property="og:url" content="http://yoursite.com/2018/05/10/DNS%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/05/10/DNS实践/index.html">
 <meta property="og:site_name" content="向阳花">
-<meta property="og:description" content="DNS解析类型：    Name –&gt;ip    Ip –&gt; Name 注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树">
-<meta property="article:published_time" content="2018-05-10T08:47:56.000Z">
-<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
-<meta property="article:author" content="ABC">
-<meta property="article:tag" content="centos">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="bind">
-<meta property="article:tag" content="named">
+<meta property="og:description" content="DNS解析类型：    Name –&amp;gt;ip    Ip –&amp;gt; Name 注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-15T06:15:25.544Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DNS配置实践">
+<meta name="twitter:description" content="DNS解析类型：    Name –&amp;gt;ip    Ip –&amp;gt; Name 注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树">
 
 
 
@@ -122,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/10/DNS实践/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/10/DNS实践/">
 
 
 
@@ -138,9 +136,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+</head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -150,13 +148,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,9 +182,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,9 +192,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -230,20 +228,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/DNS%E5%AE%9E%E8%B7%B5/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/DNS实践/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -275,7 +273,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -286,7 +284,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/linux/" itemprop="url" rel="index">
                     <span itemprop="name">linux</span>
                   </a>
@@ -325,8 +323,8 @@
 
       
         <h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>解析类型：<br>    Name –&gt;ip<br>    Ip –&gt; Name</p>
-<pre><code>注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树</code></pre><a id="more"></a>
-
+<pre><code>注意： 正方向解析是连个不同的名称空间，是两颗不同的解析树
+</code></pre><a id="more"></a>
 <p>DNS服务器类型：<br>    主DNS服务器<br>    辅助DNS服务器<br>    缓存DNS服务器<br>    转发器</p>
 <pre><code>主DNS服务器： 维护所负责解析的域内解析库服务器，解析库由管理维护
 从DNS服务器： 从主服务器或其他服务器那里”复制“（区域传递）一份解析库
@@ -340,26 +338,30 @@
 
 区域传送：
     全量传递：传递整个解析库
-    增量传递：传递解析库变化的哪部分内容</code></pre><p>DNS：<br>    Domain：<br>        正向：FQDN–&gt; IP<br>        反向：IP–&gt; FQDN</p>
+    增量传递：传递解析库变化的哪部分内容
+</code></pre><p>DNS：<br>    Domain：<br>        正向：FQDN–&gt; IP<br>        反向：IP–&gt; FQDN</p>
 <pre><code>    各需要一个解析库来分别负责本地域名的正向和反向解析
         正向区域
         反向区域
 
 FQDN：Full Qualitfied DOmain Name
-    www.enjoyms.com.</code></pre><p>一次完整的查询请求经过的流程：<br>    Client –&gt; hosts文件 –&gt; DNS Service<br>        Local Cache –&gt; DNS Server –&gt; Server Cache –&gt; iteration(迭代）———&gt;</p>
+    www.enjoyms.com.
+</code></pre><p>一次完整的查询请求经过的流程：<br>    Client –&gt; hosts文件 –&gt; DNS Service<br>        Local Cache –&gt; DNS Server –&gt; Server Cache –&gt; iteration(迭代）———&gt;</p>
 <pre><code>解析答案：
     肯定答案
     否定答案：请求的条目不存在等原因导致无法返回结果
 
     权威答案
-    非权威答案</code></pre><p>区域解析库：由众多RR组成<br>    资源记录：Resource Record，RR<br>        记录类型：A，AAAA，PTR，SOA，NS，CNAME，MX</p>
+    非权威答案
+</code></pre><p>区域解析库：由众多RR组成<br>    资源记录：Resource Record，RR<br>        记录类型：A，AAAA，PTR，SOA，NS，CNAME，MX</p>
 <pre><code>SOA：Start Of Authority ，起始授权记录，一个区域解析库有且仅能有一个SOA记录，而必须为解析库的第一条记录
 A: internet Address ,作用，FQDN --&gt; IP
 AAAA: FQDN --&gt;IPV6
 PTR: PoinTeR, IP --&gt; FQDN
 NS：Name Server，专用于标明当前区域的DNS服务器
 CNAME：Canonical Name，别名记录
-MX：Mail eXchange，邮件交换器</code></pre><p>资源记录定义的格式：<br>    语法：name [TTL]  IN  rr_type   value</p>
+MX：Mail eXchange，邮件交换器
+</code></pre><p>资源记录定义的格式：<br>    语法：name [TTL]  IN  rr_type   value</p>
 <pre><code>注意：
     （1）TTL可以全局继承
     （2）@可用于引用当前区域的名字
@@ -453,7 +455,8 @@ SOA:
             H,D,M,W
 
     BIND:
-        RR类型：A，AAAA，PTR，NS，MX，CNAME，SOA，AAAA</code></pre><p>DNS and BIND(2)<br>    子域授权：每个域的名称服务器，都是通过其上级名称服务器在解析库进行授权<br>        类似根域授权tld：<br>        .com. IN NS ns1.com.<br>        .com. IN NS ns2.com.<br>        ns1.com. IN A 2.2.2.1<br>        ns2.com. IN A 2.2.2.2</p>
+        RR类型：A，AAAA，PTR，NS，MX，CNAME，SOA，AAAA
+</code></pre><p>DNS and BIND(2)<br>    子域授权：每个域的名称服务器，都是通过其上级名称服务器在解析库进行授权<br>        类似根域授权tld：<br>        .com. IN NS ns1.com.<br>        .com. IN NS ns2.com.<br>        ns1.com. IN A 2.2.2.1<br>        ns2.com. IN A 2.2.2.2</p>
 <pre><code>enjoyms.com.  在.com的名称服务器上，解析库中添加资源记录
     enjoyms.com.    IN      NS      ns1.enjoyms.com.
     enjoyms.com.    IN      NS      ns2.enjoyms.com.
@@ -561,7 +564,8 @@ rndc：
             （1）NS记录
             （2）授权允许区域传送
         从服务器：
-            （1）只需定义区域：</code></pre><p>​<br>DNS and BIND（3）<br>​<br>    子域授权：分布式数据库</p>
+            （1）只需定义区域：
+</code></pre><p>​<br>DNS and BIND（3）<br>​<br>    子域授权：分布式数据库</p>
 <pre><code>正向解析区域子域方法：
 
     定义一个子区域：
@@ -628,7 +632,8 @@ rndc：
                     }
 
                     注意：
-                        （1）一旦启用了view，所有的zone都只能定义在view中</code></pre>
+                        （1）一旦启用了view，所有的zone都只能定义在view中
+</code></pre>
       
     </div>
     
@@ -645,9 +650,9 @@ rndc：
       
         <div class="post-tags">
           
-            <a href="/tags/centos/" rel="tag"># centos</a>
-          
             <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/centos/" rel="tag"># centos</a>
           
             <a href="/tags/bind/" rel="tag"># bind</a>
           
@@ -664,7 +669,7 @@ rndc：
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/10/%E5%9F%BA%E4%BA%8EOpenwrt%E7%9A%84%E5%88%9B%E4%B8%9A/" rel="next" title="基于OpenWrt的创业">
+              <a href="/2018/05/10/基于Openwrt的创业/" rel="next" title="基于OpenWrt的创业">
                 <i class="fa fa-chevron-left"></i> 基于OpenWrt的创业
               </a>
             
@@ -674,7 +679,7 @@ rndc：
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/04/authbind%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="prev" title="authbind在docker中使用">
+              <a href="/2018/08/04/authbind使用说明/" rel="prev" title="authbind在docker中使用">
                 authbind在docker中使用 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -740,7 +745,7 @@ rndc：
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -751,7 +756,7 @@ rndc：
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
@@ -764,7 +769,7 @@ rndc：
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -775,7 +780,7 @@ rndc：
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">128</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

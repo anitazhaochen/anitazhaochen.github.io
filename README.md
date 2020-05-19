@@ -5,6 +5,12 @@ category: Blog
 date: 2018-1-10
 ---
 
+## 2020-5.19 更新
+
+部署博客方式, 启用 `hexo d`
+使用 sh hexod.sh 进行部署
+
+
 ## Nginx1.15.6
 
 | 2018-11-06 | [nginx-1.14.1](http://nginx.org/en/download.html) stable and [nginx-1.15.6](http://nginx.org/en/download.html) mainline versions have been released, with fixes for[vulnerabilities in HTTP/2](http://nginx.org/en/security_advisories.html) (CVE-2018-16843, CVE-2018-16844) and [the MP4 module](http://nginx.org/en/security_advisories.html)(CVE-2018-16845). |

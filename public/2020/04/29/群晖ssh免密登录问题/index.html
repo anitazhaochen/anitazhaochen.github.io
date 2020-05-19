@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ssh,群晖,rsa," />
+  <meta name="keywords" content="ssh,群晖,rsa,">
 
 
 
@@ -80,18 +80,17 @@
 
 
 <meta name="description" content="群晖SSH免密登录在这里分享一下群晖开启ssh后，把公钥传输到机器上面，然后依旧无法免密登录的解决方法。 我的情况是这样的，很奇怪，在 iterm 中即使已经把公钥上传到群晖的家目录中的 .ssh 文件夹中了，但是还是会让我输入密码。然后如果此时保持有一个窗口已经登录服务器，第二个窗口就可以直接登录，不需要输入密码。这里并没有深究是iterm自带的功能，还是群晖服务器的问题。 反正第一次无法正常免">
+<meta name="keywords" content="ssh,群晖,rsa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="群晖ssh免密登录问题.md">
-<meta property="og:url" content="http://yoursite.com/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="群晖SSH免密登录在这里分享一下群晖开启ssh后，把公钥传输到机器上面，然后依旧无法免密登录的解决方法。 我的情况是这样的，很奇怪，在 iterm 中即使已经把公钥上传到群晖的家目录中的 .ssh 文件夹中了，但是还是会让我输入密码。然后如果此时保持有一个窗口已经登录服务器，第二个窗口就可以直接登录，不需要输入密码。这里并没有深究是iterm自带的功能，还是群晖服务器的问题。 反正第一次无法正常免">
-<meta property="article:published_time" content="2020-04-29T11:14:35.000Z">
-<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
-<meta property="article:author" content="ABC">
-<meta property="article:tag" content="ssh">
-<meta property="article:tag" content="群晖">
-<meta property="article:tag" content="rsa">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-15T06:15:25.562Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="群晖ssh免密登录问题.md">
+<meta name="twitter:description" content="群晖SSH免密登录在这里分享一下群晖开启ssh后，把公钥传输到机器上面，然后依旧无法免密登录的解决方法。 我的情况是这样的，很奇怪，在 iterm 中即使已经把公钥上传到群晖的家目录中的 .ssh 文件夹中了，但是还是会让我输入密码。然后如果此时保持有一个窗口已经登录服务器，第二个窗口就可以直接登录，不需要输入密码。这里并没有深究是iterm自带的功能，还是群晖服务器的问题。 反正第一次无法正常免">
 
 
 
@@ -121,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/">
 
 
 
@@ -137,9 +136,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+</head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -149,13 +148,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -183,9 +182,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -193,9 +192,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -229,20 +228,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -274,7 +273,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -285,8 +284,8 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BE%A4%E6%99%96/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/群晖/" itemprop="url" rel="index">
                     <span itemprop="name">群晖</span>
                   </a>
                 </span>
@@ -329,14 +328,12 @@
 <li><p>在服务器上面开一个一次性的临时的ssh服务，这个服务职能被连接一次。端口随便设置个端口，不要与其他端口冲突就行，-d 开启debug 模式。</p>
 <p><code>which sshd</code>  使用这个命令先查看 sshd 的绝对路径，我的是 /bin/sshd</p>
 <a id="more"></a>
-
 <p><code>sudo /bin/sshd -p 2234</code> 我的ssh端口是2233， 所以我开一个临时的，没有被占用的端口就随便选了 2234 。 我这里是有公网ip的，然后通过 ddns ，然后设置端口转发，最后使用域名来代替 ip 来连接。关于端口转发，及公网ip、ddns 不在叙述。</p>
 </li>
 <li><p>通过第一步开启临时服务后，在本机新打开一个终端，通过 ssh -vvv -p 2234 xxx.xxx.com 来进行连接。</p>
 </li>
 <li><p>然后观察服务器打印出来的日志，我这里发现这个错误:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh receive packet: type 51</span><br><span class="line">Authentication refused: bad ownership or modes for directory</span><br></pre></td></tr></table></figure>
-
 <p>直接查看日志是否有否定的词语，就可以知道大概是哪里有问题了。</p>
 </li>
 <li><p>然后发生这个问题主要是因为目录权限设置的问题。我这里改了下权限设置就可以了。</p>
@@ -377,7 +374,7 @@
           
             <a href="/tags/ssh/" rel="tag"># ssh</a>
           
-            <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"># 群晖</a>
+            <a href="/tags/群晖/" rel="tag"># 群晖</a>
           
             <a href="/tags/rsa/" rel="tag"># rsa</a>
           
@@ -392,7 +389,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/" rel="next" title="群晖GitLab创建https访问">
+              <a href="/2020/04/12/群晖GitLab创建https访问/" rel="next" title="群晖GitLab创建https访问">
                 <i class="fa fa-chevron-left"></i> 群晖GitLab创建https访问
               </a>
             
@@ -402,7 +399,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/11/%E5%BE%AE%E6%98%9FGE72-2QF-258XCN%E9%BB%91%E8%8B%B9%E6%9E%9C%E5%85%8D%E9%A9%B1%E8%93%9D%E7%89%99/" rel="prev" title="微星GE72-2QF-258XCN黑苹果免驱蓝牙">
+              <a href="/2020/05/11/微星GE72-2QF-258XCN黑苹果免驱蓝牙/" rel="prev" title="微星GE72-2QF-258XCN黑苹果免驱蓝牙">
                 微星GE72-2QF-258XCN黑苹果免驱蓝牙 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -468,7 +465,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -479,7 +476,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
@@ -492,7 +489,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -503,7 +500,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">128</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

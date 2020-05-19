@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python," />
+  <meta name="keywords" content="Python,">
 
 
 
@@ -80,16 +80,17 @@
 
 
 <meta name="description" content="新式类和经典类在 Python 2.x 中默认都是经典类，在 Pyhton 3.x 中默认都是新式类 新式类和经典类的区别:  只有显示继承了 object 才是新式类 用法上的区别:  新式类对象可以直接通过  __class__ 属性获取自身类型为 type  12345678910111213141516171819# coding:utf8# 新式类class demo(object):">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python新式类及通过继承修改源码">
-<meta property="og:url" content="http://yoursite.com/2019/12/13/Python%E6%96%B0%E5%BC%8F%E7%B1%BB%E5%8F%8A%E9%80%9A%E8%BF%87%E7%BB%A7%E6%89%BF%E4%BF%AE%E6%94%B9%E6%BA%90%E7%A0%81/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/12/13/Python新式类及通过继承修改源码/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="新式类和经典类在 Python 2.x 中默认都是经典类，在 Pyhton 3.x 中默认都是新式类 新式类和经典类的区别:  只有显示继承了 object 才是新式类 用法上的区别:  新式类对象可以直接通过  __class__ 属性获取自身类型为 type  12345678910111213141516171819# coding:utf8# 新式类class demo(object):">
-<meta property="article:published_time" content="2019-12-13T03:00:36.000Z">
-<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
-<meta property="article:author" content="ABC">
-<meta property="article:tag" content="Python">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-15T06:15:25.552Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python新式类及通过继承修改源码">
+<meta name="twitter:description" content="新式类和经典类在 Python 2.x 中默认都是经典类，在 Pyhton 3.x 中默认都是新式类 新式类和经典类的区别:  只有显示继承了 object 才是新式类 用法上的区别:  新式类对象可以直接通过  __class__ 属性获取自身类型为 type  12345678910111213141516171819# coding:utf8# 新式类class demo(object):">
 
 
 
@@ -119,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/12/13/Python新式类及通过继承修改源码/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/13/Python新式类及通过继承修改源码/">
 
 
 
@@ -135,9 +136,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+</head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -147,13 +148,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -181,9 +182,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -191,9 +192,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -227,20 +228,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/13/Python%E6%96%B0%E5%BC%8F%E7%B1%BB%E5%8F%8A%E9%80%9A%E8%BF%87%E7%BB%A7%E6%89%BF%E4%BF%AE%E6%94%B9%E6%BA%90%E7%A0%81/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/13/Python新式类及通过继承修改源码/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -272,7 +273,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -283,7 +284,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/Python/" itemprop="url" rel="index">
                     <span itemprop="name">Python</span>
                   </a>
@@ -329,24 +330,16 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新式类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">demo</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> demo.__class__</span><br><span class="line"></span><br><span class="line">经典类</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">demo1</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> demo1.__class__</span><br><span class="line"></span><br><span class="line">&lt;type <span class="string">'type'</span>&gt;     <span class="comment"># 新式类的输出</span></span><br><span class="line">Traceback (most recent call last):   <span class="comment"># 经典类不包含 __class__ 属性</span></span><br><span class="line">  File <span class="string">"1demo.py"</span>, line <span class="number">13</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="keyword">print</span> demo1.__class__</span><br><span class="line">AttributeError: <span class="class"><span class="keyword">class</span> <span class="title">demo1</span> <span class="title">has</span> <span class="title">no</span> <span class="title">attribute</span> '<span class="title">__class__</span>'</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-
-
-
 <ul>
 <li><p>继承搜索的顺序发生了改变，经典类多继承属性搜索顺序： 先深入数左侧，返回，再开始找右侧； 新式类多继承属性搜索顺序：先水平搜索，然后再向上移动。（经典类采用深度优先搜索的方式，新式类采用广度优先搜索）</p>
 <p>举例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此实验基于 Python2 </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"A_test"</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"B_test"</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(A)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(C,B,A)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">d = D()</span><br><span class="line">d.test()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出 A_test  ， D 没有继承 object 表示经典类，使用深度优先搜索， 搜索顺序是  D --&gt; C 然后 C --&gt; A</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果将D类改一下:</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object,C,B,A)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出 B_test   ,表示先搜索 C ，然后并没有沿着C继续搜索A，而是开始搜索 B ，即广度优先搜索。</span></span><br></pre></td></tr></table></figure>
-
-
-
 </li>
-</ul>
-<ul>
-<li>新式类增加了 <code>__slots__</code> 属性， 可以把实例属性的种类锁定到 <code>__slots__</code> 规定的范围之中。</li>
+<li><p>新式类增加了 <code>__slots__</code> 属性， 可以把实例属性的种类锁定到 <code>__slots__</code> 规定的范围之中。</p>
+</li>
 <li>新式类增加了 <code>__getattribute__</code> 方法</li>
 </ul>
 <h2 id="Python2-中初始化父类构造方法"><a href="#Python2-中初始化父类构造方法" class="headerlink" title="Python2 中初始化父类构造方法"></a>Python2 中初始化父类构造方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(libClass)</span>:</span> </span><br><span class="line">  		<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">          <span class="comment">#super(MyStats, self).__init__(*args, **kwargs)</span></span><br><span class="line">        	libClass.__init__(self, *args, **kwargs)</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 使用 super 会报错。</span></span><br></pre></td></tr></table></figure>
-
 <p><a href="https://stackoverflow.com/questions/489269/python-super-raises-typeerror" target="_blank" rel="noopener">Python super() raises TypeError</a></p>
 <ul>
 <li>super() 函数是用于调用父类(超类)的一个方法。</li>
@@ -361,32 +354,19 @@
 </li>
 <li><p>如果需要在子类中执行父类的<code>__init__</code>方法，必须显示执行</p>
 </li>
-<li><p>说 Python3 继承搜索是一种广度表里优先的方式，不太准确<a href="https://www.cnblogs.com/whatisfantasy/p/6046991.html" target="_blank" rel="noopener">具体遍历方式C3</a></p>
-</li>
+<li>说 Python3 继承搜索是一种广度表里优先的方式，不太准确<a href="https://www.cnblogs.com/whatisfantasy/p/6046991.html" target="_blank" rel="noopener">具体遍历方式C3</a></li>
 </ul>
 <h3 id="r-和-s-的区别"><a href="#r-和-s-的区别" class="headerlink" title="%r  和 %s 的区别"></a>%r  和 %s 的区别</h3><p>%r 使用 rper() 方法处理对象</p>
 <p>%s 用 str()  方法处理对象</p>
 <p>有些情况下两者处理的结果是一样的，比如 Int 对象</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print &quot;hello %d&quot;%2020  # hello 2020</span><br><span class="line">print &quot;hello %s&quot;%2020  # hello 2020</span><br><span class="line">print &quot;hello %r&quot;%2020  # hello 2020</span><br></pre></td></tr></table></figure>
-
 <p>字符串对象就不同了:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">"hello %s"</span>%<span class="string">"world"</span>    <span class="comment"># hello world</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello %r"</span>%<span class="string">"world"</span>    <span class="comment"># hello 'world'</span></span><br></pre></td></tr></table></figure>
-
 <p>可以看出 %r 对 字符串加了 引号。</p>
 <p>%r 打印时能够重现它所代表的对象</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">d = datetime.date.today()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"%s"</span>%d   <span class="comment">#  2019-12-17</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"%r"</span>%d   <span class="comment">#  datetime.date(2019, 12, 17)</span></span><br></pre></td></tr></table></figure>
-
-
-
 <h3 id="sys-stdout"><a href="#sys-stdout" class="headerlink" title="sys.stdout"></a>sys.stdout</h3><p>可以为一个 io流赋值给 sys.stdout，然后通过 print 就可以像这个流中写入数据。 </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sys.stdout = iostream</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"hello"</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
 
       
     </div>
@@ -417,7 +397,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/22/Python%E4%B9%8BBound-Method-%E5%92%8C-Unbound-Method-%E5%8F%8A-Function/" rel="next" title="Python之Bound Method 和 Unbound Method 及 Function">
+              <a href="/2019/11/22/Python之Bound-Method-和-Unbound-Method-及-Function/" rel="next" title="Python之Bound Method 和 Unbound Method 及 Function">
                 <i class="fa fa-chevron-left"></i> Python之Bound Method 和 Unbound Method 及 Function
               </a>
             
@@ -427,7 +407,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/12/Python%E8%A3%85%E9%A5%B0%E5%99%A8%E8%A3%85%E9%A5%B0%E7%B1%BB/" rel="prev" title="Python装饰器装饰类">
+              <a href="/2020/03/12/Python装饰器装饰类/" rel="prev" title="Python装饰器装饰类">
                 Python装饰器装饰类 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -493,7 +473,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -504,7 +484,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">97</span>
                   <span class="site-state-item-name">日志</span>
@@ -517,7 +497,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -528,7 +508,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">128</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
