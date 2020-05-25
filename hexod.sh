@@ -11,6 +11,7 @@ echo "开始生成静态文件"
 echo "准备开始发布"
 
 echo "正在提交 GitLab 备份"
+`git pull origin dev`
 `git add . && git commit -m "$1" && git push origin dev:dev`
 echo "提交到dev分支完成"
 
