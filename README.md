@@ -5,6 +5,26 @@ category: Blog
 date: 2018-1-10
 ---
 
+## 2020-5.22 更新
+
+我住的地方nas就在我旁边，一个单间。晚上有点吵，又想晚上反正也不用，挂了四块硬盘的nas，http 服务也挂在上面，基本是不会休眠的。
+又想了下电费，觉得入手一个树莓派势在必行。昨天树莓派到了。晚上下班回家已经 九点半 了。安装了系统，准备开搞，把一些服务放到
+树莓派上面，像博客这种东西，还是需要提供24小时不间断服务的，自己搞的 GitLab 目前并没有打算迁移出nas，万一哪天树莓派崩了，
+那岂不是一无所有了。反向代理可以放到 树莓派上面，ddns 也可以。
+
+综上所述：
+  目前 本博客 已运行在 树莓派 4B 上面
+  树莓派 4B 运行 nginx 进行反向代理, 二级域名不同的前缀，对应不同的机器及服务。 
+  ddns 运行在树莓派 docker 上面
+  博客自动部署运行在 docker 上面(这里出了点问题，x86机器上编译的无法在树莓派上运行，我在树莓派重新 build 了一遍，生成了一个新的镜像)
+
+
+## 2020-5.19 更新
+
+部署博客方式, 启用 `hexo d`
+使用 sh hexod.sh 进行部署
+
+
 ## Nginx1.15.6
 
 | 2018-11-06 | [nginx-1.14.1](http://nginx.org/en/download.html) stable and [nginx-1.15.6](http://nginx.org/en/download.html) mainline versions have been released, with fixes for[vulnerabilities in HTTP/2](http://nginx.org/en/security_advisories.html) (CVE-2018-16843, CVE-2018-16844) and [the MP4 module](http://nginx.org/en/security_advisories.html)(CVE-2018-16845). |
