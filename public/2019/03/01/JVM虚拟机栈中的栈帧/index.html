@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,">
+  <meta name="keywords" content="Java," />
 
 
 
@@ -80,18 +80,17 @@
 
 
 <meta name="description" content="JVM虚拟机中的栈帧栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，存在于虚拟机运行时数据区中的虚拟机栈栈中的元素。  一个栈帧主要有 局部变量表 、操作数栈 、动态连接、方法出口 。 每一个方法从调用开始到执行完成的过程，就对应着一个栈帧在虚拟机里面从入栈到出栈的过程。">
-<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM 虚拟机栈中的栈帧">
-<meta property="og:url" content="http://yoursite.com/2019/03/01/JVM虚拟机栈中的栈帧/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/03/01/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E4%B8%AD%E7%9A%84%E6%A0%88%E5%B8%A7/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="JVM虚拟机中的栈帧栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，存在于虚拟机运行时数据区中的虚拟机栈栈中的元素。  一个栈帧主要有 局部变量表 、操作数栈 、动态连接、方法出口 。 每一个方法从调用开始到执行完成的过程，就对应着一个栈帧在虚拟机里面从入栈到出栈的过程。">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/image-20190301165059365.png">
-<meta property="og:updated_time" content="2020-05-15T06:15:25.547Z">
+<meta property="article:published_time" content="2019-03-01T08:41:36.000Z">
+<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM 虚拟机栈中的栈帧">
-<meta name="twitter:description" content="JVM虚拟机中的栈帧栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，存在于虚拟机运行时数据区中的虚拟机栈栈中的元素。  一个栈帧主要有 局部变量表 、操作数栈 、动态连接、方法出口 。 每一个方法从调用开始到执行完成的过程，就对应着一个栈帧在虚拟机里面从入栈到出栈的过程。">
 <meta name="twitter:image" content="http://yoursite.com/images/image-20190301165059365.png">
 
 
@@ -122,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/01/JVM虚拟机栈中的栈帧/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/01/JVM虚拟机栈中的栈帧/"/>
 
 
 
@@ -138,9 +137,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -150,13 +149,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,9 +183,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -194,9 +193,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -230,20 +229,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/JVM虚拟机栈中的栈帧/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E4%B8%AD%E7%9A%84%E6%A0%88%E5%B8%A7/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -275,7 +274,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -286,7 +285,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -327,7 +326,9 @@
         <h2 id="JVM虚拟机中的栈帧"><a href="#JVM虚拟机中的栈帧" class="headerlink" title="JVM虚拟机中的栈帧"></a>JVM虚拟机中的栈帧</h2><p>栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，存在于虚拟机运行时数据区中的虚拟机栈栈中的元素。</p>
 <p><img src="/images/image-20190301165059365.png" alt="image-20190301165059365"></p>
 <p>一个栈帧主要有 <strong>局部变量表</strong> 、<strong>操作数栈</strong> 、<strong>动态连接</strong>、<strong>方法出口</strong> 。</p>
-<p>每一个方法从调用开始到执行完成的过程，就对应着一个栈帧在虚拟机里面从入栈到出栈的过程。<br><a id="more"></a></p>
+<p>每一个方法从调用开始到执行完成的过程，就对应着一个栈帧在虚拟机里面从入栈到出栈的过程。</p>
+<a id="more"></a>
+
 <p>在编译程序代码的时候，栈帧中需要多大的局部变量表、多深的操作数栈已经完全确定了，并且写入到方法表的 Code 属性之中，因为一个栈帧需要分配多少内存，不会受到程序运行期变量数据的影响，而仅仅取决于具体的虚拟机实现。</p>
 <p>一个线程中的方法调用链可能会很长，很多方法都同时处于执行状态。对于执行引擎来讲，活动线程中，只有栈顶的栈帧是有效的，称为当前栈帧，这个栈帧所关联的方法称为当前方法。</p>
 <h2 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h2><p>是一组变量值储存空间，用于存放方法参数和方法内部定义的局部变量。</p>
@@ -377,7 +378,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/27/JVM内存模型/" rel="next" title="JVM内存模型">
+              <a href="/2019/02/27/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" rel="next" title="JVM内存模型">
                 <i class="fa fa-chevron-left"></i> JVM内存模型
               </a>
             
@@ -387,7 +388,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/04/Java关于两个数通过函数交换引发的问题/" rel="prev" title="Java关于两个数通过函数交换引发的问题">
+              <a href="/2019/03/04/Java%E5%85%B3%E4%BA%8E%E4%B8%A4%E4%B8%AA%E6%95%B0%E9%80%9A%E8%BF%87%E5%87%BD%E6%95%B0%E4%BA%A4%E6%8D%A2%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="Java关于两个数通过函数交换引发的问题">
                 Java关于两个数通过函数交换引发的问题 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -453,7 +454,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -464,7 +465,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
@@ -477,11 +478,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-<<<<<<< HEAD
                   <span class="site-state-item-count">31</span>
-=======
-                  <span class="site-state-item-count">32</span>
->>>>>>> f36f88f1ee39b42e6c2c333851dd2d18cf6a9805
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -492,11 +489,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-<<<<<<< HEAD
                   <span class="site-state-item-count">130</span>
-=======
-                  <span class="site-state-item-count">138</span>
->>>>>>> f36f88f1ee39b42e6c2c333851dd2d18cf6a9805
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
