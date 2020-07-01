@@ -232,6 +232,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/04/authbind使用说明/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/authbind使用说明/" itemprop="url">authbind在docker中使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T16:47:56+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Linux-普通用户使用authbind绑定特权端口"><a href="#Linux-普通用户使用authbind绑定特权端口" class="headerlink" title="Linux 普通用户使用authbind绑定特权端口"></a>Linux 普通用户使用authbind绑定特权端口</h1><p>在Linux上普通用户无法绑定1024以下的端口，不过总是会碰到一些特殊情况，比如遇到最多的就是普通用户程序要监听80端口，有很多方法可以实现，之前常用的就是使用sudo给予普通用户一定的权限，不过总感觉sudo控制起来不是很方便，最近发现ubuntu下面有一款小程序authbind可以实现该功能，且配置起来也方便。　　authbind允许程序不使用root权限来绑定系统1024以下的特权端口，你必须使程序调用authbind，authbind会调用一些环境变量，来允许你的程序绑定在特权端口。　　Ubuntu 12.04安装authbind　　apt-get install authbind　　怎样使用authbind呢？通过配置文件区域来使用了，默认的配置文件区域在/etc/authbind目录下，里面有三个目录：byport、byaddr、byuid。　　假如我们有个test账号，想运行一个程序绑定80端口　　在byport目录下建立80文件：/etc/authbind/byport/80即#touch /etc/authbind/byport/80，设置test账户有80文件的使用权限，如果80文件可以被test访问，则绑定就是成功的，否则绑定就是失败的。　　具体操作：　　chmod 755 /etc/authbind/port/80; chown test /etc/authbind/port/80　　在你要启动的命令前加上authbind –deep命令即可。　　我们也可以直接在地址上绑定端口，在byaddr下建立ip:port文件，测试方法如上。也可以在byuid目录下建立uid文件，只要你的test账号可以访问，否则绑定失败</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/DNS实践/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1563,158 +1705,6 @@ fastcgi
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/国外VPS自己搭建/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/02/国外VPS自己搭建/" itemprop="url">国外VPS自己搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-02T00:00:00+08:00">
-                2018-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Shadowsocks/" itemprop="url" rel="index">
-                    <span itemprop="name">Shadowsocks</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>首先需要一台国外的 VPS ，可以在阿里云买，也可以在国外的网站买，可以使用 PayPal，或者信用卡。</p>
-<p>我用的是 DigitalOcean 的主机，按时间收费，一个月 <code>5$</code>，主要是使用的 github education 认证，然后通过推广链接，然后花了 <code>5$</code> 把账号激活了，然后账户里就有 <code>65$</code> 了。</p>
-<p><a href="https://m.do.co/c/cdd31cc97a15" target="_blank" rel="noopener">https://m.do.co/c/cdd31cc97a15</a>  可以通过这个链接注册，可以多得  <code>10$</code></p>
-<p>主机选择的是 旧金山的。</p>
-<p>ubuntu  16.04 操作系统</p>
-<p>如果选择 18.04 的话，可能会出点问题，因为它的 openssl 升级了，而我们即将安装的东西，他是依赖于 openssl ，需要改一些文件。</p>
-<p>首先安装 python (如果VPS上面没有 python)<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/02/国外VPS自己搭建/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1765,7 +1755,7 @@ fastcgi
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
