@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,requests,TLS,">
+  <meta name="keywords" content="Python,requests,TLS," />
 
 
 
@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误： 1requests.exceptions.SSLError: [Errno 1] _ssl.c:503: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed 原因是： Python 2.x 不">
-<meta name="keywords" content="Python,requests,TLS">
+<meta name="description" content="使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误： 1requests.exceptions.SSLError: [Errno 1] _ssl.c:503: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed  原因是： Python 2.x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requests中的sni">
-<meta property="og:url" content="http://yoursite.com/2019/11/07/requests中的sni/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/11/07/requests%E4%B8%AD%E7%9A%84sni/index.html">
 <meta property="og:site_name" content="向阳花">
-<meta property="og:description" content="使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误： 1requests.exceptions.SSLError: [Errno 1] _ssl.c:503: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed 原因是： Python 2.x 不">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-15T06:15:25.556Z">
+<meta property="og:description" content="使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误： 1requests.exceptions.SSLError: [Errno 1] _ssl.c:503: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed  原因是： Python 2.x">
+<meta property="article:published_time" content="2019-11-07T11:12:13.000Z">
+<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="requests">
+<meta property="article:tag" content="TLS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="requests中的sni">
-<meta name="twitter:description" content="使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误： 1requests.exceptions.SSLError: [Errno 1] _ssl.c:503: error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed 原因是： Python 2.x 不">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/07/requests中的sni/">
+  <link rel="canonical" href="http://yoursite.com/2019/11/07/requests中的sni/"/>
 
 
 
@@ -136,9 +137,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +149,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +183,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,9 +193,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -228,20 +229,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/07/requests中的sni/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/07/requests%E4%B8%AD%E7%9A%84sni/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +274,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -284,7 +285,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Python/" itemprop="url" rel="index">
                     <span itemprop="name">Python</span>
                   </a>
@@ -324,20 +325,27 @@
       
         <p>使用 Python2 中的 requests 访问 https 网站的时候，会出现这样的错误：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.exceptions.SSLError: [Errno <span class="number">1</span>] _ssl.c:<span class="number">503</span>: error:<span class="number">14090086</span>:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed</span><br></pre></td></tr></table></figure>
+
 <p>原因是： Python 2.x 不支持 SNI。</p>
 <h2 id="SNI"><a href="#SNI" class="headerlink" title="SNI"></a>SNI</h2><p>全称 Server Name Indication。 <strong>SNI 是 TLS 的一个扩展</strong></p>
-<p>了解 https 的人都知道，https 会首先建立 SSL 握手，然后才会传输数据。<br><a id="more"></a></p>
+<p>了解 https 的人都知道，https 会首先建立 SSL 握手，然后才会传输数据。</p>
+<a id="more"></a>
+
 <p>SNI 的作用是 在请求头部headers 中加入一个 Host 字段，这样就可以让 Nginx、Apache等 http 服务器可以通过Host字段来判断请求是要访问哪一个站点。这样就可以实现一台服务器上面部署多个不同域名的网站。而使用 https 后， 在 ssl 握手的过程中，是需要服务器提供证书的，而服务器并不知道这个请求请求的是哪一个host， 所以就就无法挑出对应的整数来供客户端校验。</p>
 <p>有了 SNI 后，服务器可以通过 SSL 过程中的 Client Hello 中的 SNI 扩展拿到用户要访问网站的 Server Name，进而发送与之匹配的整数，顺利完成 SSL 握手。</p>
 <p>而对于 Python 2.x 是不支持 SNI 的。</p>
 <p><a href="https://stackoverflow.com/questions/10667960/python-requests-throwing-sslerror" target="_blank" rel="noopener">Python  Requests throwing SSLError</a></p>
 <h2 id="临时解决方法"><a href="#临时解决方法" class="headerlink" title="临时解决方法"></a>临时解决方法</h2><ol>
 <li><p>关闭校验，就是不校验服务器端的证书</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = requests.get(url, verify=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = requests.get(url, verify=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>安装 requests 的时候，安装额外的支持 </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install requests[security]</span><br><span class="line"><span class="comment"># 或者已经安装requests了执行下面的</span></span><br><span class="line">pip install pyopenssl ndg-httpsclient pyasn1</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在requests 2.22.0 版本中，会自动帮我们尝试获取 SNI 的支持</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Attempt to enable urllib3's SNI support, if possible</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> urllib3.contrib <span class="keyword">import</span> pyopenssl</span><br><span class="line">    pyopenssl.inject_into_urllib3()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Check cryptography version</span></span><br><span class="line">    <span class="keyword">from</span> cryptography <span class="keyword">import</span> __version__ <span class="keyword">as</span> cryptography_version</span><br><span class="line">    _check_cryptography(cryptography_version)</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ol>
 
@@ -374,7 +382,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/07/使用rsync同步文件调试遇到的问题/" rel="next" title="使用rsync同步文件调试遇到的问题">
+              <a href="/2019/11/07/%E4%BD%BF%E7%94%A8rsync%E5%90%8C%E6%AD%A5%E6%96%87%E4%BB%B6%E8%B0%83%E8%AF%95%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="next" title="使用rsync同步文件调试遇到的问题">
                 <i class="fa fa-chevron-left"></i> 使用rsync同步文件调试遇到的问题
               </a>
             
@@ -384,7 +392,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/11/22/Python之Bound-Method-和-Unbound-Method-及-Function/" rel="prev" title="Python之Bound Method 和 Unbound Method 及 Function">
+              <a href="/2019/11/22/Python%E4%B9%8BBound-Method-%E5%92%8C-Unbound-Method-%E5%8F%8A-Function/" rel="prev" title="Python之Bound Method 和 Unbound Method 及 Function">
                 Python之Bound Method 和 Unbound Method 及 Function <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -450,7 +458,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -461,7 +469,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -474,7 +482,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -485,7 +493,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

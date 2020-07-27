@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ss,老毛子,padavan,">
+  <meta name="keywords" content="ss,老毛子,padavan," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="关于路由器最近小米 AC2100 终于可以刷机了。就在前几天听说可以刷机了，立马就刷了老毛子系统。之前是使用 LEDE 软路由进行一些科学设置的，但是 LEDE 是安装在群辉虚拟机上，每次群辉出现一些异常bug的时候，就需要重启，随之网络也断了。在试用了 LEDE 软路由之后，发现其中一些软件已经没有人维护了，根本用不了，还有一些软件如 KOOLDNS， bug 不断，要不然就是不更新ip，要不然">
-<meta name="keywords" content="ss,老毛子,padavan">
 <meta property="og:type" content="article">
 <meta property="og:title" content="老毛子固件justmysocket之obfs-local设置">
-<meta property="og:url" content="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="关于路由器最近小米 AC2100 终于可以刷机了。就在前几天听说可以刷机了，立马就刷了老毛子系统。之前是使用 LEDE 软路由进行一些科学设置的，但是 LEDE 是安装在群辉虚拟机上，每次群辉出现一些异常bug的时候，就需要重启，随之网络也断了。在试用了 LEDE 软路由之后，发现其中一些软件已经没有人维护了，根本用不了，还有一些软件如 KOOLDNS， bug 不断，要不然就是不更新ip，要不然">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-19T09:09:58.293Z">
+<meta property="article:published_time" content="2020-05-16T17:26:57.000Z">
+<meta property="article:modified_time" content="2020-05-17T16:19:48.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="ss">
+<meta property="article:tag" content="老毛子">
+<meta property="article:tag" content="padavan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="老毛子固件justmysocket之obfs-local设置">
-<meta name="twitter:description" content="关于路由器最近小米 AC2100 终于可以刷机了。就在前几天听说可以刷机了，立马就刷了老毛子系统。之前是使用 LEDE 软路由进行一些科学设置的，但是 LEDE 是安装在群辉虚拟机上，每次群辉出现一些异常bug的时候，就需要重启，随之网络也断了。在试用了 LEDE 软路由之后，发现其中一些软件已经没有人维护了，根本用不了，还有一些软件如 KOOLDNS， bug 不断，要不然就是不更新ip，要不然">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/">
+  <link rel="canonical" href="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/"/>
 
 
 
@@ -136,9 +137,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +149,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +183,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,9 +193,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -228,20 +229,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +274,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -284,7 +285,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/openwrt/" itemprop="url" rel="index">
                     <span itemprop="name">openwrt</span>
                   </a>
@@ -326,7 +327,9 @@
 <p>基于小米 AC2100 可以刷机后， 果断放弃了 LEDE 。但是在 LEDE 上面，科学体验还是可以的，就是不支持自动故障切换节点功能，比如走 obfs 的节点，被封了后，每次只能手动上去更改混淆参数。</p>
 <p>换了 老毛子 之后，发现自动故障切换节点功能是有了，但是基于它的设置界面及形式，搞得我晕头转向。最后不得不使用穷举法，一个一个试，看看哪一种参数可以成功访问 obfs。这里特别记录一下。</p>
 <h2 id="页面配置"><a href="#页面配置" class="headerlink" title="页面配置"></a>页面配置</h2><p>在页面上建议，直接点击飞机，然后添加节点那里输入如下参数</p>
-<p><code>-O origin -o plain --plugin obfs-local --plugin-opts &quot;obfs=tls;obfs-host=www.bing.com&quot;</code><br><a id="more"></a></p>
+<p><code>-O origin -o plain --plugin obfs-local --plugin-opts &quot;obfs=tls;obfs-host=www.bing.com&quot;</code></p>
+<a id="more"></a>
+
 <p>然后填写节点信息，点加号就可以了。</p>
 <p>我也不知道是因为我在节点配置配置对了，还是转到详情配置配置对了。</p>
 <p>所以，如果上面还不起效的话，或者 通过下一节的 检查 obfs 不过关的话，再去详情里配置下</p>
@@ -346,6 +349,7 @@
 <p><code>cat /tmp/ss-redir_1.json</code></p>
 <p>看一下一些参数是否配置上去了</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">"server"</span>: <span class="string">"xxxxx"</span>,</span><br><span class="line"><span class="attr">"server_port"</span>: <span class="string">"xxx"</span>,</span><br><span class="line"><span class="attr">"local_address"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line"><span class="attr">"local_port"</span>: <span class="string">"1090"</span>,</span><br><span class="line"><span class="attr">"password"</span>: <span class="string">"xxxxxx"</span>,</span><br><span class="line"><span class="attr">"timeout"</span>: <span class="string">"180"</span>,</span><br><span class="line"><span class="attr">"method"</span>: <span class="string">"xxx"</span>,</span><br><span class="line"><span class="attr">"protocol"</span>: <span class="string">"origin"</span>,</span><br><span class="line"><span class="attr">"protocol_param"</span>: <span class="string">""</span>,</span><br><span class="line"><span class="attr">"obfs"</span>: <span class="string">"plain"</span>,</span><br><span class="line"><span class="attr">"obfs_param"</span>: <span class="string">""</span>,</span><br><span class="line"><span class="attr">"plugin"</span>: <span class="string">"obfs-local"</span>,</span><br><span class="line"><span class="attr">"plugin_opts"</span>: <span class="string">"obfs=tls;obfs-host=www.aasdf.com"</span>,</span><br><span class="line"><span class="attr">"reuse_port"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里解释一下 obfs 的参数:</p>
 <ul>
 <li>plugin 这里，需要跟上面的一样</li>
@@ -372,7 +376,7 @@
           
             <a href="/tags/ss/" rel="tag"># ss</a>
           
-            <a href="/tags/老毛子/" rel="tag"># 老毛子</a>
+            <a href="/tags/%E8%80%81%E6%AF%9B%E5%AD%90/" rel="tag"># 老毛子</a>
           
             <a href="/tags/padavan/" rel="tag"># padavan</a>
           
@@ -387,7 +391,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/" rel="next" title="蜗牛星际B双网口全洗白加网络唤醒">
+              <a href="/2020/05/13/%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85B%E5%8F%8C%E7%BD%91%E5%8F%A3%E5%85%A8%E7%B3%BB%E7%99%BD%E5%8A%A0%E7%BD%91%E7%BB%9C%E5%94%A4%E9%86%92/" rel="next" title="蜗牛星际B双网口全洗白加网络唤醒">
                 <i class="fa fa-chevron-left"></i> 蜗牛星际B双网口全洗白加网络唤醒
               </a>
             
@@ -397,7 +401,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/25/iterm配合i2cssh自动登录ssh实现集群管理/" rel="prev" title="iterm配合i2cssh自动登录ssh实现集群管理">
+              <a href="/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/" rel="prev" title="iterm配合i2cssh自动登录ssh实现集群管理">
                 iterm配合i2cssh自动登录ssh实现集群管理 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -463,7 +467,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -474,7 +478,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -487,7 +491,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -498,7 +502,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

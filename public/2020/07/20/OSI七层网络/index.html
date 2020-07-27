@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="HTTP,网络,TCP,UDP,QUIC,">
+  <meta name="keywords" content="HTTP,网络,TCP,UDP,QUIC," />
 
 
 
@@ -80,17 +80,20 @@
 
 
 <meta name="description" content="物理层通过比特流进行传输，这里略过。 数据链路层使用以太网帧进行传输数据。 STP 协议（生成树协议），解决了交换机连接交换机之间的环路问题。由于交换机为了冗余、带宽提升、或者错误连接，难免会产生一个封闭的物理环路，而以太网的转发机制又决定了不能有物理环路，一有环路，那些发给所有主机的包如广播包，就会永远在环路上转圈，到达不了目的地，交换机的CPU飙升。 STP 解决方法wiki百科 VLAN：全">
-<meta name="keywords" content="HTTP,网络,TCP,UDP,QUIC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OSI七层网络">
-<meta property="og:url" content="http://yoursite.com/2020/07/20/OSI七层网络/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/07/20/OSI%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="物理层通过比特流进行传输，这里略过。 数据链路层使用以太网帧进行传输数据。 STP 协议（生成树协议），解决了交换机连接交换机之间的环路问题。由于交换机为了冗余、带宽提升、或者错误连接，难免会产生一个封闭的物理环路，而以太网的转发机制又决定了不能有物理环路，一有环路，那些发给所有主机的包如广播包，就会永远在环路上转圈，到达不了目的地，交换机的CPU飙升。 STP 解决方法wiki百科 VLAN：全">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-20T10:22:54.090Z">
+<meta property="article:published_time" content="2020-07-20T03:38:06.000Z">
+<meta property="article:modified_time" content="2020-07-27T14:06:04.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="网络">
+<meta property="article:tag" content="TCP">
+<meta property="article:tag" content="UDP">
+<meta property="article:tag" content="QUIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OSI七层网络">
-<meta name="twitter:description" content="物理层通过比特流进行传输，这里略过。 数据链路层使用以太网帧进行传输数据。 STP 协议（生成树协议），解决了交换机连接交换机之间的环路问题。由于交换机为了冗余、带宽提升、或者错误连接，难免会产生一个封闭的物理环路，而以太网的转发机制又决定了不能有物理环路，一有环路，那些发给所有主机的包如广播包，就会永远在环路上转圈，到达不了目的地，交换机的CPU飙升。 STP 解决方法wiki百科 VLAN：全">
 
 
 
@@ -120,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/20/OSI七层网络/">
+  <link rel="canonical" href="http://yoursite.com/2020/07/20/OSI七层网络/"/>
 
 
 
@@ -136,9 +139,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +151,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +185,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,9 +195,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -228,20 +231,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/OSI七层网络/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/OSI%E4%B8%83%E5%B1%82%E7%BD%91%E7%BB%9C/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +276,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -284,8 +287,8 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
                     <span itemprop="name">网络</span>
                   </a>
                 </span>
@@ -326,7 +329,9 @@
 <h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>使用以太网帧进行传输数据。</p>
 <p>STP 协议（生成树协议），解决了交换机连接交换机之间的环路问题。由于交换机为了冗余、带宽提升、或者错误连接，难免会产生一个封闭的物理环路，而以太网的转发机制又决定了不能有物理环路，一有环路，那些发给所有主机的包如广播包，就会永远在环路上转圈，到达不了目的地，交换机的CPU飙升。</p>
 <p><a href="https://zh.wikipedia.org/wiki/%E7%94%9F%E6%88%90%E6%A0%91%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">STP 解决方法wiki百科</a></p>
-<p>VLAN：全程虚拟局域网，由于二层交换机会转发所有的群发内容，可以划分多个虚拟局域网来避免广播内容的安全问题。 vlan 只需要在二层的头上加一个 TAG， 12 位，可划分 4096 个 VLAN。<br><a id="more"></a></p>
+<p>VLAN：全程虚拟局域网，由于二层交换机会转发所有的群发内容，可以划分多个虚拟局域网来避免广播内容的安全问题。 vlan 只需要在二层的头上加一个 TAG， 12 位，可划分 4096 个 VLAN。</p>
+<a id="more"></a>
+
 <h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>如果网络发生了问题，可以使用以下命令进行排障：</p>
 <p> 查看 ping 包到了哪个设备开始返回的，直接定位可能故障的设备</p>
 <p><code>tcpdump -i eth0 icmp</code></p>
@@ -334,7 +339,8 @@
 <p>traceroute 如何确定目标主机超时：traceroute 程序会发送一份 UDP 数据报给主机，但是会选择一个不可能的值作为 UDP 的端口号（大于30000），如果数据报没有到达，则可能是超时。</p>
 <p> traceroute 探测 MTU：通过发送分组，并设置不分片标志。如果被卡了，就会收到 ICMP 的 网络差错包，类型为 “需要进行分片但设置了不分片位”，然后依次减小包的大小直接不会受到错误为止，就确定了某个设备的最大 MTU。</p>
 <p>查看路由： <code>ip route</code> 或者 <code>route</code>，在有多个网关的时候可以手动为指定客户端添加路由规则，如通过客户端IP地址限制某个客户端强制走某个网口：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 创建新的 test 路由表</span><br><span class="line"><span class="meta">#</span> ip rule add from 192.168.1.101 table test</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ip rule ls </span><br><span class="line"></span><br><span class="line">0: from all lookup local </span><br><span class="line"></span><br><span class="line">32765: from 10.0.0.10 lookup test </span><br><span class="line"></span><br><span class="line">32766: from all lookup main</span><br><span class="line"></span><br><span class="line">32767: from all lookup default</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">// 添加路由规则</span><br><span class="line"><span class="meta">#</span> ip route add default via 60.190.27.189 dev eth3 table chao </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> ip route flush cache</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 创建新的 test 路由表</span><br><span class="line"><span class="meta">#</span><span class="bash"> ip rule add from 192.168.1.101 table <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip rule ls </span></span><br><span class="line"></span><br><span class="line">0: from all lookup local </span><br><span class="line"></span><br><span class="line">32765: from 10.0.0.10 lookup test </span><br><span class="line"></span><br><span class="line">32766: from all lookup main</span><br><span class="line"></span><br><span class="line">32767: from all lookup default</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">// 添加路由规则</span><br><span class="line"><span class="meta">#</span><span class="bash"> ip route add default via 60.190.27.189 dev eth3 table chao </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ip route flush cache</span></span><br></pre></td></tr></table></figure>
+
 <p>以上代码设置了规则，从 192.168.1.101 来的包都查 test 这个新的路由表， 后面两条命令是在 test 路由表中添加具体路由规则。</p>
 <p> 三层算法： <a href="https://zh.wikipedia.org/zh-hans/%E5%BC%80%E6%94%BE%E5%BC%8F%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88" target="_blank" rel="noopener">OSPF Wiki百科</a> （开放式最短路径优先），某些时候可以发现多个最短路径，可以在多个路径中进行负载均衡，这常常被称为等价路由。</p>
 <p> 基于距离矢量路由算法的 <a href="https://zh.wikipedia.org/zh/%E8%BE%B9%E7%95%8C%E7%BD%91%E5%85%B3%E5%8D%8F%E8%AE%AE" target="_blank" rel="noopener">BGP Wiki 百科</a> 全程边界网关协议。</p>
@@ -405,7 +411,7 @@
           
             <a href="/tags/HTTP/" rel="tag"># HTTP</a>
           
-            <a href="/tags/网络/" rel="tag"># 网络</a>
+            <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
           
             <a href="/tags/TCP/" rel="tag"># TCP</a>
           
@@ -424,7 +430,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/19/使用calibre转换文档配合email向kindle发送电子书/" rel="next" title="使用calibre转换文档配合email向kindle发送电子书">
+              <a href="/2020/07/19/%E4%BD%BF%E7%94%A8calibre%E8%BD%AC%E6%8D%A2%E6%96%87%E6%A1%A3%E9%85%8D%E5%90%88email%E5%90%91kindle%E5%8F%91%E9%80%81%E7%94%B5%E5%AD%90%E4%B9%A6/" rel="next" title="使用calibre转换文档配合email向kindle发送电子书">
                 <i class="fa fa-chevron-left"></i> 使用calibre转换文档配合email向kindle发送电子书
               </a>
             
@@ -496,7 +502,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -507,7 +513,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -520,7 +526,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -531,7 +537,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

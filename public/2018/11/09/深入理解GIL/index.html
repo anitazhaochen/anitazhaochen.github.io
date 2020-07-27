@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,GIL,">
+  <meta name="keywords" content="Python,GIL," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="并行与并发的区别并发： 在一个时间段内要处理多个任务。 并行： 在同一时刻要同时处理多个任务。比如 CPU 每一个核跑一个线程。  并发性(concurrency)，又称共行性，是指能处理多个同时性活动的能力，并发事件之间不一定要同一时刻发生。 并行(parallelism)是指同时发生的两个并发事件，具有并发的含义，而并发则不一定并行。  并发与并行的区别">
-<meta name="keywords" content="Python,GIL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解GIL">
-<meta property="og:url" content="http://yoursite.com/2018/11/09/深入理解GIL/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/11/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GIL/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="并行与并发的区别并发： 在一个时间段内要处理多个任务。 并行： 在同一时刻要同时处理多个任务。比如 CPU 每一个核跑一个线程。  并发性(concurrency)，又称共行性，是指能处理多个同时性活动的能力，并发事件之间不一定要同一时刻发生。 并行(parallelism)是指同时发生的两个并发事件，具有并发的含义，而并发则不一定并行。  并发与并行的区别">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-15T06:15:25.561Z">
+<meta property="article:published_time" content="2018-11-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="GIL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解GIL">
-<meta name="twitter:description" content="并行与并发的区别并发： 在一个时间段内要处理多个任务。 并行： 在同一时刻要同时处理多个任务。比如 CPU 每一个核跑一个线程。  并发性(concurrency)，又称共行性，是指能处理多个同时性活动的能力，并发事件之间不一定要同一时刻发生。 并行(parallelism)是指同时发生的两个并发事件，具有并发的含义，而并发则不一定并行。  并发与并行的区别">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/09/深入理解GIL/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/09/深入理解GIL/"/>
 
 
 
@@ -136,9 +136,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +148,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +182,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,9 +192,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -228,20 +228,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/09/深入理解GIL/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GIL/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +273,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -284,7 +284,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Python/" itemprop="url" rel="index">
                     <span itemprop="name">Python</span>
                   </a>
@@ -351,25 +351,35 @@
 <p>GIL 保证了线程安全性，但很显然也带来了一个问题：每个时刻只有一个线程在执行，即使在多核架构中也是如此。毕竟，解释器只有一个。如此一来，单进程多线程的 Python 程序便无法利用到多核的优势了。所以 Python 的多线程显得鸡肋。</p>
 <p>为了控制变量，可以使用两个线程来串行执行。即一个线程跑完了在开启一个线程在跑一次。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_counter</span><span class="params">()</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000000</span>):</span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    thread_array = &#123;&#125;</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> tid <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        t = Thread(target=my_counter)</span><br><span class="line">        t.start()</span><br><span class="line">        t.join()</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    print(<span class="string">"Total time: &#123;&#125;"</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br><span class="line">    <span class="comment"># Python 模拟两个线程，一个线程跑完再跑另一个线程，模拟单线程执行。</span></span><br><span class="line">    </span><br><span class="line">➜  /tmp python <span class="number">3.</span>py</span><br><span class="line">Total time: <span class="number">7.85346484184</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p>多线程执行。 两个线程同时开启执行。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_counter</span><span class="params">()</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000000</span>):</span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    thread_array = &#123;&#125;</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> tid <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        t = Thread(target=my_counter)</span><br><span class="line">        t.start()</span><br><span class="line">        t.join()</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    print(<span class="string">"Total time: &#123;&#125;"</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Python 多线程执行，两个线程并发执行。</span></span><br><span class="line">➜  /tmp python <span class="number">4.</span>py</span><br><span class="line">Total time: <span class="number">14.8255028725</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_counter</span><span class="params">()</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">100000000</span>):</span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    thread_array = &#123;&#125;</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">for</span> tid <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        t = Thread(target=my_counter)</span><br><span class="line">        t.start()</span><br><span class="line">        t.join()</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    print(<span class="string">"Total time: &#123;&#125;"</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># Python 多线程执行，两个线程并发执行。</span></span><br><span class="line">➜  /tmp python <span class="number">4.</span>py</span><br><span class="line">Total time: <span class="number">14.8255028725</span></span><br></pre></td></tr></table></figure>
+
 <p>测试环境： MBP 2018款 6 核 CPU</p>
 <p>发现，多线程同时执行，速度比串行执行慢了一倍。</p>
 <p>总结：GIL 不仅无法利用多核 CPU 实现真正的并行，并且多核还会让速度变得更慢。</p>
 <p>继续验证：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line">a = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        a = a+<span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        a = a<span class="number">-1</span></span><br><span class="line"></span><br><span class="line">t1 = Thread(target=test)</span><br><span class="line">t2 = Thread(target=test2)</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()</span><br><span class="line"><span class="keyword">print</span> a</span><br></pre></td></tr></table></figure>
+
 <p>运行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp python 5.py</span><br><span class="line">time = 0.164122104645</span><br><span class="line">-206968</span><br></pre></td></tr></table></figure>
+
 <p>竟然不是0，而是 -206968。每次运行结果都可能不一样。</p>
 <p>我们修改一下代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread, Lock</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">a = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        <span class="keyword">if</span> mutex.acquire(<span class="keyword">True</span>):</span><br><span class="line">            a = a+<span class="number">1</span></span><br><span class="line">            mutex.release()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        <span class="keyword">if</span> mutex.acquire(<span class="keyword">True</span>):</span><br><span class="line">            a = a<span class="number">-1</span></span><br><span class="line">            mutex.release()</span><br><span class="line"></span><br><span class="line">mutex = Lock()</span><br><span class="line">t1 = Thread(target=test)</span><br><span class="line">t2 = Thread(target=test2)</span><br><span class="line">start = time.time()</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()</span><br><span class="line">end = time.time()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"time = "</span>+str(end - start)</span><br><span class="line"><span class="keyword">print</span> a</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread, Lock</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">a = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        <span class="keyword">if</span> mutex.acquire(<span class="literal">True</span>):</span><br><span class="line">            a = a+<span class="number">1</span></span><br><span class="line">            mutex.release()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> a</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">        <span class="keyword">if</span> mutex.acquire(<span class="literal">True</span>):</span><br><span class="line">            a = a<span class="number">-1</span></span><br><span class="line">            mutex.release()</span><br><span class="line"></span><br><span class="line">mutex = Lock()</span><br><span class="line">t1 = Thread(target=test)</span><br><span class="line">t2 = Thread(target=test2)</span><br><span class="line">start = time.time()</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()</span><br><span class="line">end = time.time()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"time = "</span>+str(end - start)</span><br><span class="line"><span class="keyword">print</span> a</span><br></pre></td></tr></table></figure>
+
 <p>运行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp python 5.py</span><br><span class="line">time = 3.93809294701</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
 <p>这个结果是 0 ，结果是对了，但是一看时间，足足慢了 25 倍左右。</p>
 <p>就是因为加了一个锁。我们在改一下代码，看看就用主线程单线程来跑相同的运算会是什么样的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">a = <span class="number">0</span></span><br><span class="line">start = time.time()</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">    a = a + <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">    a = a - <span class="number">1</span></span><br><span class="line">end = time.time()</span><br><span class="line"><span class="keyword">print</span> a</span><br><span class="line"><span class="keyword">print</span> <span class="string">"time="</span> + str(end-start)</span><br></pre></td></tr></table></figure>
+
 <p>运行结果：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp python 7.py</span><br><span class="line">0</span><br><span class="line">time=0.134548902512</span><br></pre></td></tr></table></figure>
+
 <p>结果肯定是正确的 0，时间比第一次的还快一点点呢。</p>
 <p>由于 GIL 的存在，本来多线程可以节省时间的事情，变得比单线程还慢了，究其原因为什么会这样呢，</p>
 <p>加锁之后，就会存在锁的性能开销，并且也会存在上下文切换的耗时。</p>
@@ -440,8 +450,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/06/Python架构/" rel="next" title="Python 架构">
-                <i class="fa fa-chevron-left"></i> Python 架构
+              <a href="/2018/11/06/HTTP%E7%BC%93%E5%AD%98%E5%A4%84%E7%90%86/" rel="next" title="HTTP缓存处理">
+                <i class="fa fa-chevron-left"></i> HTTP缓存处理
               </a>
             
           </div>
@@ -450,7 +460,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/15/树莓派centos-rpi3配置热点/" rel="prev" title="树莓派centos-rpi3配置热点">
+              <a href="/2018/11/15/%E6%A0%91%E8%8E%93%E6%B4%BEcentos-rpi3%E9%85%8D%E7%BD%AE%E7%83%AD%E7%82%B9/" rel="prev" title="树莓派centos-rpi3配置热点">
                 树莓派centos-rpi3配置热点 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -516,7 +526,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -527,7 +537,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -540,7 +550,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -551,7 +561,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

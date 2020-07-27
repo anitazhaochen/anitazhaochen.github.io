@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="iterm,ssh,i2cssh,">
+  <meta name="keywords" content="iterm,ssh,i2cssh," />
 
 
 
@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="i2cssh安装自己的 RUBY最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。 首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。 brew install ruby 安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。 echo &amp;#39;export">
-<meta name="keywords" content="iterm,ssh,i2cssh">
+<meta name="description" content="i2cssh安装自己的 RUBY最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。 首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。 brew install ruby 安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。 echo &#39;export">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iterm配合i2cssh自动登录ssh实现集群管理">
-<meta property="og:url" content="http://yoursite.com/2020/05/25/iterm配合i2cssh自动登录ssh实现集群管理/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="向阳花">
-<meta property="og:description" content="i2cssh安装自己的 RUBY最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。 首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。 brew install ruby 安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。 echo &amp;#39;export">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-01T02:21:56.420Z">
+<meta property="og:description" content="i2cssh安装自己的 RUBY最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。 首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。 brew install ruby 安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。 echo &#39;export">
+<meta property="article:published_time" content="2020-05-25T15:02:21.000Z">
+<meta property="article:modified_time" content="2020-05-25T15:28:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="iterm">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="i2cssh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iterm配合i2cssh自动登录ssh实现集群管理">
-<meta name="twitter:description" content="i2cssh安装自己的 RUBY最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。 首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。 brew install ruby 安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。 echo &amp;#39;export">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/25/iterm配合i2cssh自动登录ssh实现集群管理/">
+  <link rel="canonical" href="http://yoursite.com/2020/05/25/iterm配合i2cssh自动登录ssh实现集群管理/"/>
 
 
 
@@ -136,9 +137,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +149,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +183,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -192,9 +193,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -228,20 +229,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/iterm配合i2cssh自动登录ssh实现集群管理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +274,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -284,7 +285,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/iterm/" itemprop="url" rel="index">
                     <span itemprop="name">iterm</span>
                   </a>
@@ -326,7 +327,9 @@
 <p>首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。</p>
 <p><code>brew install ruby</code></p>
 <p>安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。</p>
-<p><code>echo &#39;export PATH=&quot;/usr/local/opt/ruby/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc</code><br><a id="more"></a></p>
+<p><code>echo &#39;export PATH=&quot;/usr/local/opt/ruby/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc</code></p>
+<a id="more"></a>
+
 <p>这里，我的是 zsh , 其他shell，换个名字即可，如 .bashrc 。这里解释一下就是优先从用户自定义安装软件的地方来找 ruby，所以 需要在 PATH 前面加上路径。</p>
 <p>执行完后，不要忘记执行 <code>source .zshrc</code> 来刷新配置。</p>
 <p>接着可以看一看是否成功了， 执行 <code>which ruby</code> 看看是否是在 <code>/usr/local/</code> 里面</p>
@@ -334,16 +337,20 @@
 <p>使用说明见官方文档：<a href="https://github.com/wouterdebie/i2cssh" target="_blank" rel="noopener">GItHubi2cssh</a></p>
 <p>安装完后，输入 <code>i2cssh</code> 如果提示你命令找不到，则需要修改 PATH。</p>
 <p>首先找到 gem 安装 i2cssh 的位置，我的位置是在 <code>/usr/local/lib/ruby/gems/2.7.0/gems/i2cssh-2.2.0/bin/i2cssh</code></p>
-<p>我也不是 ruby 开发者，也没深究，因为 ruby 安装在 <code>/usr/local/opt/ruby/bin/ruby</code> 这个目录，所以我就在<code></code>/usr/local/opt/ruby/<code>这个目录执行</code>grep -R “i2cssh” ./ <code>，然后输出一大堆东西，自己看一下大概可以知道在哪里了。我的是在</code>/usr/local/lib/ruby/gems/2.7.0/gems/i2cssh-2.2.0/bin/i2cssh` 目录下，所以执行下面的命令，如果你要执行请先找到然后替换下面的路径。</p>
+<p>我也不是 ruby 开发者，也没深究，因为 ruby 安装在 <code>/usr/local/opt/ruby/bin/ruby</code> 这个目录，所以我就在``/usr/local/opt/ruby/<code>这个目录执行</code>grep -R “i2cssh” ./ <code>，然后输出一大堆东西，自己看一下大概可以知道在哪里了。我的是在</code>/usr/local/lib/ruby/gems/2.7.0/gems/i2cssh-2.2.0/bin/i2cssh` 目录下，所以执行下面的命令，如果你要执行请先找到然后替换下面的路径。</p>
 <p><code>echo &#39;export PATH=&quot;/usr/local/lib/ruby/gems/2.7.0/gems/i2cssh-2.2.0/bin/i2cssh:$PATH&quot;&#39; &gt;&gt; ~/.zshrc</code></p>
 <p>再次 <code>source .zshrc</code> 应该就可以了。</p>
 <h3 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h3><p>对于初次使用 i2cssh 的我，因为 i2cssh 的文档实在太少了，所以并不知道该如何去使用。把我摸索出来的东西给需要的人说一下：</p>
 <p>首先： 你不需要设置 iterm， 直接在 <code>.ssh/config</code> 中先设置好你的服务器，最好把配置写完整，其中一个服务器如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host ubuntu</span><br><span class="line">HostName 1.2.3.4</span><br><span class="line">Port 32222</span><br><span class="line">User root</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
 <p>其中 <code>IdentityFile</code> 这一项最好写上。</p>
 <p>然后直接在 iterm 中执行 <code>i2cssh host1 host2 xxx xxx</code> 他就会自动弹出窗口。</p>
 <p>在我这里有一个问题，就是如果 i2cssh 命令后面的主机数小于2的话，就会报错</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: unknown cluster ["linux"]. Check your /Users/Myname/.i2csshrc</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="iterm-多个窗口同时输入"><a href="#iterm-多个窗口同时输入" class="headerlink" title="iterm 多个窗口同时输入"></a>iterm 多个窗口同时输入</h3><p>在刚才通过 i2cssh 打开的窗口中，随便选一个窗口，然后 <code>command + shift + i</code> 就可以开启同时输入了。</p>
 <p>比如说，我有几十台服务器，然后我需要查日志，但是我并不知道某次请求会打在哪一台机器上， 这个时候，我就需要使用 i2cssh 来把这些服务器全部连上， 然后因为每台服务器运行的程序位置都相同，所以再执行 <code>tail -f xxx.log</code> 同时监听，然后在一个一个看就可以了。</p>
 
@@ -380,7 +387,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/17/老毛子固件justmysocket之obfs-local设置/" rel="next" title="老毛子固件justmysocket之obfs-local设置">
+              <a href="/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/" rel="next" title="老毛子固件justmysocket之obfs-local设置">
                 <i class="fa fa-chevron-left"></i> 老毛子固件justmysocket之obfs-local设置
               </a>
             
@@ -390,7 +397,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/30/review代码引发的悲剧之git删除本地及远程分支/" rel="prev" title="review代码引发的悲剧之git删除分支">
+              <a href="/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/" rel="prev" title="review代码引发的悲剧之git删除分支">
                 review代码引发的悲剧之git删除分支 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -456,7 +463,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -467,7 +474,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -480,7 +487,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -491,7 +498,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
