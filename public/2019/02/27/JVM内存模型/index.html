@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,">
+  <meta name="keywords" content="Java," />
 
 
 
@@ -80,23 +80,22 @@
 
 
 <meta name="description" content="运行时数据区域Java 虚拟机在执行 Java 程序的过程中会把所管理的内存划分为若干个不同的数据区域。Java 虚拟机所管理的内存包括以下几个运行时数据区域：  Class文件通过类加载器进行加载后，不同的数据分布在不同的区域，然后经过执行引擎来进行执行。 一个线程的图示">
-<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM内存模型">
-<meta property="og:url" content="http://yoursite.com/2019/02/27/JVM内存模型/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/02/27/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="运行时数据区域Java 虚拟机在执行 Java 程序的过程中会把所管理的内存划分为若干个不同的数据区域。Java 虚拟机所管理的内存包括以下几个运行时数据区域：  Class文件通过类加载器进行加载后，不同的数据分布在不同的区域，然后经过执行引擎来进行执行。 一个线程的图示">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/image-20190227172713322.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190227191910281.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190301160421783.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190227181711297.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190228002727341.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190228002955122.png">
-<meta property="og:updated_time" content="2020-05-15T06:15:25.546Z">
+<meta property="article:published_time" content="2019-02-27T09:26:30.000Z">
+<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM内存模型">
-<meta name="twitter:description" content="运行时数据区域Java 虚拟机在执行 Java 程序的过程中会把所管理的内存划分为若干个不同的数据区域。Java 虚拟机所管理的内存包括以下几个运行时数据区域：  Class文件通过类加载器进行加载后，不同的数据分布在不同的区域，然后经过执行引擎来进行执行。 一个线程的图示">
 <meta name="twitter:image" content="http://yoursite.com/images/image-20190227172713322.png">
 
 
@@ -127,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/27/JVM内存模型/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/27/JVM内存模型/"/>
 
 
 
@@ -143,9 +142,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -155,13 +154,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -189,9 +188,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -199,9 +198,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -235,20 +234,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/JVM内存模型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/27/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -280,7 +279,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -291,7 +290,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -337,12 +336,15 @@
 <h3 id="通过一个例子来分析一个线程的运行"><a href="#通过一个例子来分析一个线程的运行" class="headerlink" title="通过一个例子来分析一个线程的运行"></a>通过一个例子来分析一个线程的运行</h3><p>可以使用 javap  进行反汇编 class 文件。</p>
 <p>源代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.enjoyms.study;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result;</span><br><span class="line">        result = add();</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        <span class="keyword">int</span> b;</span><br><span class="line">        <span class="keyword">int</span> c;</span><br><span class="line">        a = <span class="number">3</span>;</span><br><span class="line">        b = <span class="number">6</span>;</span><br><span class="line">        c = (a + b) * <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>通过 sublime 打开 Test2.class 文件如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">cafe babe 0000 0037 0029 0a00 0600 1b0a</span><br><span class="line">0005 001c 0900 1d00 1e0a 001f 0020 0700</span><br><span class="line">2107 0022 0100 063c 696e 6974 3e01 0003</span><br><span class="line">2829 5601 0004 436f 6465 0100 0f4c 696e</span><br><span class="line">654e 756d 6265 7254 6162 6c65 0100 124c</span><br><span class="line">6f63 616c 5661 7269 6162 6c65 5461 626c</span><br><span class="line">6501 0004 7468 6973 0100 194c 636f 6d2f</span><br><span class="line">656e 6a6f 796d 732f 7374 7564 792f 5465</span><br><span class="line">7374 323b 0100 046d 6169 6e01 0016 285b</span><br><span class="line">4c6a 6176 612f 6c61 6e67 2f53 7472 696e</span><br><span class="line">673b 2956 0100 0461 7267 7301 0013 5b4c</span><br><span class="line">6a61 7661 2f6c 616e 672f 5374 7269 6e67</span><br><span class="line">3b01 0006 7265 7375 6c74 0100 0149 0100</span><br><span class="line">0361 6464 0100 0328 2949 0100 0161 0100</span><br><span class="line">0162 0100 0163 0100 0a53 6f75 7263 6546</span><br><span class="line">696c 6501 000a 5465 7374 322e 6a61 7661</span><br><span class="line">0c00 0700 080c 0014 0015 0700 230c 0024</span><br><span class="line">0025 0700 260c 0027 0028 0100 1763 6f6d</span><br><span class="line">2f65 6e6a 6f79 6d73 2f73 7475 6479 2f54</span><br><span class="line">6573 7432 0100 106a 6176 612f 6c61 6e67</span><br><span class="line">2f4f 626a 6563 7401 0010 6a61 7661 2f6c</span><br><span class="line">616e 672f 5379 7374 656d 0100 036f 7574</span><br><span class="line">0100 154c 6a61 7661 2f69 6f2f 5072 696e</span><br><span class="line">7453 7472 6561 6d3b 0100 136a 6176 612f</span><br><span class="line">696f 2f50 7269 6e74 5374 7265 616d 0100</span><br><span class="line">0770 7269 6e74 6c6e 0100 0428 4929 5600</span><br><span class="line">2100 0500 0600 0000 0000 0300 0100 0700</span><br><span class="line">0800 0100 0900 0000 2f00 0100 0100 0000</span><br><span class="line">052a b700 01b1 0000 0002 000a 0000 0006</span><br><span class="line">0001 0000 0003 000b 0000 000c 0001 0000</span><br><span class="line">0005 000c 000d 0000 0009 000e 000f 0001</span><br><span class="line">0009 0000 0048 0002 0002 0000 000c b800</span><br><span class="line">023c b200 031b b600 04b1 0000 0002 000a</span><br><span class="line">0000 000e 0003 0000 0007 0004 0008 000b</span><br><span class="line">0009 000b 0000 0016 0002 0000 000c 0010</span><br><span class="line">0011 0000 0004 0008 0012 0013 0001 0009</span><br><span class="line">0014 0015 0001 0009 0000 0058 0002 0003</span><br><span class="line">0000 000e 063b 1006 3c1a 1b60 100a 683d</span><br><span class="line">1cac 0000 0002 000a 0000 0012 0004 0000</span><br><span class="line">000f 0002 0010 0005 0011 000c 0012 000b</span><br><span class="line">0000 0020 0003 0002 000c 0016 0013 0000</span><br><span class="line">0005 0009 0017 0013 0001 000c 0002 0018</span><br><span class="line">0013 0002 0001 0019 0000 0002 001a</span><br></pre></td></tr></table></figure>
+
 <p>可以使用 javap 命令进行反编译成 JVM 指令。</p>
 <p><code>javap -c Test2.class &gt;&gt; Test2.txt</code></p>
 <p>生成的 Test2.txt 如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Compiled from <span class="string">"Test2.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">enjoyms</span>.<span class="title">study</span>.<span class="title">Test2</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> com.enjoyms.study.Test2();</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">       <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       0: invokestatic  #2                  // Method add:()I</span><br><span class="line">       <span class="number">3</span>: istore_1</span><br><span class="line">       4: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">       <span class="number">7</span>: iload_1</span><br><span class="line">       8: invokevirtual #4                  // Method java/io/PrintStream.println:(I)V</span><br><span class="line">      <span class="number">11</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">()</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: iconst_3</span><br><span class="line">       <span class="number">1</span>: istore_0</span><br><span class="line">       <span class="number">2</span>: bipush        <span class="number">6</span></span><br><span class="line">       <span class="number">4</span>: istore_1</span><br><span class="line">       <span class="number">5</span>: iload_0</span><br><span class="line">       <span class="number">6</span>: iload_1</span><br><span class="line">       <span class="number">7</span>: iadd</span><br><span class="line">       <span class="number">8</span>: bipush        <span class="number">10</span></span><br><span class="line">      <span class="number">10</span>: imul</span><br><span class="line">      <span class="number">11</span>: istore_2</span><br><span class="line">      <span class="number">12</span>: iload_2</span><br><span class="line">      <span class="number">13</span>: ireturn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>Code 部分的指令可以通过查询 <a href="https://juejin.im/entry/588085221b69e60059035f0a" target="_blank" rel="noopener">JVM 指令集</a> 来获取指令的含义。</p>
 <p>简要执行图：</p>
 <p><img src="/images/image-20190301160421783.png" alt="image-20190301160421783"></p>
@@ -420,7 +422,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/19/Java模板设计模式/" rel="next" title="Java模板设计模式">
+              <a href="/2019/01/19/Java%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="Java模板设计模式">
                 <i class="fa fa-chevron-left"></i> Java模板设计模式
               </a>
             
@@ -430,7 +432,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/01/JVM虚拟机栈中的栈帧/" rel="prev" title="JVM 虚拟机栈中的栈帧">
+              <a href="/2019/03/01/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E4%B8%AD%E7%9A%84%E6%A0%88%E5%B8%A7/" rel="prev" title="JVM 虚拟机栈中的栈帧">
                 JVM 虚拟机栈中的栈帧 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -496,7 +498,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -507,7 +509,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -520,7 +522,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -531,7 +533,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

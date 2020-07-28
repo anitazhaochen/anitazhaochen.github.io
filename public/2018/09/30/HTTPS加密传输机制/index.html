@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="https,加密,">
+  <meta name="keywords" content="https,加密," />
 
 
 
@@ -80,20 +80,20 @@
 
 
 <meta name="description" content="前些日子，面试官问我 HTTP 和 HTTPS 的区别的时候？ 我总是说 HTTPS 就是在传输层和应用层之间加了一个基于TLS的加密协议。   后来，反复审视自己的问题。觉得了解一个东西不要太表面。他也没深问，我也没往下说。 HTTP 存在的风险（切身经历）为什么我的 js 代码偶尔无法运行我自己是写了一个线上的 WEB 应用，偶尔就会接到反馈说我的网页怎么点击按钮没反应。 然后我反复纠结是否">
-<meta name="keywords" content="https,加密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTPS加密传输机制">
-<meta property="og:url" content="http://yoursite.com/2018/09/30/HTTPS加密传输机制/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/09/30/HTTPS%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="前些日子，面试官问我 HTTP 和 HTTPS 的区别的时候？ 我总是说 HTTPS 就是在传输层和应用层之间加了一个基于TLS的加密协议。   后来，反复审视自己的问题。觉得了解一个东西不要太表面。他也没深问，我也没往下说。 HTTP 存在的风险（切身经历）为什么我的 js 代码偶尔无法运行我自己是写了一个线上的 WEB 应用，偶尔就会接到反馈说我的网页怎么点击按钮没反应。 然后我反复纠结是否">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/image-20181003014931328.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20181003015104774.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20181003015656460.png">
-<meta property="og:updated_time" content="2020-05-15T06:15:25.546Z">
+<meta property="article:published_time" content="2018-09-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-15T07:19:09.000Z">
+<meta property="article:author" content="ABC">
+<meta property="article:tag" content="https">
+<meta property="article:tag" content="加密">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTPS加密传输机制">
-<meta name="twitter:description" content="前些日子，面试官问我 HTTP 和 HTTPS 的区别的时候？ 我总是说 HTTPS 就是在传输层和应用层之间加了一个基于TLS的加密协议。   后来，反复审视自己的问题。觉得了解一个东西不要太表面。他也没深问，我也没往下说。 HTTP 存在的风险（切身经历）为什么我的 js 代码偶尔无法运行我自己是写了一个线上的 WEB 应用，偶尔就会接到反馈说我的网页怎么点击按钮没反应。 然后我反复纠结是否">
 <meta name="twitter:image" content="http://yoursite.com/images/image-20181003014931328.png">
 
 
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/30/HTTPS加密传输机制/">
+  <link rel="canonical" href="http://yoursite.com/2018/09/30/HTTPS加密传输机制/"/>
 
 
 
@@ -140,9 +140,9 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -152,13 +152,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -186,9 +186,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -196,9 +196,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -232,20 +232,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/HTTPS加密传输机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/HTTPS%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -277,7 +277,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -288,8 +288,8 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议分析/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index">
                     <span itemprop="name">协议分析</span>
                   </a>
                 </span>
@@ -334,7 +334,9 @@
 <p>后来，反复审视自己的问题。觉得了解一个东西不要太表面。他也没深问，我也没往下说。</p>
 <h2 id="HTTP-存在的风险（切身经历）"><a href="#HTTP-存在的风险（切身经历）" class="headerlink" title="HTTP 存在的风险（切身经历）"></a>HTTP 存在的风险（切身经历）</h2><h3 id="为什么我的-js-代码偶尔无法运行"><a href="#为什么我的-js-代码偶尔无法运行" class="headerlink" title="为什么我的 js 代码偶尔无法运行"></a>为什么我的 js 代码偶尔无法运行</h3><p>我自己是写了一个线上的 WEB 应用，偶尔就会接到反馈说我的网页怎么点击按钮没反应。</p>
 <p>然后我反复纠结是否是我 js 代码写的有问题，无论怎么改，都会出现十次有两三次的现象，按钮无效，无法提交表单。</p>
-<p>细心观察发现，那些无法执行的时候，页面上总是有些乱七八糟的广告，要么就是有个移动流量的圆球，要么就是什么吸引眼球的点击网页。<br><a id="more"></a></p>
+<p>细心观察发现，那些无法执行的时候，页面上总是有些乱七八糟的广告，要么就是有个移动流量的圆球，要么就是什么吸引眼球的点击网页。</p>
+<a id="more"></a>
+
 <p>接下来，来分析一下为什么会这样。</p>
 <p>如果发起一个网络请求，是需要经过 TCP 三次握手的。</p>
 <ol>
@@ -473,7 +475,7 @@
           
             <a href="/tags/https/" rel="tag"># https</a>
           
-            <a href="/tags/加密/" rel="tag"># 加密</a>
+            <a href="/tags/%E5%8A%A0%E5%AF%86/" rel="tag"># 加密</a>
           
         </div>
       
@@ -486,7 +488,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/27/关于异步IO的研究/" rel="next" title="关于 selct、poll、epoll 的研究">
+              <a href="/2018/09/27/%E5%85%B3%E4%BA%8E%E5%BC%82%E6%AD%A5IO%E7%9A%84%E7%A0%94%E7%A9%B6/" rel="next" title="关于 selct、poll、epoll 的研究">
                 <i class="fa fa-chevron-left"></i> 关于 selct、poll、epoll 的研究
               </a>
             
@@ -496,7 +498,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/30/Mac正则sed的问题/" rel="prev" title="Mac中sed无法正常保存">
+              <a href="/2018/09/30/Mac%E6%AD%A3%E5%88%99sed%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="Mac中sed无法正常保存">
                 Mac中sed无法正常保存 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -562,7 +564,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -573,7 +575,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">105</span>
                   <span class="site-state-item-name">日志</span>
@@ -586,7 +588,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -597,7 +599,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -630,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-存在的风险（切身经历）"><span class="nav-number">1.</span> <span class="nav-text">HTTP 存在的风险（切身经历）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么我的-js-代码偶尔无法运行"><span class="nav-number">1.1.</span> <span class="nav-text">为什么我的 js 代码偶尔无法运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后解决方法"><span class="nav-number">1.2.</span> <span class="nav-text">最后解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-的运行机制"><span class="nav-number">2.</span> <span class="nav-text">HTTPS 的运行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要证书？"><span class="nav-number">2.1.</span> <span class="nav-text">为什么需要证书？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-TLS-协议基本过程"><span class="nav-number">2.2.</span> <span class="nav-text">SSL/TLS 协议基本过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-TLS-握手过程"><span class="nav-number">3.</span> <span class="nav-text">SSL/TLS 握手过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">4.</span> <span class="nav-text">思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-存在的风险（切身经历）"><span class="nav-number">1.</span> <span class="nav-text">HTTP 存在的风险（切身经历）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么我的-js-代码偶尔无法运行"><span class="nav-number">1.1.</span> <span class="nav-text">为什么我的 js 代码偶尔无法运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后解决方法"><span class="nav-number">1.2.</span> <span class="nav-text">最后解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-的运行机制"><span class="nav-number">2.</span> <span class="nav-text">HTTPS 的运行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么需要证书？"><span class="nav-number">2.1.</span> <span class="nav-text">为什么需要证书？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-TLS-协议基本过程"><span class="nav-number">2.2.</span> <span class="nav-text">SSL&#x2F;TLS 协议基本过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-TLS-握手过程"><span class="nav-number">3.</span> <span class="nav-text">SSL&#x2F;TLS 握手过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">4.</span> <span class="nav-text">思考</span></a></li></ol></div>
             
 
           </div>
