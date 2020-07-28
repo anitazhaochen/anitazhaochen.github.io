@@ -6,10 +6,10 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,内存," />
+  <meta name="keywords" content="Linux,内存,">
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="内存映射只有内核才可以直接访问物理内存。Linux 内核给每个进程都提供了一个独立的虚拟地址空间，并且这个地址空间是连续的。这样，进程就可以很方便的访问内存，更确切的说是访问虚拟内存。 虚拟内存地址空间内部又被分为内核空间和用户空间两部分，不同CPU指令可以处理的最大长度的处理器，地址空间范围也不同，32位，最大4G，64位系统都是定义的 128 T，并不是说最大。分别占据内存空间的最高位和最低位">
+<meta name="keywords" content="Linux,内存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux性能指标之内存">
-<meta property="og:url" content="http://yoursite.com/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8B%E5%86%85%E5%AD%98/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/07/17/Linux性能指标之内存/index.html">
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="内存映射只有内核才可以直接访问物理内存。Linux 内核给每个进程都提供了一个独立的虚拟地址空间，并且这个地址空间是连续的。这样，进程就可以很方便的访问内存，更确切的说是访问虚拟内存。 虚拟内存地址空间内部又被分为内核空间和用户空间两部分，不同CPU指令可以处理的最大长度的处理器，地址空间范围也不同，32位，最大4G，64位系统都是定义的 128 T，并不是说最大。分别占据内存空间的最高位和最低位">
-<meta property="article:published_time" content="2020-07-17T08:04:31.000Z">
-<meta property="article:modified_time" content="2020-07-27T14:06:04.000Z">
-<meta property="article:author" content="ABC">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="内存">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-07-20T03:20:18.749Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux性能指标之内存">
+<meta name="twitter:description" content="内存映射只有内核才可以直接访问物理内存。Linux 内核给每个进程都提供了一个独立的虚拟地址空间，并且这个地址空间是连续的。这样，进程就可以很方便的访问内存，更确切的说是访问虚拟内存。 虚拟内存地址空间内部又被分为内核空间和用户空间两部分，不同CPU指令可以处理的最大长度的处理器，地址空间范围也不同，32位，最大4G，64位系统都是定义的 128 T，并不是说最大。分别占据内存空间的最高位和最低位">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/07/17/Linux性能指标之内存/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/17/Linux性能指标之内存/">
 
 
 
@@ -136,9 +136,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+</head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +148,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">向阳花</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,9 +182,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -192,9 +192,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -228,20 +228,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8B%E5%86%85%E5%AD%98/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/Linux性能指标之内存/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ABC">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="向阳花">
     </span>
 
@@ -273,7 +273,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -284,7 +284,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -327,9 +327,7 @@
 <p>虽然每个进程的地址空间都包含了内核空间，但是这些内核空间，其实关联的都是相同的物理内存。这样，进程从用户态切换到内核态后，就可以很方便的访问内核空间内存。</p>
 <p>内存映射，其实就是将虚拟内存地址映射到物理内存地址。为了完成内存映射，内核为每个进程都维护了一张页表，记录虚拟地址与物理地址的映射关系。</p>
 <p>页表实际存储在CPU内存管理单元的 <strong>MMU</strong> 中，这样，正常情况下，处理器就可以直接通过硬件，找出要访问的内存。</p>
-<p>当进程访问的虚拟地址在页表中查不到就会产生缺页异常，进入内核空间分配物理内存、更新进程页表，最后再返回用户空间，恢复进程的运行。（仅仅表示进程将要使用某块虚拟内存，但是此时并没有在真正的物理内存上进行创建）</p>
-<a id="more"></a>
-
+<p>当进程访问的虚拟地址在页表中查不到就会产生缺页异常，进入内核空间分配物理内存、更新进程页表，最后再返回用户空间，恢复进程的运行。（仅仅表示进程将要使用某块虚拟内存，但是此时并没有在真正的物理内存上进行创建）<br><a id="more"></a></p>
 <p><strong>MMU</strong> 并不是以字节为单位来管理内存，而是规定了一个内存映射的最小单位，也就是页，通常是4KB大小。这样，每一次内存映射，都需要关联 4KB 或者 4KB 整数倍的内存空间。</p>
 <p>页的大小只有4KB，页表就会很大，32位就有100多万页（4GB/4KB），Linux 提供了两种机制解决这个问题，就是多级页和大页。</p>
 <p>多级页就是虚拟地址分为5个部分，前4个表项用于选择页，而最后一个索引表示页内偏移。</p>
@@ -354,8 +352,7 @@
 </li>
 <li><p>回收不常访问内存，把不常用的内存通过交换分区直接写入磁盘中（交换分区 Swap 效率很低，会对性能造成严重的影响）</p>
 </li>
-<li><p>杀死进程，内存紧张时，会报  OOM（Out Of Memory），直接杀掉占用大量内存的进程。</p>
-</li>
+<li>杀死进程，内存紧张时，会报  OOM（Out Of Memory），直接杀掉占用大量内存的进程。</li>
 </ol>
 <h3 id="Buffer-amp-Cache"><a href="#Buffer-amp-Cache" class="headerlink" title="Buffer&amp;Cache"></a>Buffer&amp;Cache</h3><ul>
 <li>Buffer： 缓存起来，准备写入硬盘，可以将多次少量写转成一次大量写。另外，读磁盘的时候，磁盘数据会缓存到 Buffer 中。</li>
@@ -363,20 +360,13 @@
 </ul>
 <p>总结：Buffer 是对磁盘数据的缓存，而 Cache 是文件数据的缓存，它们既会用在读请求中，也会用在写请求中。 </p>
 <p>Buffer 和 Cache 的设计目的，是为了提升系统 I/O 性能。它们利用内存，充当起慢速磁盘与快速 CPU 之间的桥梁，可以加快 I/O 访问速度。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> stack -p $(pgrep app)  // 跟踪进程</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> stack -p $(pgrep app)  // 跟踪进程</span><br></pre></td></tr></table></figure>
 <p>如果缓存(Cache)命中率很高，然而缓存读取次数却很少，可以考虑是否使用了直接 IO，即直接从磁盘上读取数据，而不经过操作系统。</p>
 <p>磁盘读和文件读：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 提示，如果没有空硬盘不要进行写硬盘操作，否则有可能造成数据丢失</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 首先清理缓存</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd 命令读取文件数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/tmp/file of=/dev/null</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> vmstat 观察变化</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 首先清理缓存</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行 dd 命令读取文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dd <span class="keyword">if</span>=/dev/sda1 of=/dev/null bs=1M count=1024</span></span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 提示，如果没有空硬盘不要进行写硬盘操作，否则有可能造成数据丢失</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 首先清理缓存</span><br><span class="line"><span class="meta">#</span> echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line"><span class="meta">#</span> dd 命令读取文件数据</span><br><span class="line"><span class="meta">#</span> dd if=/tmp/file of=/dev/null</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> vmstat 观察变化</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 首先清理缓存</span><br><span class="line"><span class="meta">#</span> echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line"><span class="meta">#</span> 运行 dd 命令读取文件</span><br><span class="line"><span class="meta">#</span> dd if=/dev/sda1 of=/dev/null bs=1M count=1024</span><br></pre></td></tr></table></figure>
 <p>工具：</p>
 <p>查看哪些进程被 OOM 杀死了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dmesg | grep -i <span class="string">"Out of memory"</span></span></span><br><span class="line">Out of memory: Kill process 9329 (java) score 321 or sacrifice child</span><br></pre></td></tr></table></figure>
-
-
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> dmesg | grep -i "Out of memory"</span><br><span class="line">Out of memory: Kill process 9329 (java) score 321 or sacrifice child</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -396,7 +386,7 @@
           
             <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/%E5%86%85%E5%AD%98/" rel="tag"># 内存</a>
+            <a href="/tags/内存/" rel="tag"># 内存</a>
           
         </div>
       
@@ -409,7 +399,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8BCPU/" rel="next" title="Linux性能指标之CPU">
+              <a href="/2020/07/17/Linux性能指标之CPU/" rel="next" title="Linux性能指标之CPU">
                 <i class="fa fa-chevron-left"></i> Linux性能指标之CPU
               </a>
             
@@ -419,7 +409,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/07/19/%E4%BD%BF%E7%94%A8calibre%E8%BD%AC%E6%8D%A2%E6%96%87%E6%A1%A3%E9%85%8D%E5%90%88email%E5%90%91kindle%E5%8F%91%E9%80%81%E7%94%B5%E5%AD%90%E4%B9%A6/" rel="prev" title="使用calibre转换文档配合email向kindle发送电子书">
+              <a href="/2020/07/19/使用calibre转换文档配合email向kindle发送电子书/" rel="prev" title="使用calibre转换文档配合email向kindle发送电子书">
                 使用calibre转换文档配合email向kindle发送电子书 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -485,7 +475,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">ABC</p>
               <p class="site-description motion-element" itemprop="description">~~~~~</p>
@@ -496,9 +486,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/">
               
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">106</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -509,7 +499,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -520,7 +510,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">151</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
