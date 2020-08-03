@@ -128,7 +128,27 @@ webhook 请求地址, 写了一个简单 flask 项目,然后封装成 Docker 来
 
 
 
+### 2020-7-1 将脚本编程命令
 
+偶然间发现，可以将一些脚本编程命令来执行。因为自己对 shell 脚本不太熟悉，直到前几天看到了一篇博文。
+
+以前发布文档的方式是：
+
+```
+sh hexod.sh # hexod.sh 是我的脚本，里面写了一些 shell 命令，本质上就是 hexo g 、hexo d 、git add . 、git commit -m "xxx" 等等。
+```
+
+每次 `sh hexod.sh` 有点多余，还需要加一个sh，或者即使不这样， `./hexod.sh` 也多余，每次还要多个一个 `./` 。
+
+通过写一个函数，放到 .zshrc 或者 .bashrc 文件中，就可以实现命令来操作。
+
+```shell
+function hexod() {
+	echo "发布完成"
+}
+```
+
+类似上面的，然后: `source .zshrc` 就可以了。 
 
 
 
