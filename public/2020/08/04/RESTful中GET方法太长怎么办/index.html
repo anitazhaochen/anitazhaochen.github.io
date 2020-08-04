@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="http,RESTful,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="~~~~~">
+<meta name="description" content="在 RESTful 分隔下的 API 中，有的时候，一个聚合查询，参数很长，GET 很有可能超出浏览器的限制，我记得是 GET 的参数实际上是在协议里是没有限制的。 是浏览器和 web 服务器限制了 URI 的长度。不同的浏览器和 Web服务器,限制大小是不一样的。 遇到这种 API 的时候，直接无脑改为使用 POST 吗。 其实我也搜了一些资料，最终回到改为 POST 是可以的的结论。 其实只想">
+<meta name="keywords" content="http,RESTful">
 <meta property="og:type" content="article">
-<meta property="og:title" content="向阳花">
+<meta property="og:title" content="RESTful中GET方法太长怎么办">
 <meta property="og:url" content="http://yoursite.com/2020/08/04/RESTful中GET方法太长怎么办/index.html">
 <meta property="og:site_name" content="向阳花">
-<meta property="og:description" content="~~~~~">
+<meta property="og:description" content="在 RESTful 分隔下的 API 中，有的时候，一个聚合查询，参数很长，GET 很有可能超出浏览器的限制，我记得是 GET 的参数实际上是在协议里是没有限制的。 是浏览器和 web 服务器限制了 URI 的长度。不同的浏览器和 Web服务器,限制大小是不一样的。 遇到这种 API 的时候，直接无脑改为使用 POST 吗。 其实我也搜了一些资料，最终回到改为 POST 是可以的的结论。 其实只想">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-04T04:10:15.360Z">
+<meta property="og:updated_time" content="2020-08-04T06:06:18.193Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="向阳花">
-<meta name="twitter:description" content="~~~~~">
+<meta name="twitter:title" content="RESTful中GET方法太长怎么办">
+<meta name="twitter:description" content="在 RESTful 分隔下的 API 中，有的时候，一个聚合查询，参数很长，GET 很有可能超出浏览器的限制，我记得是 GET 的参数实际上是在协议里是没有限制的。 是浏览器和 web 服务器限制了 URI 的长度。不同的浏览器和 Web服务器,限制大小是不一样的。 遇到这种 API 的时候，直接无脑改为使用 POST 吗。 其实我也搜了一些资料，最终回到改为 POST 是可以的的结论。 其实只想">
 
 
 
@@ -125,7 +126,7 @@
 
 
 
-  <title> | 向阳花</title>
+  <title>RESTful中GET方法太长怎么办 | 向阳花</title>
   
 
 
@@ -249,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">RESTful中GET方法太长怎么办</h1>
         
 
         <div class="post-meta">
@@ -261,7 +262,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-04T12:10:15+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-04T11:23:11+08:00">
                 2020-08-04
               </time>
             
@@ -271,6 +272,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/RESTful/" itemprop="url" rel="index">
+                    <span itemprop="name">RESTful</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -299,7 +322,17 @@
       
 
       
-        
+        <p>在 RESTful 分隔下的 API 中，有的时候，一个聚合查询，参数很长，GET 很有可能超<br>出浏览器的限制，我记得是 GET 的参数实际上是在协议里是没有限制的。 是浏览器和 web 服务器限制了 URI 的长度。<br>不同的浏览器和 Web服务器,限制大小是不一样的。</p>
+<p>遇到这种 API 的时候，直接无脑改为使用 POST 吗。</p>
+<p>其实我也搜了一些资料，最终回到改为 POST 是可以的的结论。</p>
+<p>其实只想说明一件事情就是，只对知识保有记忆，而不思考，还不如不知道。</p>
+<p>因为知道了 RESTful 里的规定后，只会生硬的硬搬，遇到需要选择的问题的时候，直接回到原始状态。</p>
+<p>很多时候，或者解决一个问题，我知道最终的方法也还算是可以的，但是就是不知道为什么，也没有人告诉我。<br><a id="more"></a></p>
+<p>这是知乎的一篇文档，非常感谢其中两位作者的思考。</p>
+<p><a href="https://www.zhihu.com/question/36706936" target="_blank" rel="noopener">RESTful GET，如果存在大量参数，是否有必要变通一下？</a></p>
+<p><a href="https://tools.ietf.org/html/rfc2616#section-10.2.2" target="_blank" rel="noopener">rfc2616 http状态码定义</a></p>
+<p>文中提到了 RESTful 的风格，思考之后的解决方法， 以及直接用 POST 也很好， 还有是对 HTTP code 的正确使用<br>以及 HTTP 缓存的思考，把知识都运用到了实践中，值得学习。</p>
+
       
     </div>
     
@@ -313,6 +346,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+            <a href="/tags/RESTful/" rel="tag"># RESTful</a>
+          
+        </div>
       
 
       
@@ -410,7 +451,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -421,7 +462,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">152</span>
+                  <span class="site-state-item-count">153</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
