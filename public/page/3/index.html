@@ -232,6 +232,459 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/29/群晖ssh免密登录问题/" itemprop="url">群晖ssh免密登录问题.md</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T19:14:35+08:00">
+                2020-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/群晖/" itemprop="url" rel="index">
+                    <span itemprop="name">群晖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="群晖SSH免密登录"><a href="#群晖SSH免密登录" class="headerlink" title="群晖SSH免密登录"></a>群晖SSH免密登录</h2><p>在这里分享一下群晖开启ssh后，把公钥传输到机器上面，然后依旧无法免密登录的解决方法。</p>
+<p>我的情况是这样的，很奇怪，在 iterm 中即使已经把公钥上传到群晖的家目录中的 .ssh 文件夹中了，但是还是会让我输入密码。然后如果此时保持有一个窗口已经登录服务器，第二个窗口就可以直接登录，不需要输入密码。这里并没有深究是iterm自带的功能，还是群晖服务器的问题。 反正第一次无法正常免密登录，那肯定可以判断是群晖的问题。</p>
+<h2 id="SSH-调试方法"><a href="#SSH-调试方法" class="headerlink" title="SSH 调试方法"></a>SSH 调试方法</h2><ol>
+<li><p>在服务器上面开一个一次性的临时的ssh服务，这个服务职能被连接一次。端口随便设置个端口，不要与其他端口冲突就行，-d 开启debug 模式。</p>
+<p><code>which sshd</code>  使用这个命令先查看 sshd 的绝对路径，我的是 /bin/sshd</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/29/群晖ssh免密登录问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ol></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/群晖GitLab创建https访问/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/12/群晖GitLab创建https访问/" itemprop="url">群晖GitLab创建https访问</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T12:18:36+08:00">
+                2020-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/群晖/" itemprop="url" rel="index">
+                    <span itemprop="name">群晖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="为什么要使用HTTPS"><a href="#为什么要使用HTTPS" class="headerlink" title="为什么要使用HTTPS"></a>为什么要使用HTTPS</h2><p>举一个例子，以前自己搭建的http网站，总是遇到js无法正确执行，并且页面里夹杂了本来没有的广告。问题出现在了运营商线路上，比如说我手机网络是移动的，然后用微信访问http绑定页面，偶尔就会出现移动查流量等等的广告。这是因为信息在传递的时候，走运营商网络，因为我的信息是http传递，没有加密，所以运营商在里面嵌入了广告修改后，再把信息传递给我的终端。</p>
+<p>并且http本来就是不安全的，平时在家访问下http没什么事情，但是有时候还是需要在外面访问的，信息安全就得不到保证。</p>
+<h2 id="群晖GitLab-HTTPS-设置"><a href="#群晖GitLab-HTTPS-设置" class="headerlink" title="群晖GitLab HTTPS 设置"></a>群晖GitLab HTTPS 设置</h2><p>这里，演示一下群晖 GitLab 如何设置 HTTPS，其他服务也同理可以参考。</p>
+<p>前言： 我有公网IP，并且路由器可以做端口转发。</p>
+<p>先说下最终实现的功能：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/12/群晖GitLab创建https访问/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/11/群晖搭建gitlab服务器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/11/群晖搭建gitlab服务器/" itemprop="url">群晖搭建gitlab服务器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-11T20:34:48+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/黑群晖/" itemprop="url" rel="index">
+                    <span itemprop="name">黑群晖</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>作为一个程序员，在公司基本上都是使用gitlab来对项目代码管理，但是作为一个初级的搬砖工，也就只有简单的push、pull和创建分支，修改wiki 的权限。工作之中考虑到许多代码都是可以复用的，需要用到的时候，又找很久，后面索性不找了，直接重写一遍。</p>
+<p>在一个比较大的项目中，添加某些重复的功能，如果不能把它记下来，就只能一点点看源码，然后再添加，这感觉实在太痛苦。 既然 gitlab 可以管理代码，那写一个自己的工作总结及代码整理，开发流程岂不是挺好。</p>
+<h2 id="蜗牛星际矿渣主机"><a href="#蜗牛星际矿渣主机" class="headerlink" title="蜗牛星际矿渣主机"></a>蜗牛星际矿渣主机</h2><p>首先黑群晖配置是j3455 B款 双网口，8G内存，就是想装 gitlab 和 docker 和虚拟机所以把内存升级到了8G， 拆开机箱，看里面最多也只能插入一条内存条。</p>
+<ul>
+<li><p>黑群晖，拿到蜗牛星际立马安装了黑群晖，考虑到都是工作之中的积累及代码记录，所以还是稳点比较好，准备买四块硬盘，两块做raid 0 两块一个做下载盘，一个做影音盘。</p>
+</li>
+<li><p>黑群晖中 vmm 虚拟机，做软路由。 已经关注了华硕 ac 86u 很久，但是价格一直坚挺，并且家里已经有一个废物的小米路由ac2100，无法刷机，所以再买一个路由还真有点舍不得。以前是在小米路由后面再加一个 斐讯K2， 然后 斐讯 K2 专门给投影仪这样不方便安装科学客户端的设备使用，小米路由是千兆，K2 是百兆，而我家宽带又是200兆的，所以加上光猫，光路由设备就有三台了，考虑到功耗，感觉有必要重新配置一下，就入手了星际蜗牛，使用 vmm 搭建了软路由。</p>
+<p>  具体连接方式：光猫桥接然后光猫连接蜗牛星际其中一个网口，然后蜗牛星际另一个网口连接小米路由器的 wan 端口。这样小米路由器只充当了一个发射无线AP的WIFI的设备。拨号是放在软路由里面做的，科学及一些有用的插件都放到软路由里面。关于软路由lede群晖vmm安装网上已经有很多教程了。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/11/群晖搭建gitlab服务器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1272,462 +1725,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/07/使用rsync同步文件调试遇到的问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/07/使用rsync同步文件调试遇到的问题/" itemprop="url">使用rsync同步文件调试遇到的问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-07T17:56:51+08:00">
-                2019-11-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="rsync"><a href="#rsync" class="headerlink" title="rsync"></a>rsync</h2><p>rsync 可以用来做代码同步。以前还没接触这个工具的时候，都是用 scp 上传到服务器，然后在测试，有些麻烦，有时候索性就到服务器改了，所以最后造成代码不一致，引起诸多麻烦等等。</p>
-<p>rsync 一般用法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -auv --progress /Users/home/project/project_finder zhaochen03@106.2.67.13:/home/username/.</span><br></pre></td></tr></table></figure>
-<p>这里需要注意： 如果ssh端口不是 22 端口,比如ssh端口是 2222，需要加上端口号：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">rsync -auv --progress /Users/home/project/project_finder zhaochen03@106.2.67.13:/home/username/.   -e " ssh -p 2222"</span><br></pre></td></tr></table></figure>
-<p>其底层是基于 SSH 的。如果在 ~/.ssh/config 中配置了信息，则可以直接：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -auv --progress /Users/zhaochen/Netease/dsp ali:/home/zhaochen03/.</span><br></pre></td></tr></table></figure>
-<h1 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h1><ol>
-<li><p>rsync 默认增量同步，比如 Python 中某个目录以前生成了 pyc 文件，但是后来把文件移动到另一个目录，而忘记更改 import 的路径，这样在服务器上是可以继续运行的，因为那个路径下是存在 pyc 文件的，而上线另一台服务器的时候就会报错。</p>
-</li>
-<li><p>rsync 同步的时候，是基于文件修改时间同步的，如果服务器上的文件修改时间新， 本地旧， 则从本地 rsync 就不会同步过去。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/06/requests传文件filename为中文服务器报错/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/06/requests传文件filename为中文服务器报错/" itemprop="url">requests传文件filename为中文服务器报错</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-06T17:45:24+08:00">
-                2019-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>​    当使用 requests 的 post 进行表单提交的时候，其中包含 file 和 data。 如果 filename 为中文，则会对 filename 进行 编码成：</p>
-<p>filename* = utf-8…………… 的样子，导致服务器无法正常接收文件。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>requests    2.13.0</p>
-<p>暂时略去其他环境问题，主要是 requests 库<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/06/requests传文件filename为中文服务器报错/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/Python2编码问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/24/Python2编码问题/" itemprop="url">Python2编码问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T10:10:28+08:00">
-                2019-10-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近工作的老项目使用的是 Python2，在处理中文的时候，遇到了一些编码错误，在这里总结一下。</p>
-<p>在 Python2 中，一个字符串可能为 str 或者 unicode 。 </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">'你好'</span></span><br><span class="line">type(a) <span class="comment"># 输出 &lt;type 'str'&gt;</span></span><br><span class="line">repr(a) <span class="comment"># 输出 "'\\xe4\\xbd\\xa0\\xe5\\xa5\\xbd'"</span></span><br><span class="line">a = <span class="string">u'你好'</span></span><br><span class="line">type(a) <span class="comment"># 输出 &lt;type 'unicode'&gt;</span></span><br><span class="line">repr(a) <span class="comment"># 输出 "u'\\u4f60\\u597d'"</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/24/Python2编码问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1773,7 +1775,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">113</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1784,7 +1786,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1795,7 +1797,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">153</span>
+                  <span class="site-state-item-count">154</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
