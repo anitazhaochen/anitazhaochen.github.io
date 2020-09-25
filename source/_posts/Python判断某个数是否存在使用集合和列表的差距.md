@@ -18,8 +18,6 @@ arr = [i for i in  range(10000)]
 
 def test_list(arr):
     for i in range(10000):
-<!--more -->
-<!--more -->
         if i in arr:
             pass
 
