@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="向阳花">
 <meta property="og:description" content="使用下面的命令查看处于哪个状态的连接最多。 1netstat -tna  | awk &apos;&amp;#123;print $5,$6&amp;#125;&apos;| sort | uniq -c | sort -n | tail -n 1 发现排名第一的是TCP的TIME_WAIT 状态连接，竟然高达三万个。 解决方法： 12345678# 打开 sysctl.conf 文件，修改一下参数net.ipv4.tcp_tw_r">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-26T09:02:09.496Z">
+<meta property="og:updated_time" content="2020-10-19T06:07:55.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大量TCP连接处于TIME_WAIT状态问题">
 <meta name="twitter:description" content="使用下面的命令查看处于哪个状态的连接最多。 1netstat -tna  | awk &apos;&amp;#123;print $5,$6&amp;#125;&apos;| sort | uniq -c | sort -n | tail -n 1 发现排名第一的是TCP的TIME_WAIT 状态连接，竟然高达三万个。 解决方法： 12345678# 打开 sysctl.conf 文件，修改一下参数net.ipv4.tcp_tw_r">
@@ -485,7 +485,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">119</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

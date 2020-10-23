@@ -232,6 +232,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/" itemprop="url">光猫桥接软路由lede pppoe拨号无法慢速问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-09T19:27:22+08:00">
+                2020-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/黑科技/" itemprop="url" rel="index">
+                    <span itemprop="name">黑科技</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>购买了一台蜗牛星际B款双网口，装了黑群晖加软路由lede。再上一遍教程中，写了将光猫设置为桥接的方法。一切就绪就等着使用软路由拨号上网了。 </p>
+<h2 id="软路由拨号不如光猫是什么问题"><a href="#软路由拨号不如光猫是什么问题" class="headerlink" title="软路由拨号不如光猫是什么问题"></a>软路由拨号不如光猫是什么问题</h2><p>软路由刚开始设置的时候，拨号一直连不上，总是错误不断，然后就关闭ipv6， 开启ipv6，把某些特殊的设置屏蔽掉，我用的是lede 软路由系统，我第一次拨号，他会显示User Request 错误，不过不用管它，过几十秒他就自己变好了。但是速度巨慢，我家是 200M 的网络，使用光猫拨号随便跑到200多，但是使用软路由拨号成功后去测试，只有 四五十兆左右。 当时做了以下猜测：</p>
+<ul>
+<li><p>蜗牛星际性能不行</p>
+<p>  通过实验进行对比，可以判断不是蜗牛星际的问题。首先光猫拨号，然后连接软路由(蜗牛星际中虚拟机设置的wan端口)，然后蜗牛软路由lan口(蜗牛星际虚拟机中设置为lan的端口)连接千兆路由器，然后电脑通过wifi连接千兆路由器，测试发现网速可以跑到两百多兆，这说明流量在通过这一连串的设备时，并没有因为哪个设备的性能不行导致网速下降的。所以应该不是蜗牛星际的问题。</p>
+</li>
+<li><p>运营商绑定了mac地址，或者对陌生设备拨号做了限制</p>
+<p>  想要证明这点，我直接把端口不连软路由，直接连接千兆路由器，让千兆路由器进行拨号，拨号的结果和光猫拨号速度差不多，所以说应该也不是运营商的问题。期间我还试过把路由器拨号的mac地址改为软路由的地址，发现网速照样很快，那就说明并不是运营商进行了限制，问题出在了软路由这里。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/联通光猫-型号-ZXHN-F677-改桥接/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1570,152 +1723,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/14/Python中maketrans源码记录/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/14/Python中maketrans源码记录/" itemprop="url">Python中maketrans源码记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-14T16:34:45+08:00">
-                2019-10-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="首先举个例子"><a href="#首先举个例子" class="headerlink" title="首先举个例子"></a>首先举个例子</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> maketrans</span><br><span class="line"></span><br><span class="line">a = <span class="string">'abcde'</span></span><br><span class="line">b = <span class="string">'12345'</span></span><br><span class="line"></span><br><span class="line">trantab = maketrans(a, b)</span><br><span class="line"></span><br><span class="line">str = <span class="string">'abcdefag'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> str.translate(trantab)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出 12345f1g</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/14/Python中maketrans源码记录/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1766,7 +1773,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">119</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
