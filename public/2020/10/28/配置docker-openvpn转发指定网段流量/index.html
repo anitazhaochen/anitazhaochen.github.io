@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openvpn,tun,tap,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Github-docker-openvpn地址 新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。 openvpn 两种模式的区别 tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是">
+<meta name="keywords" content="openvpn,tun,tap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置docker-openvpn转发指定网段流量">
+<meta property="og:url" content="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/index.html">
+<meta property="og:site_name" content="向阳花">
+<meta property="og:description" content="Github-docker-openvpn地址 新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。 openvpn 两种模式的区别 tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-29T03:16:09.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置docker-openvpn转发指定网段流量">
+<meta name="twitter:description" content="Github-docker-openvpn地址 新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。 openvpn 两种模式的区别 tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/">
+
+
+
+
+
+  <title>配置docker-openvpn转发指定网段流量 | 向阳花</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">向阳花</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">配置docker-openvpn转发指定网段流量</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-28T21:04:05+08:00">
+                2020-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/vpn/" itemprop="url" rel="index">
+                    <span itemprop="name">vpn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://github.com/kylemanna/docker-openvpn" target="_blank" rel="noopener">Github-docker-openvpn地址</a></p>
+<p>新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。</p>
+<h2 id="openvpn-两种模式的区别"><a href="#openvpn-两种模式的区别" class="headerlink" title="openvpn 两种模式的区别"></a>openvpn 两种模式的区别</h2><ul>
+<li><p>tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是直连路由器（大概意思就是你在路由器上面看到的ip 和你在你电脑上看到的内网ip 是一致的），那么远在其他地方的设备连接上了vpn，你可以在路由器上面发现一个IP，这个IP既不是wifi连接的，也不是网线连接的，而是通过 vpn 连接的。即使你不在路由器旁边，依旧可以通过 vpn 实现在同一个网段。</p>
+<p>这种方式比较底层，会接收到一些群发的包，可能会导致耗费流量增大。</p>
+<p>使用场景：这个应该是在数据链路层打通了一条通路，所以主要是用在某些需要数据链路层支持的应用。 比如 Itunes，我可以在 nas 服务器上面放很多歌曲，然后使用 itunes 去读取，并且作为歌曲的播放器，因为这种模式需要处于同一网段，不能是子网，所以需要使用这种桥接来进行实现。</p>
+</li>
+<li><p>tun模式： 相当于打通了一条隧道，拿到的ip是vpn分配的私有ip，就相当于在路由器子网中的子网，一般来说去访问家里的内网设备是没有问题的，但是如果家里的设备要反向来访问就不行了，而 tap 模式可以实现，在tap模式下甚至，我在连接 vpn 的情况下，晚上回到家里，打开家里的电脑可以直接连接公司的电脑。</p>
+<a id="more"></a>
+</li>
+</ul>
+<p>关于两种模式的选择，还是比较推荐 tun 模式，简单易用。 一般是用不到 tap 模式的。</p>
+<h2 id="docker-openvpn"><a href="#docker-openvpn" class="headerlink" title="docker-openvpn"></a>docker-openvpn</h2><p>由于以前的机器及tap模式的限制，索性直接用了一台虚拟机来实现vpn服务，现在对 tap 也没有那么大的需求了，所以就简单点，直接使用 docker 来实现 vpn 服务。</p>
+<p>概括一下步骤，以及需要注意的地方：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 直接在终端里对一个变量进行赋值，这个值将是你的 vpn 配置文件存储的地方</span><br><span class="line"># 这种方式也是 docker 推荐的方式，可以手动命名，如果你没有命名的话，</span><br><span class="line"># 他存储的位置都是一样的，但是是一串不知名的乱码，虽然以后可以通过其他 docker 命令</span><br><span class="line"># 进行查看具体是哪个名称，存储在哪里，但是容器多了后还是比较麻烦。</span><br><span class="line">1. 命名</span><br><span class="line">OVPN_DATA=&quot;ovpn-data-example&quot;</span><br><span class="line"># 创建一个名字为 ovpn-data-example 的存储空间，位于 /var/lib/docker/volumes/ovpn-data-example， 提醒，在修改原来的配置文件的时候记得备份，否则可能造成不必要的麻烦。</span><br><span class="line">2. 创建存储空间（我重建了一次，然后我先手动先删除了这个文件夹，第二次告诉我创建成功，然而我去指定文件夹却没看到，最终手动创建(mkdir)才搞定）</span><br><span class="line">docker volume create --name $OVPN_DATA</span><br><span class="line">3. 初始化：</span><br><span class="line">	3.1 将 udp://VPN.SERVERNAME.COM 中的 VPN.SERVERNAME.COM 改成你自己的地址</span><br><span class="line">	docker run -v $OVPN_DATA:/etc/openvpn --log-driver=none --rm kylemanna/openvpn ovpn_genconfig -u 				udp://VPN.SERVERNAME.COM</span><br><span class="line">	3.2 </span><br><span class="line">	docker run -v $OVPN_DATA:/etc/openvpn --log-driver=none --rm -it kylemanna/openvpn ovpn_initpki</span><br><span class="line">4. 开启vpn服务</span><br><span class="line">docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn</span><br><span class="line">5. 生成客户端证书 (生成证书的时候，如果要图方便省事，让你输入任何东西，你都输入同样的就可以了)</span><br><span class="line">docker run -v $OVPN_DATA:/etc/openvpn --log-driver=none --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass</span><br><span class="line">6. 导出客户端证书 </span><br><span class="line">docker run -v $OVPN_DATA:/etc/openvpn --log-driver=none --rm kylemanna/openvpn ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn</span><br><span class="line">7. 然后将 CLIENTNAME.ovpn（可以改变文件名） 传输到客户端，导入 openvpn 就可以使用了，如有问题可以 docker logs id 查看日志。</span><br></pre></td></tr></table></figure>
+<h2 id="选择性的转发流量"><a href="#选择性的转发流量" class="headerlink" title="选择性的转发流量"></a>选择性的转发流量</h2><p>因为家里的宽带虽然给了公网IP，但总不能开个服务就暴露出来吧。所以还是需要一个内网环境来进行使用。</p>
+<p>比如某台 192.168.1.100 的机器开了一个 nginx 服务，我需要访问，我可以直接输入 192.168.1.100 就去访问了，而不需要配置内网穿透或者是端口转发。</p>
+<p>所以目标也很明确了，只需要转发 192.168.1.1/24 这个网段的流量。然后就和以前一样开始在 CLIENTNAME.ovpn 中修改配置了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route-nopull</span><br><span class="line">route 192.168.1.0 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>服务端配置其实不需要动，重试了很多次还是全部流量都走vpn，怎么找都找不到，最后又回到 GitHub 仓库的文档一看，发现了问题，生成出来的客户端配置文件，里面默认设置了转发所有流量，而我的配置都加在前几行，所以也就没有生效，解决方法就是删除最后一行（藏得真够深）的 <code>redirect-gateway def1</code> 即可。</p>
+<h2 id="全量转发"><a href="#全量转发" class="headerlink" title="全量转发"></a>全量转发</h2><p>如果你就是需要全部流量都走vpn，那么可能会发现连上了 vpn 后，可能可以访问你的内网服务，但是无法访问其他网站了，ping 一下 114.114.114.114 可能是正常的，但是ping baidu.com 可能就不正常了，这个其实作业也已经提到了（认真读文档的重要性！！），因为设置了默认全量转发，所以你的 DNS 如果设置的是内网 DNS，那么可能就会出现 DNS 失效的情况，解决方法，设置 DNS 为一些公共（公网）的 DNS，如 114.114.114.114、8.8.8.8 等等。</p>
+<p>如何确定我的 DNS 是内网 DNS？ 可以看下网络设置里面 DNS 是否是自动，如果是自动可能就是内网，如果 DNS的IP和你的ip地址属于同一个网段，也就是内网了，这里不多阐述了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openvpn/" rel="tag"># openvpn</a>
+          
+            <a href="/tags/tun/" rel="tag"># tun</a>
+          
+            <a href="/tags/tap/" rel="tag"># tap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/23/平均负载的理解/" rel="next" title="平均负载的理解">
+                <i class="fa fa-chevron-left"></i> 平均负载的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ABC</p>
+              <p class="site-description motion-element" itemprop="description">~~~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">162</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#openvpn-两种模式的区别"><span class="nav-number">1.</span> <span class="nav-text">openvpn 两种模式的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-openvpn"><span class="nav-number">2.</span> <span class="nav-text">docker-openvpn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择性的转发流量"><span class="nav-number">3.</span> <span class="nav-text">选择性的转发流量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全量转发"><span class="nav-number">4.</span> <span class="nav-text">全量转发</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABC</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
