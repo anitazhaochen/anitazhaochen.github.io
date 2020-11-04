@@ -1,8 +1,8 @@
 ---
 title: 关于I/O问题的排查思路
 date: 2020-10-27 15:18:09
-tags:
-category:
+tags: [磁盘, I/O]
+category: Linux
 ---
 
 硬盘一般分为机械硬盘和固态硬盘。
