@@ -232,6 +232,161 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/InnoDB之LRU缓存及SQL状态/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/04/InnoDB之LRU缓存及SQL状态/" itemprop="url">InnoDB之LRU缓存及SQL状态</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-04T15:45:57+08:00">
+                2020-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在 MySQL 中可以使用 show processlist 来观察 sql 的执行状态。</p>
+<p>举个例子： 我们现在查询一个很大的表，100G 左右，超过了我们的 16G 内存，那么它是怎么执行的呢？</p>
+<ol>
+<li>获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认16Kb。</li>
+<li>重复获取，直到 net_buffer 写满，然后就会调用网络接口发送出去。</li>
+<li>如果发送成功，就清空 net_buffer，然后继续取下一行，并写入 net_buffer.</li>
+<li>如果发送函数返回对方网络栈写满了，就进入等待。直到网络栈重新可写，再继续发送。</li>
+</ol>
+<p>由于MySQL 是”边读边发“的。这就意味着如果客户端接收得慢，会导致 MySQL服务端由于迟迟得不到响应，这个事务的执行时间就会变长。就是说如果客户端和服务端网络不佳的情况下，并且又对MySQL查了大量数据，就可能造成 MySQL 的性能急剧下降。</p>
+<p>我们使用 show processlist 会看到有关的状态：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/11/04/InnoDB之LRU缓存及SQL状态/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/03/MySQL中join语句优化/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1567,181 +1722,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/关于Python中os模块中的popen/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/26/关于Python中os模块中的popen/" itemprop="url">关于Python中os模块中的popen</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-26T17:08:30+08:00">
-                2020-08-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>近期写一些脚本需要用到 os.popen 函数，然后就看了下实现，发现它返回的是一个文件描述符，就跟 open 这个操作返回的东西一样，只不过 os.popen 返回的是一个只读的。</p>
-<p>然后联想到，如果返回的是一个类似文件的fd，岂不是需要执行完命令后，需要手动 close 嘛。</p>
-<p>于是做了一个小实验来一探究竟。首先需要一些命令辅助。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef |grep demo.py|awk '&#123;print $2&#125;'</span><br></pre></td></tr></table></figure>
-<p>这个命令是用来查看我们运行 Python 程序后进程 PID 的。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">lsof -p PID | wc -l</span><br></pre></td></tr></table></figure>
-<p>这个命令把上一步我们拿到的 PID 填充进去，就可以得到这个进程打开的文件数量。</p>
-<p>一般来说，就算我们的程序没有打开额外的文件，这个命令也不会显示0，因为这个进程总会打开一些 Python 库必须的文件，我这里是10个。</p>
-<p>在额外说一个命令，修改系统单个进程能够打开的最大文件句柄数量：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ulimit -n       # 查看当前系统定义的单个进程最大打开的句柄数</span><br><span class="line"></span><br><span class="line">lsof -n|awk '&#123;print $2&#125;'|sort|uniq -c|sort -nr|more  #输入第一列为 PID ，第二列为数量</span><br><span class="line"></span><br><span class="line">ps aef|grep PID  # 根据进程 PID 查看进程的信息</span><br><span class="line"></span><br><span class="line">ulimit – HSn 2048  # 临时设置文件句柄数， 重启失效 H 为硬性 S为软性 n 表示设定单个进程最大的打开文件句柄数量</span><br></pre></td></tr></table></figure>
-<p>下面是实验的程序：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">        a = os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line">        os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line"></span><br><span class="line">        c = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        c.close()</span><br><span class="line">        d = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        d.close()</span><br><span class="line">        e = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        f = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        g = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        h = open(<span class="string">'./test.sh'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'退出前20s'</span>)</span><br><span class="line">time.sleep(<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-<p>你可以 删除 c.close() 、d.close() 、或者添加更多。最终得到的结论是：</p>
-<ol>
-<li><p>如果函数退出，文件描述符自动回收，即使没有手动 close 。</p>
-</li>
-<li><p>使用 popen 执行后确实会返回一个类似的fd(文件描述符)，但是在系统上使用命令查询却看不出增加了，说明其实这个只是一个 Python 内部的对象，并不需要操作系统真正的分配文件描述符。 而既然是一个对象，那么如果不 close， 最终函数执行结束了，也会被垃圾回收给清理掉。</p>
-</li>
-<li><p>内存回收机制一定不会不回收，否则就要内存泄露了，像 Python Java 这种语言应该不存在这个问题</p>
-</li>
-</ol>
-<p>看到了以上结论后，也许会问，那都可以自动回收，那为啥还要设计 close 呢。以下只是我个人的思考：</p>
-<ol>
-<li>close 设计的原因： 如果你自己不 close， 等 垃圾回收的话，比如你一个函数巨长，最终还没开始垃圾回收， 就已经无法再打开新文件了，因为超过个数了。</li>
-<li>手动 close 可以保证及时把写完的内容刷到文件里。</li>
-<li>手动 close 可以随时释放资源，提高资源利用率。</li>
-<li>要养成 close 的习惯，来避免一些难于找到又奇怪的 bug。</li>
-</ol>
-<p>除此之外，执行系统命令还可以用：</p>
-<p><code>os.system()</code> : 这个就不会返回一个 fd 了，无法获取命令的输出和返回值</p>
-<p><code>os.popen()</code> ： 可以获取到命令执行后的输出</p>
-<p><code>commands</code> : 还有这个库，可以同时获得返回值和输出</p>
-<p>参考：</p>
-<p><a href="https://my.oschina.net/dabird/blog/837784" target="_blank" rel="noopener">Linux 查看文件句柄数</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1792,7 +1772,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">123</span>
+                  <span class="site-state-item-count">124</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1814,7 +1794,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">166</span>
+                  <span class="site-state-item-count">169</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

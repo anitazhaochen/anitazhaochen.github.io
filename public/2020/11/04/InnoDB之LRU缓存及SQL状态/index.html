@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="InnoDB,LRU,processlist,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在 MySQL 中可以使用 show processlist 来观察 sql 的执行状态。 举个例子： 我们现在查询一个很大的表，100G 左右，超过了我们的 16G 内存，那么它是怎么执行的呢？  获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认16Kb。 重复获取，直到 net_buffer 写满，然后就会调用网络接口发送出去。">
+<meta name="keywords" content="InnoDB,LRU,processlist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InnoDB之LRU缓存及SQL状态">
+<meta property="og:url" content="http://yoursite.com/2020/11/04/InnoDB之LRU缓存及SQL状态/index.html">
+<meta property="og:site_name" content="向阳花">
+<meta property="og:description" content="在 MySQL 中可以使用 show processlist 来观察 sql 的执行状态。 举个例子： 我们现在查询一个很大的表，100G 左右，超过了我们的 16G 内存，那么它是怎么执行的呢？  获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认16Kb。 重复获取，直到 net_buffer 写满，然后就会调用网络接口发送出去。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-04T08:49:46.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="InnoDB之LRU缓存及SQL状态">
+<meta name="twitter:description" content="在 MySQL 中可以使用 show processlist 来观察 sql 的执行状态。 举个例子： 我们现在查询一个很大的表，100G 左右，超过了我们的 16G 内存，那么它是怎么执行的呢？  获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认16Kb。 重复获取，直到 net_buffer 写满，然后就会调用网络接口发送出去。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/04/InnoDB之LRU缓存及SQL状态/">
+
+
+
+
+
+  <title>InnoDB之LRU缓存及SQL状态 | 向阳花</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">向阳花</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/InnoDB之LRU缓存及SQL状态/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">InnoDB之LRU缓存及SQL状态</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-04T15:45:57+08:00">
+                2020-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在 MySQL 中可以使用 show processlist 来观察 sql 的执行状态。</p>
+<p>举个例子： 我们现在查询一个很大的表，100G 左右，超过了我们的 16G 内存，那么它是怎么执行的呢？</p>
+<ol>
+<li>获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认16Kb。</li>
+<li>重复获取，直到 net_buffer 写满，然后就会调用网络接口发送出去。</li>
+<li>如果发送成功，就清空 net_buffer，然后继续取下一行，并写入 net_buffer.</li>
+<li>如果发送函数返回对方网络栈写满了，就进入等待。直到网络栈重新可写，再继续发送。</li>
+</ol>
+<p>由于MySQL 是”边读边发“的。这就意味着如果客户端接收得慢，会导致 MySQL服务端由于迟迟得不到响应，这个事务的执行时间就会变长。就是说如果客户端和服务端网络不佳的情况下，并且又对MySQL查了大量数据，就可能造成 MySQL 的性能急剧下降。</p>
+<p>我们使用 show processlist 会看到有关的状态：</p>
+<a id="more"></a>
+<ul>
+<li><strong>Stat 处于 Sending to client</strong></li>
+</ul>
+<p>如果一直处于这状态，说明服务端的网络栈写满了。常常是因为客户端来不及接收导致的。在 MySQL 中客户端使用 –quick 参数，会使用 mysql_use_result 方法。这个方法时读一行处理一行。如果业务的逻辑比较复杂，每一行都需要处理很久，那么久可能导致服务器发送堵塞。如果想减少这种状态的线程，也可以把net_buffer_length参数设置的大一点。</p>
+<p>因此一般情况下尽量使用 mysql_store_result 接口，直接把查询结果保存到本地内存会好一些。前提是查询结果返回不多，如果查询结果很多，有好多个G，那还是需要改用 mysql_use_result 接口了。</p>
+<ul>
+<li><strong>Stat 处于 Sending data</strong></li>
+</ul>
+<p>这个状态其实跟他的名字关联不大，常常被误解。</p>
+<ol>
+<li>MySQL 查询语句进入执行阶段后，首先把状态设置成 ”Sending data“， </li>
+<li>然后发送执行结果的列相关信息（meta data）给客户端</li>
+<li>再继续执行语句的流程</li>
+<li>执行完成后，把状态设置成空字符串</li>
+</ol>
+<p>以上可以看出，”Sending data“ 并不一定是指”正在发送数据“， 而可能是处于执行器过程中的任意阶段。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">session A:                   												sessionB:</span><br><span class="line"></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line">																											<span class="keyword">select</span> * <span class="keyword">from</span> t <span class="keyword">lock</span> <span class="keyword">in</span> <span class="keyword">share</span> <span class="keyword">mode</span>;</span><br></pre></td></tr></table></figure>
+<p>这个时候使用 show processlist 查看就可能显示 “Sending data”，但是B明明是在等待锁。</p>
+<p>也就是说，仅当一个线程处于”等待客户端接收结果“的状态，才会显示”Sending to client“；而如果显示”Sending data“， 它的意思只是”正在执行“。</p>
+<p>以上仅针对 MySQL server 层的处理逻辑。</p>
+<ul>
+<li>全表扫描对InnoDB的影响</li>
+</ul>
+<p>InnoDB 由于有了 WAL 机制，再配合 redo log，就可以避免随机写盘。</p>
+<p>内存中的数据页是在Buffer Pool 中管理，在 WAL 里 Buffer Pool 起到了加速更新的作用。而实际上，Buffer Pool 还有一个更重要的作用就是加速查询。</p>
+<p>如果有一个查询要来读刚刚修改的数据页，这个时候最新的数据还在 Buffer Pool 里面，就可以实现直接从内存返回，而不需要去读取磁盘，从而实现了加速查询。衡量 Buffer Pool 的加速效果，可以通过内存命中率来看。</p>
+<p>使用 <code>show engine innodb status</code> 来查看系统当前的 Buffer Pool 命中率。一般情况下，一个稳定服务的线上系统，要保证响应时间符合要求的话，内存命中率要在 99% 以上。其中 “Buffer pool hit rate” 就表示命中率。</p>
+<p>如果查询需要的数据页能够直接从内存得到，那么命中率就是 100%，这一般很难做到。</p>
+<p>InnoDB Buffer Pool 的大小是由参数 innodb_buffer_pool_size 确定的，一般建议设置成可用物理内存的 60%-80%。</p>
+<p>这个时候再来看看缓存，InnoDB 使用的是LRU 算法，不过对其进行了改进。这算法的核心就是淘汰最近未使用的数据。</p>
+<p>如果直接使用 LRU 会怎样？ 假设我们要扫描一个 200G的表，这个表示一个冷表，平时没有业务访问它。那么按照这个算法扫描的话，就会把当前的Buffer Pool 里的数据全部淘汰掉。这时，对于一个正在做业务服务的库，这可不妙。你会看到内存命中率急剧下降，磁盘压力增加，SQL 语句响应变慢。</p>
+<p>改进LRU算法之处在于，InnoDB 按照 5：3 的比例将整个 LRU 链表分成了 young 区域和 old 区域。某个数据如果不在链表中，那么第一次先放到 old 区域，如果在 1 秒后，这个数据再次被访问，就将其放在 young 区域。这样就避免了在扫描大表的过程中，将 缓存的正常业务数据给淘汰了。如果是全表扫描，基本上一个内存页一定可以在 1秒中之内完成访问，然后就不会再访问，这样就会在 old 区域不断的添加和淘汰，根本进入不了young区域。 对 old 区域有影响，但是对 young 区域完全没有影响，从而保证了Buffer Pool 响应正常业务的查询命中率。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/InnoDB/" rel="tag"># InnoDB</a>
+          
+            <a href="/tags/LRU/" rel="tag"># LRU</a>
+          
+            <a href="/tags/processlist/" rel="tag"># processlist</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/03/MySQL中join语句优化/" rel="next" title="MySQL中join语句优化">
+                <i class="fa fa-chevron-left"></i> MySQL中join语句优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ABC</p>
+              <p class="site-description motion-element" itemprop="description">~~~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">124</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABC</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
