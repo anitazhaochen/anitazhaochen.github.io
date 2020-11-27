@@ -24,3 +24,5 @@ category: Linux
 $ while true; do curl http://192.168.1.2:10000/get_something; done
 ```
 
+[]()
+

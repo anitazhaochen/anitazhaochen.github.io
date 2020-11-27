@@ -232,6 +232,304 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/http请求偶尔处于pending很久排查/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/24/http请求偶尔处于pending很久排查/" itemprop="url">http请求偶尔处于pending很久排查</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-24T16:33:15+08:00">
+                2020-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>问题是这样的，打开我们的网站后，打开开发者工具，然后偶尔会看到某个请求一直处于 pending 状态，大概会过去个十几秒，偶尔又全部都很快，几百毫秒就完成了。</p>
+<p>看了下  TTFB， 发现基本就花在了等服务器响应的时间上。 其实到这里基本上就可以断定问题出在了服务器上，但是我有点不信邪，觉得一个 TTFB 有可能不太准确，然后就分析了 chrome 的网络日志。具体方法：</p>
+<ol>
+<li>打开 <code>chrome://net-export/</code> ，然后点击 <strong>Start Logging to Disk</strong> 然后会让你选择一个地方来存储日志文件，好了之后录制也就开始了。</li>
+<li>现在去出现问题的页面疯狂尝试重现，重现完毕后，回到第一步的那个页面<strong>Stop</strong> 就可以了。</li>
+<li>查看日志， 打开这个地址 <code>https://netlog-viewer.appspot.com/#import</code> 然后选择文件，将刚才的日志文件导入。选择 event， 搜索那个出问题的 api， 就可以查看到详细的日志，简单到点的话，看看有没有 error 之类的日志，如果没有的话，看看从哪一步开始时间边长的，我这个是从读取响应 header 的时候边长的，估计是在等待，也没有 error ， 基本就断定问题出现在了服务端。</li>
+</ol>
+<p>然后在服务端查了一会，没有查到，最后靠猜猜到的。当时有个现场就是服务器重新部署后，严谨的说应该是第一次请求，发现大量接口都处于 pending 状态，这个时候基本就可以知道结论了， 某些初始化采用了类似单例模式中的懒汉模式，就是访问的时候才进行初始化，这就导致第一次非常慢。 然后继续往下看，发现数据库的连接池有点问题， 采用了 Blocking 模式，并且也没有按需增加和减少连接数，这样的话，如果某个 库的连接急剧上涨，那后面的请求肯定得处于 pending 状态。 最终将连接池 Blocking 改掉发现 pending 消失了。 其实当时考虑到，在以前的代码中有的使用了<code>select LAST_INSERT_ID()</code> 这就搞得无法使用共享的连接池， 最终只能改成随线程创建，随线程销毁的模式的连接池，这种模式也没有 blocking 模式，最终就解决了。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/09/24/http请求偶尔处于pending很久排查/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/17/Python判断某个数是否存在使用集合和列表的差距/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/17/Python判断某个数是否存在使用集合和列表的差距/" itemprop="url">Python判断某个数是否存在使用集合和列表的差距</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-17T17:24:39+08:00">
+                2020-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>其实大家都知道判断一个数字是否存在，使用集合速度会更快。这次，我实际测试了一下，结果出乎意料，也在意料之中。 出乎意料的是，这个不应该会被底层优化成集合嘛！意料之中的是，不要什么都需要底层优化来帮你优化，其实有的时候，他并不会为我们优化。 正是某些情况如： 现在不需要注意那些了， 底层都会帮你优化的，导致最终性能下降的厉害，毕竟他优化没优化我们也不知道。 说到底还是一句话，写代码规范问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr = [i <span class="keyword">for</span> i <span class="keyword">in</span>  range(<span class="number">10000</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_list</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> arr:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_set</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> arr:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_arr = arr</span><br><span class="line">set_arr = set(arr)</span><br><span class="line">start = time.time()</span><br><span class="line">test_list(list_arr)</span><br><span class="line">t_list = time.time() - start</span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line">test_set(set_arr)</span><br><span class="line">t_set = time.time() - start</span><br><span class="line"></span><br><span class="line">print(<span class="string">'列表耗时: '</span>, str(t_list))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'集合耗时: '</span>, str(t_set))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'快多少倍: '</span> , str(t_list // t_set))</span><br><span class="line"></span><br><span class="line">python3 执行结果(仅供参考)：</span><br><span class="line"></span><br><span class="line">列表耗时:  <span class="number">0.498913049697876</span></span><br><span class="line">集合耗时:  <span class="number">0.00047206878662109375</span></span><br><span class="line">快多少倍:  <span class="number">1056.0</span></span><br></pre></td></tr></table></figure>
+<p>直接写段代码试下就完事了，简单直观。</p>
+<p>规范的重要性油然而生。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/28/使用Python批量转换html为PDF/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1634,313 +1932,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/31/Cookie不分协议和端口/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/31/Cookie不分协议和端口/" itemprop="url">Cookie不分协议和端口</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-31T17:38:41+08:00">
-                2020-07-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/http/" itemprop="url" rel="index">
-                    <span itemprop="name">http</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在写自己的端口上测试一些功能的时候，发现偶尔需要登录，偶尔不需要登录，有些情况下，只想看下 api 是否正确，也就没有搭建前端的代码。</p>
-<p>经测试： 发现 Cookie 只跟域名有关，不区分协议和端口。</p>
-<p>比如你在 127.0.0.1:8080 端口登录了一个网页，如果你的服务端的 session 是放在如 memcache 里面即共享的，那么你再开一个其他端口相同的服务，你会发现状态和8080端口的状态是一样的， 就是因为，浏览器把 8080 的 cookie 也发送到了另一个端口上。因为 Cookie 跟 协议及端口无关。</p>
-<p>Cookie 的作用域： Domain 和 Path 。</p>
-<p>Domain 指定了哪些主机可以接受 Cookie，如果不指定，默认不包含子域名。如果指定了 Domain， 则一般包含子域名，因此指定 Domain 比省略它的限制要少。但是，当子域名需要共享相关用户信息时，可能会有包住。</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">Domain=mozilla.org   </span><br><span class="line">则 Cookie 也包含在子域名中如  dev.mozilla.org</span><br></pre></td></tr></table></figure>
-<p>Path 属性：Path 标识了主机下的哪些路径可以接受 Cookie （该 URL 路径必须存在于请求 URL 中），义字符 <code>%x2F</code> 作为分隔符，子路径也会被匹配。例如：设置 <code>Path=/docs</code>, 则以下地址都会匹配：</p>
-<ul>
-<li>/docs</li>
-<li>/docs/web/</li>
-<li>docs/web/http</li>
-<li>……</li>
-</ul>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies" target="_blank" rel="noopener">MDN 参考_HTTP_COOKIE</a></p>
-<p>Cookie 一般来说相对比较敏感，如果服务端不想让前端的 js 访问 Cookie 怎么办呢， 其实可以加一个 httponly 字段。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/" itemprop="url">使用Docker搭建MySQL主从模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T17:36:38+08:00">
-                2020-07-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>眼过千遍不如手过一遍，最近在复习 MySQL 知识的时候，准备边看边练。<br>所以，还是理论与实践相结合。</p>
-<p><a href="https://hub.docker.com/_/mysql" target="_blank" rel="noopener">Docker MySQL 指南</a></p>
-<h2 id="搭建-MySQL-主从模式"><a href="#搭建-MySQL-主从模式" class="headerlink" title="搭建 MySQL 主从模式"></a>搭建 MySQL 主从模式</h2><p>如果那虚拟机，或者服务器搭建的话，有点麻烦，且不易移植，使用 Docker 就可以了。</p>
-<p>由于当时pull 镜像的时候，没有选择版本，所以就默认 MySQL 最新版本，确实问题有点多。</p>
-<p>MySQL 版本： 8.0.21<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1991,7 +1982,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">125</span>
+                  <span class="site-state-item-count">127</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2002,7 +1993,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2013,7 +2004,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">170</span>
+                  <span class="site-state-item-count">171</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

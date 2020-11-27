@@ -232,6 +232,313 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/31/Cookie不分协议和端口/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/31/Cookie不分协议和端口/" itemprop="url">Cookie不分协议和端口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-31T17:38:41+08:00">
+                2020-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在写自己的端口上测试一些功能的时候，发现偶尔需要登录，偶尔不需要登录，有些情况下，只想看下 api 是否正确，也就没有搭建前端的代码。</p>
+<p>经测试： 发现 Cookie 只跟域名有关，不区分协议和端口。</p>
+<p>比如你在 127.0.0.1:8080 端口登录了一个网页，如果你的服务端的 session 是放在如 memcache 里面即共享的，那么你再开一个其他端口相同的服务，你会发现状态和8080端口的状态是一样的， 就是因为，浏览器把 8080 的 cookie 也发送到了另一个端口上。因为 Cookie 跟 协议及端口无关。</p>
+<p>Cookie 的作用域： Domain 和 Path 。</p>
+<p>Domain 指定了哪些主机可以接受 Cookie，如果不指定，默认不包含子域名。如果指定了 Domain， 则一般包含子域名，因此指定 Domain 比省略它的限制要少。但是，当子域名需要共享相关用户信息时，可能会有包住。</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">Domain=mozilla.org   </span><br><span class="line">则 Cookie 也包含在子域名中如  dev.mozilla.org</span><br></pre></td></tr></table></figure>
+<p>Path 属性：Path 标识了主机下的哪些路径可以接受 Cookie （该 URL 路径必须存在于请求 URL 中），义字符 <code>%x2F</code> 作为分隔符，子路径也会被匹配。例如：设置 <code>Path=/docs</code>, 则以下地址都会匹配：</p>
+<ul>
+<li>/docs</li>
+<li>/docs/web/</li>
+<li>docs/web/http</li>
+<li>……</li>
+</ul>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies" target="_blank" rel="noopener">MDN 参考_HTTP_COOKIE</a></p>
+<p>Cookie 一般来说相对比较敏感，如果服务端不想让前端的 js 访问 Cookie 怎么办呢， 其实可以加一个 httponly 字段。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/" itemprop="url">使用Docker搭建MySQL主从模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T17:36:38+08:00">
+                2020-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>眼过千遍不如手过一遍，最近在复习 MySQL 知识的时候，准备边看边练。<br>所以，还是理论与实践相结合。</p>
+<p><a href="https://hub.docker.com/_/mysql" target="_blank" rel="noopener">Docker MySQL 指南</a></p>
+<h2 id="搭建-MySQL-主从模式"><a href="#搭建-MySQL-主从模式" class="headerlink" title="搭建 MySQL 主从模式"></a>搭建 MySQL 主从模式</h2><p>如果那虚拟机，或者服务器搭建的话，有点麻烦，且不易移植，使用 Docker 就可以了。</p>
+<p>由于当时pull 镜像的时候，没有选择版本，所以就默认 MySQL 最新版本，确实问题有点多。</p>
+<p>MySQL 版本： 8.0.21<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/07/27/2020-07-27-使用Docker搭建MySQL主从模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/OSI七层网络/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1461,310 +1768,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/17/老毛子固件justmysocket之obfs-local设置/" itemprop="url">老毛子固件justmysocket之obfs-local设置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-17T01:26:57+08:00">
-                2020-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/openwrt/" itemprop="url" rel="index">
-                    <span itemprop="name">openwrt</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="关于路由器"><a href="#关于路由器" class="headerlink" title="关于路由器"></a>关于路由器</h2><p>最近小米 AC2100 终于可以刷机了。就在前几天听说可以刷机了，立马就刷了老毛子系统。之前是使用 LEDE 软路由进行一些科学设置的，但是 LEDE 是安装在群辉虚拟机上，每次群辉出现一些异常bug的时候，就需要重启，随之网络也断了。在试用了 LEDE 软路由之后，发现其中一些软件已经没有人维护了，根本用不了，还有一些软件如 KOOLDNS， bug 不断，要不然就是不更新ip，要不然就是把ip解析到 127.0.0.1 。</p>
-<p>基于小米 AC2100 可以刷机后， 果断放弃了 LEDE 。但是在 LEDE 上面，科学体验还是可以的，就是不支持自动故障切换节点功能，比如走 obfs 的节点，被封了后，每次只能手动上去更改混淆参数。</p>
-<p>换了 老毛子 之后，发现自动故障切换节点功能是有了，但是基于它的设置界面及形式，搞得我晕头转向。最后不得不使用穷举法，一个一个试，看看哪一种参数可以成功访问 obfs。这里特别记录一下。</p>
-<h2 id="页面配置"><a href="#页面配置" class="headerlink" title="页面配置"></a>页面配置</h2><p>在页面上建议，直接点击飞机，然后添加节点那里输入如下参数</p>
-<p><code>-O origin -o plain --plugin obfs-local --plugin-opts &quot;obfs=tls;obfs-host=www.bing.com&quot;</code><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/05/17/老毛子固件justmysocket之obfs-local设置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/" itemprop="url">蜗牛星际B双网口全洗白加网络唤醒</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T23:45:00+08:00">
-                2020-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/蜗牛星际/" itemprop="url" rel="index">
-                    <span itemprop="name">蜗牛星际</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="网络唤醒（局域网唤醒）"><a href="#网络唤醒（局域网唤醒）" class="headerlink" title="网络唤醒（局域网唤醒）"></a>网络唤醒（局域网唤醒）</h2><p>在局域网中通过发送 魔法包来开机。</p>
-<p>前提： </p>
-<ol>
-<li><p>电脑主板支持局域网唤醒 wol</p>
-<pre><code>2. 在操作系统设置好
-</code></pre></li>
-</ol>
-<p>一开始找了一些现有的帖子，都说群辉全洗白了就无法局域网唤醒了，因为 mac 变了，所以很多需要局域网唤醒的就办洗白来实现。</p>
-<p>通过我的实测，发现不管是通过改过mac的那块网卡，还是另一块没有该过的，都是可以实现唤醒开机的。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1815,7 +1818,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">125</span>
+                  <span class="site-state-item-count">127</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1826,7 +1829,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1837,7 +1840,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">170</span>
+                  <span class="site-state-item-count">171</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
