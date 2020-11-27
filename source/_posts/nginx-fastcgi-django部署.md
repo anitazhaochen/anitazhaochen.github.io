@@ -7,19 +7,19 @@ category: Nginx
 
 Django 项目中写一个脚本来启动 fastcgi ，可以添加上一些判断及处理，这样重启或者开启都可以执行。
 
+<!--more -->
+
 ```shell
 #!/bin/sh
 
-export VENV="/home/edt/dsp/venv/bin/activate"
+export VENV="/xxx/venv/bin/activate"
 
 PROJECT_PATH='xxx'
 
-PIDFILE="$PROJECT_PATH/dsp.pid"
-SOCKET="$PROJECT_PATH/dsp.sock"
+PIDFILE="$PROJECT_PATH/xx.pid"
+SOCKET="$PROJECT_PATH/xx.sock"
 LOG="$PROJECT_PATH/logs/fcgi.log"
 ERROR="$PROJECT_PATH/logs/fcgi.error"
-<!--more -->
-
 cd $PROJECT_PATH
 if [ -f $PIDFILE ]; then
     kill `cat -- $PIDFILE`
@@ -29,7 +29,6 @@ fi
 ps -ef | grep python | grep $PROJDIR | awk '{print $2}' | xargs kill
 
 source $VENV
-cd ad_platform
 echo "python ./manage.py runfcgi socket=$SOCKET pidfile=$PIDFILE errlog=$ERROR"
 python ./manage.py runfcgi socket=$SOCKET pidfile=$PIDFILE errlog=$ERROR
 
