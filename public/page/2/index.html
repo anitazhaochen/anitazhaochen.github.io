@@ -232,6 +232,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/GitLab-自动部署Blog/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/25/GitLab-自动部署Blog/" itemprop="url">GitLab 自动部署Blog</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-25T11:31:20+08:00">
+                2020-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>首先在 GitLab 上面创建项目，打开项目，然后在左侧页面点击 Setting –&gt; Integrations 然后输入回调的 url 以及设置在发生哪些事件时通知， 因为我这里主要是想实现我推送新的内容到 GitLab， 然后我的博客服务器可以收到 GitLab 发送过来的通知， 进而实现 我的博客服务器可以去自动拉取代码进行部署。</p>
+<p>不过，如果你输入的是一个私有地址，如 192.168.xxx.xxx 这样的一看就是内网地址，会提示你： <strong>url is blocked requests to the local network are not allowed</strong> 。解决方法： 需要先登陆管理员账号–&gt; Admin area –&gt; Setting –&gt; NetWork 找到 <strong>Outbound requests </strong> 把  Allow requests to local network from hooks and services 打上勾保存就可以了。</p>
+<p>从 GitLab 发请求到 服务器时，会让你设置一个 token ， 这个 token 是让你用来验证这个请求是来自 GitLab 服务器的。</p>
+<p>服务器收到请求后，接下来会从 GitLab 拉取代码，如果直接放 ssh，是否会权限有点大了，可以在 setting 里面点击 Repository 然后在 Deploy Tokens 里面申请一个 Token 。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/09/25/GitLab-自动部署Blog/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/http请求偶尔处于pending很久排查/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1776,162 +1925,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/03/Mac通过brew安装MongoDB时Mongo无法连接/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/03/Mac通过brew安装MongoDB时Mongo无法连接/" itemprop="url">Mac通过brew安装MongoDB时Mongo无法连接</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-03T14:04:42+08:00">
-                2020-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mac/" itemprop="url" rel="index">
-                    <span itemprop="name">Mac</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近，升级了一下 MongoDB之后，突然发现在 终端中输入 mongo，报错如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed global initialization: InvalidSSLConfiguration: Error enumerating certificates: The specified item could not be found in the keychain.</span><br></pre></td></tr></table></figure>
-<p>但是使用 Navicat 竟然可以连接，说明有可能是 mongo 这个命令的问题，或者系统的一些设置问题。</p>
-<p>看了下报错信息，应该是和 SSL 有关，本来本地的这个 MongoDB 也只是作为开发使用，监听在 127.0.0.1， 感觉也没有必要去大动干戈，去配置一下 SSL。</p>
-<p>显示搜了下报错信息，然后搜了下 MongoDB 的 SSL，配 SSL 觉得有点麻烦，暂时还用不到。于是在 stackoverflow 上找到了答案。</p>
-<p><a href="https://stackoverflow.com/questions/16845169/error-when-trying-to-obtain-a-certificate-the-specified-item-could-not-be-found/19160225#19160225" target="_blank" rel="noopener"><a href="https://stackoverflow.com/questions/16845169/error-when-trying-to-obtain-a-certificate-the-specified-item-could-not-be-found" target="_blank" rel="noopener">Error when trying to obtain a certificate: The specified item could not be found in the keychain</a></a></p>
-<p>报错信息不太一样，但是问题是同一个问题。</p>
-<p>这里直接拿出来正确操作方法：</p>
-<ol>
-<li>打开钥匙串</li>
-<li>选择系统，然后看一下有没有一个叫做:  Apple Worldwide Developer Relations Certification Authority 的证书。</li>
-<li>然后确保证书图标右下角有个小 + 号，即信任的意思，我就是因为这个证书虽然在那里，但是我没有信任他，导致一系列麻烦。</li>
-<li>如果还没有信任，双击点开然后选择  信任—- 使用此证书时： 选择始终信任，也会让你输入密码验证。 </li>
-<li>证书信任之后，重新打开终端，然后输入 mongo 就可以了，确保MongoDB 服务已经启动。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1982,7 +1975,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">127</span>
+                  <span class="site-state-item-count">128</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
