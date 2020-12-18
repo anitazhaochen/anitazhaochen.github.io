@@ -232,6 +232,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/28/配置docker-openvpn转发指定网段流量/" itemprop="url">配置docker-openvpn转发指定网段流量</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-28T21:04:05+08:00">
+                2020-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/vpn/" itemprop="url" rel="index">
+                    <span itemprop="name">vpn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="https://github.com/kylemanna/docker-openvpn" target="_blank" rel="noopener">Github-docker-openvpn地址</a></p>
+<p>新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。</p>
+<h2 id="openvpn-两种模式的区别"><a href="#openvpn-两种模式的区别" class="headerlink" title="openvpn 两种模式的区别"></a>openvpn 两种模式的区别</h2><ul>
+<li><p>tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是直连路由器（大概意思就是你在路由器上面看到的ip 和你在你电脑上看到的内网ip 是一致的），那么远在其他地方的设备连接上了vpn，你可以在路由器上面发现一个IP，这个IP既不是wifi连接的，也不是网线连接的，而是通过 vpn 连接的。即使你不在路由器旁边，依旧可以通过 vpn 实现在同一个网段。</p>
+<p>这种方式比较底层，会接收到一些群发的包，可能会导致耗费流量增大。</p>
+<p>使用场景：这个应该是在数据链路层打通了一条通路，所以主要是用在某些需要数据链路层支持的应用。 比如 Itunes，我可以在 nas 服务器上面放很多歌曲，然后使用 itunes 去读取，并且作为歌曲的播放器，因为这种模式需要处于同一网段，不能是子网，所以需要使用这种桥接来进行实现。</p>
+</li>
+<li><p>tun模式： 相当于打通了一条隧道，拿到的ip是vpn分配的私有ip，就相当于在路由器子网中的子网，一般来说去访问家里的内网设备是没有问题的，但是如果家里的设备要反向来访问就不行了，而 tap 模式可以实现，在tap模式下甚至，我在连接 vpn 的情况下，晚上回到家里，打开家里的电脑可以直接连接公司的电脑。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/10/28/配置docker-openvpn转发指定网段流量/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置grafana使用GitLab-OAuth认证/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1721,157 +1874,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/Python中的Mixin类/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/08/18/Python中的Mixin类/" itemprop="url">Python中的Mixin类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-18T10:29:40+08:00">
-                2020-08-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>由于 Python 是支持多继承的，而 Mixin 类就是利用了这种特性。</p>
-<p>Mixin 类是只包含了一组特定的函数组合，我们将其与其他类进行混合，从而生成一个适用于实际需要的新类。</p>
-<p>直接上 code 更好理解：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line">&lt;!--more --&gt;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        print(<span class="string">'I am A'</span>)</span><br><span class="line">        print(<span class="string">'say'</span> + word)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AMixin</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self, food)</span>:</span></span><br><span class="line">        print(<span class="string">'eat '</span> + food)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        super().say(word + <span class="string">'from mixin'</span>)</span><br><span class="line">        print(<span class="string">'i am AMixin'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(AMixin, A)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line"></span><br><span class="line">b.say(<span class="string">'hello'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这是 Python3 的语法</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行结果：</span></span><br><span class="line"></span><br><span class="line">I am A</span><br><span class="line">sayhellofrom mixin</span><br><span class="line">i am AMixin</span><br></pre></td></tr></table></figure>
-<p>以上执行结果说明了一个问题，就是  AMixin 的父类并不是 A ，但是竟然可以调用 A 的 say 方法。 </p>
-<p>是因为 B 同时继承了 AMixin 和 A ， 这就是 Mixin 类的作用。 </p>
-<p>而 Mixin 类为什么可以执行到 A 的 say 方法呢，在多重继承的环境下， super() 有相对来说更加复杂的语义。它会查看你的继承链， 使用一种叫做 Methods Resolution Order（方法解析顺序）的方式，来决定调用最近的继承父类的方法。</p>
-<p>也就是说super().method() 与 self.method() 是差不多的，只是 super().method() 需要跳过当前类而已。</p>
-<p>参考：</p>
-<p>感谢 <a href="https://blog.csdn.net/u012814856/article/details/81355935" target="_blank" rel="noopener">Python 的 Mixin 类</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1922,7 +1924,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-count">132</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1933,7 +1935,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

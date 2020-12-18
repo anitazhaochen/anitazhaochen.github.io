@@ -540,6 +540,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/15/数组链表容器的一些问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/12/15/数组链表容器的一些问题/" itemprop="url">数组链表容器的一些问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-15T14:17:58+08:00">
+                2020-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"><a href="#大多数编程语言中，数组要从0开始编号，而不是从1开始呢？" class="headerlink" title="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"></a>大多数编程语言中，数组要从0开始编号，而不是从1开始呢？</h3><p>从数组存储的内存模型来看，“下标”最确切的定义应该是“偏移（offset）”。<br>如果用 a 来表示数组的首地址，a[0] 就是偏移为0的位置，也就是首地址，a[k]就表示偏移k个type_size的位置，<br>所以计算a[k]的内存地址只需要用这个公式：<br><code>a[k]_address = base_address + k * type_size</code></p>
+<p>但是如果数组从1开始计数，那我们计算数组元素a[k]就会变成为：<br><code>a[k]_address = base_address + (k - 1) * type_size</code></p>
+<p>对于以上两个公司，从1开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就是多了一次减法指令。</p>
+<p>另一方面，可能也是历史原因造成的，C语言设计者用0开始计数数组下标，之后的 Java、JavaScript 等高级语言都效仿了 C 语言，或者说，为了在一定程度上减少 C 语言程序员学习 Java 的成本，因此沿用了从0开始计数的习惯。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/12/15/数组链表容器的一些问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/11/代码设计思想总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1585,159 +1734,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="向阳花">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/10/28/配置docker-openvpn转发指定网段流量/" itemprop="url">配置docker-openvpn转发指定网段流量</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-28T21:04:05+08:00">
-                2020-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/vpn/" itemprop="url" rel="index">
-                    <span itemprop="name">vpn</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><a href="https://github.com/kylemanna/docker-openvpn" target="_blank" rel="noopener">Github-docker-openvpn地址</a></p>
-<p>新增加一台服务器，于是就把以前的虚拟机删除了，关一台性能低的服务器（考虑到节约用电），重新配置下vpn服务，才可以轻松愉快的访问家里的服务器。</p>
-<h2 id="openvpn-两种模式的区别"><a href="#openvpn-两种模式的区别" class="headerlink" title="openvpn 两种模式的区别"></a>openvpn 两种模式的区别</h2><ul>
-<li><p>tap 模式： 这种模式可以实现桥接功能，处于网络层中比较底层的地位，就相当于你直接拿网线连接上了路由器，或者你就在家里通过 wifi 连接了路由器。如果你的 vpn 服务器是直连路由器（大概意思就是你在路由器上面看到的ip 和你在你电脑上看到的内网ip 是一致的），那么远在其他地方的设备连接上了vpn，你可以在路由器上面发现一个IP，这个IP既不是wifi连接的，也不是网线连接的，而是通过 vpn 连接的。即使你不在路由器旁边，依旧可以通过 vpn 实现在同一个网段。</p>
-<p>这种方式比较底层，会接收到一些群发的包，可能会导致耗费流量增大。</p>
-<p>使用场景：这个应该是在数据链路层打通了一条通路，所以主要是用在某些需要数据链路层支持的应用。 比如 Itunes，我可以在 nas 服务器上面放很多歌曲，然后使用 itunes 去读取，并且作为歌曲的播放器，因为这种模式需要处于同一网段，不能是子网，所以需要使用这种桥接来进行实现。</p>
-</li>
-<li><p>tun模式： 相当于打通了一条隧道，拿到的ip是vpn分配的私有ip，就相当于在路由器子网中的子网，一般来说去访问家里的内网设备是没有问题的，但是如果家里的设备要反向来访问就不行了，而 tap 模式可以实现，在tap模式下甚至，我在连接 vpn 的情况下，晚上回到家里，打开家里的电脑可以直接连接公司的电脑。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/10/28/配置docker-openvpn转发指定网段流量/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1788,7 +1784,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-count">132</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1799,7 +1795,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
