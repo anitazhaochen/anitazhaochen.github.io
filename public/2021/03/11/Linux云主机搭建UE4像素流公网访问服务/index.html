@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="网络,像素流,UE4,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言：由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。 如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。  本地内网 Windows 机器跑像素流及“信令和Web服务器” 使用 Linux 搭建支持">
+<meta name="keywords" content="网络,像素流,UE4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux云主机搭建UE4像素流公网访问服务">
+<meta property="og:url" content="http://yoursite.com/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/index.html">
+<meta property="og:site_name" content="向阳花">
+<meta property="og:description" content="前言：由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。 如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。  本地内网 Windows 机器跑像素流及“信令和Web服务器” 使用 Linux 搭建支持">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-03-11T09:54:57.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux云主机搭建UE4像素流公网访问服务">
+<meta name="twitter:description" content="前言：由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。 如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。  本地内网 Windows 机器跑像素流及“信令和Web服务器” 使用 Linux 搭建支持">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/">
+
+
+
+
+
+  <title>Linux云主机搭建UE4像素流公网访问服务 | 向阳花</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">向阳花</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">YL</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="向阳花">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux云主机搭建UE4像素流公网访问服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-03-11T00:00:00+08:00">
+                2021-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/像素流/" itemprop="url" rel="index">
+                    <span itemprop="name">像素流</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。</p>
+<p>如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。</p>
+<ol>
+<li>本地内网 Windows 机器跑像素流及“信令和Web服务器”</li>
+<li>使用 Linux 搭建支持信令服务器的网络打洞/中继服务及Web服务器的转发服务，以支持外网访问。</li>
+</ol>
+<blockquote>
+<p>信令和Web服务器： 这个词是官方的叫法，其实它实际上只表示一个组件，这个组件同时包含了信令服务器和Web服务器，他们分别有不同的用途，我们也需要分别对其进行网络穿透支持。</p>
+</blockquote>
+<p>需要解决的问题：</p>
+<ol>
+<li>UE4 像素流使用到了 <a href="https://zh.wikipedia.org/wiki/WebRTC" target="_blank" rel="noopener">WebRTC</a>（网页即时通信），在移动运营商的网络中如4G网络，一般是不支持用户通过 WebRTC 协议直接与服务器建立连接，需要自建 STUN/TURN 服务，通过中继服务器进行网络中继解决信令服务器的网络问题及在内网访问问题。</li>
+<li>信令和Web服务器，官方只提供了 Windows 版本，即无法部署到 Linux 服务器。</li>
+<li>内网穿透解决 Web服务器公网访问问题</li>
+</ol>
+<h2 id="搭建教程"><a href="#搭建教程" class="headerlink" title="搭建教程"></a>搭建教程</h2><a id="more"></a>
+<p><a href="https://docs.unrealengine.com/zh-CN/SharingAndReleasing/PixelStreaming/Hosting/index.html" target="_blank" rel="noopener">创建主机和网络连接指南</a> 像素流官方文档，通过查阅文档可以了解其大概的网络架构，由于其文档写的不是很具体，所以其中的参数还需要自己去多多尝试。</p>
+<ol>
+<li><p>内网的一台高性能的 Windows 机器上，包体就在这台机器上面跑。</p>
+</li>
+<li><p>信令和Web服务器官方直接提供的就是 Windows 版本，所以决定将其也放置在内网的这台高性能 Windows 上面运行，由此引发的网络问题后续解决。（如有 Windows 云主机，部署相对容易）</p>
+</li>
+<li><p>自己搭建 STUN/TURN 服务器， 在 4G 无线运营商网络下，STUN 一般也是无法穿透的，所以需要使用 TURN 当做中继服务进行中转，对带宽有一定要求。这里我们选择开源服务器 <a href="https://github.com/coturn/coturn" target="_blank" rel="noopener">coturn</a> 进行搭建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">apt install build-essential</span><br><span class="line">apt install openssl libssl-dev make</span><br><span class="line"></span><br><span class="line">wget https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz</span><br><span class="line">tar xf libevent-2.1.12-stable.tar.gz</span><br><span class="line">cd libevent-2.1.12-stable</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 接下来选择数据库，coturn 默认选择 sqllite 数据库</span><br><span class="line"><span class="meta">#</span># 选择 sqllite 数据库 （如果机器上已有，就不要安装了）</span><br><span class="line">apt-get install sqlite libsqlite3-dev</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 下载 coturn 源码，并编译安装</span><br><span class="line"></span><br><span class="line">wget https://github.com/coturn/coturn/archive/4.5.2.zip</span><br><span class="line">tar xf 4.5.2.zip</span><br><span class="line">cd coturn-4.5.2</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 看看上面有没有报错，数据库是否选择正确，至此安装完成</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 创建用户并配置 coturn</span><br><span class="line"></span><br><span class="line">turnadmin -a -u test -p test -r test</span><br><span class="line"><span class="meta">#</span>  创建用户名为 test 密码为 test ，同时 realm(这个参数等下配置文件中需要一致) 为 test</span><br><span class="line"></span><br><span class="line">cp /usr/local/etc/turnserver.conf.default /usr/local/etc/turnserver.conf</span><br><span class="line">vim /usr/local/etc/turnserver.conf</span><br><span class="line"><span class="meta">#</span> 直接在最上面把以下配置粘贴进去， 请看注释进行微调：</span><br><span class="line">listening-port=3478 #监听端口</span><br><span class="line">listening-device=eth0 #监听的网卡， ifconfig 查看</span><br><span class="line">external-ip=1,2,3,4 # 服务器的公网ip</span><br><span class="line">user=test:test # 用户名:密码</span><br><span class="line">realm=test #一般与 turnadmin 创建用户时指定的 realm 一致</span><br></pre></td></tr></table></figure>
+<p>配置完成后先前台运行服务器查看有无报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">turnserver -a -f -v -r test</span><br></pre></td></tr></table></figure>
+<p>验证监听是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:3478</span><br></pre></td></tr></table></figure>
+<p>如果有输出，则监听成功。</p>
+<p>通过在线检测ice服务是否正常：</p>
+<p><a href="https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/" target="_blank" rel="noopener">webrtc-官网检测服务</a></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">STUN or TURN URI: turn:ip:port</span><br><span class="line">TURN username: test</span><br><span class="line">TURN password: test</span><br><span class="line"></span><br><span class="line">选择 Add Server</span><br><span class="line"></span><br><span class="line">STUN or TURN URI: stun:ip:port</span><br><span class="line">TURN username: </span><br><span class="line">TURN password: </span><br><span class="line"></span><br><span class="line">选择 Add Server</span><br><span class="line"></span><br><span class="line">然后点击  Gather candidates</span><br><span class="line"></span><br><span class="line">稍等片刻，如果在 Protocol Address 一栏看到你的公网IP地址，说明服务搭建成功。</span><br></pre></td></tr></table></figure>
+<p>以上 STUN/TURN 服务搭建成功后，我们开始搭建像素流送服务。</p>
+<ol>
+<li><p>首先确保局域网跑通没问题后</p>
+</li>
+<li><p>修改”信令和WEB服务器”的配置，在其配置中加入我们的 STUN/TURN 服务地址</p>
+<p>具体操作方法：</p>
+<ol>
+<li><p>打开 <code>\Engine\Source\Programs\PixeLStreaming\WebServers\SignallingWebServer</code> 编辑里面的 <code>Start_AWS_WithTURN_SignallingServer</code> 文件， 将 $PublicIp 更改为 STUN/TURN 服务器的公网 IP，然后找到 <code>$peerConnectionOptions</code> 这一行，修改其中的 username 及 credential 为你自己设置的用户名和密码，在我这都改为 test 。然后保存。</p>
+</li>
+<li><p>在局域网运行的时候，我们启动的是 run.bat 文件， 现在我们改为启动 runAWS_WithTURN.bat 这个文件。</p>
+<p>至此，基本搭建完成。 然后我们进行这一步的测试，保证服务搭建的没问题，我们在内网进行访问，地址还是和我们在局域网的地址一样，看看能否访问，如果可以访问，则证明这条链路是没有问题的，如果不能访问，首先查看 STUN/TURN 日志，看看有没有接收到连接，如果日志没有任何连接之类的信息输出，说明我们的内网 Widnwos 并没有连接上 STUN/TURN 服务，检查是否自己刚才修改 Windows 上的配置文件哪里修改错了，或者无意间破坏了它的格式。</p>
+</li>
+<li><p>如果第二步测试没有问题，并且 STUN/TURN 服务器也有日志输出，我们继续下一步的工作，前面提到 “信令服务器” 和 “Web服务器” 在这里，它是一体的，我们部署在 Windows 上，其中 “信令服务器” 的网络问题我们已经解决，就是使用的 STUN/TURN 服务进行中继或者“打洞” 实现。我们接下来实现 Web服务器的外网访问，这个 Web 服务器的功能仅仅是为客户端提供 WebRTC 连接的js文件。以下四种解决方法供参考：</p>
+<ol>
+<li>利用 ssh 命令自带的代理服务将端口映射到服务器上的某个端口上，由于很少在 windows上面操作，所以没有使用这个方法，这个方法其实一条命令就能解决，缺点是不稳定，ssh 经常会自动断开连接。</li>
+<li>使用 Nginx 反向代理功能，前提是服务器可以访问到内网这台 Windows 主机，测试方法，在服务器上面执行 ping windows 的内网ip ， 可以在 windows 的 cmd 中输入 ipconfig 命令查看内网 IP， 如果可以 ping 通，就可以配置 Nginx 反向代理来提供 Web 服务器访问。</li>
+<li>（目前使用的方法）使用开源工具 FRP 进行内网穿透，部署方法参考<a href="https://github.com/fatedier/frp" target="_blank" rel="noopener">Frp 官网文档</a> ，需要在 Windows 部署 frpc 客户端及服务端部署 frps 服务端。</li>
+</ol>
+</li>
+<li>将必要的客户端文件提取出来，将其部署到公网主机上。</li>
+</ol>
+<p>全部部署完成后，打开4G网，访问 公网ip:frp穿透到服务器的端口  看看能否访问到 web 页面，如果连页面都访问不到，请检查云主机的端口是否打开。</p>
+<p>至此，完成所有部署。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+            <a href="/tags/像素流/" rel="tag"># 像素流</a>
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/18/如何实现一个通用的高性能的排序函数/" rel="next" title="如何实现一个通用的高性能的排序函数">
+                <i class="fa fa-chevron-left"></i> 如何实现一个通用的高性能的排序函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ABC</p>
+              <p class="site-description motion-element" itemprop="description">~~~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">134</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">175</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建教程"><span class="nav-number">2.</span> <span class="nav-text">搭建教程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABC</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
