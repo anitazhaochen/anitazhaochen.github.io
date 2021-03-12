@@ -12,7 +12,7 @@ if __name__ == "__main__":
         print(sys.argv[1])
         with open(sys.argv[1],'r') as f:
             li = f.readlines()
-            li.insert(20,"<!--more -->\n")
+            #li.insert(20,"<!--more -->\n")
             with open (sys.argv[1],"w") as f:
                 f.writelines(li)
         os.popen(r"sed  's/\(^.*!\[.*\)\.\.\(.*\)/\1\2/g' %s > ../_posts/%s"%(sys.argv[1], sys.argv[1]))

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言通过树莓派做流量转发至后端服务器，通过 ip_forward 来进行流量转发，可以转发到不同网段。  可以在网络的前端防止嗅探器，实质是一个流量转发的工具。 然后在同一个网段，将树莓派做成一个类似路由器的东西，但是不是路由器，开启 IP 转发，将所有包转发至后端的一台 Docker 集群。 但是这样的话， client 的 ip 就会丢失，我们并无法确定是谁访问了嗅探器。 在后端服务器上面拿到">
+<meta name="keywords" content="Linux,负载均衡,架构,透明代理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVS负载均衡模型及实际应用">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/LVS负载均衡模型及实际应用/index.html">
+<meta property="og:site_name" content="CCC">
+<meta property="og:description" content="前言通过树莓派做流量转发至后端服务器，通过 ip_forward 来进行流量转发，可以转发到不同网段。  可以在网络的前端防止嗅探器，实质是一个流量转发的工具。 然后在同一个网段，将树莓派做成一个类似路由器的东西，但是不是路由器，开启 IP 转发，将所有包转发至后端的一台 Docker 集群。 但是这样的话， client 的 ip 就会丢失，我们并无法确定是谁访问了嗅探器。 在后端服务器上面拿到">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/image-20181127113006330-3289406.png">
+<meta property="og:updated_time" content="2021-03-12T09:58:33.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LVS负载均衡模型及实际应用">
+<meta name="twitter:description" content="前言通过树莓派做流量转发至后端服务器，通过 ip_forward 来进行流量转发，可以转发到不同网段。  可以在网络的前端防止嗅探器，实质是一个流量转发的工具。 然后在同一个网段，将树莓派做成一个类似路由器的东西，但是不是路由器，开启 IP 转发，将所有包转发至后端的一台 Docker 集群。 但是这样的话， client 的 ip 就会丢失，我们并无法确定是谁访问了嗅探器。 在后端服务器上面拿到">
+<meta name="twitter:image" content="http://yoursite.com/images/image-20181127113006330-3289406.png">
+
+<link rel="canonical" href="http://yoursite.com/2018/11/26/LVS负载均衡模型及实际应用/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>LVS负载均衡模型及实际应用 | CCC</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CCC</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">感谢网易游戏！！</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/LVS负载均衡模型及实际应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ABC">
+      <meta itemprop="description" content="~~~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CCC">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LVS负载均衡模型及实际应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2018-11-26T00:00:00+08:00">2018-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-12 17:58:33" itemprop="dateModified" datetime="2021-03-12T17:58:33+08:00">2021-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/LVS/" itemprop="url" rel="index"><span itemprop="name">LVS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过树莓派做流量转发至后端服务器，通过 ip_forward 来进行流量转发，可以转发到不同网段。</p>
+<p><img src="/images/image-20181127113006330-3289406.png" alt="image-20181127113006330"></p>
+<p>可以在网络的前端防止嗅探器，实质是一个流量转发的工具。</p>
+<p>然后在同一个网段，将树莓派做成一个类似路由器的东西，但是不是路由器，开启 IP 转发，将所有包转发至后端的一台 Docker 集群。</p>
+<p>但是这样的话， client 的 ip 就会丢失，我们并无法确定是谁访问了嗅探器。</p>
+<p>在后端服务器上面拿到的 IP 只是嗅探器的 IP。</p>
+<p>使用 LVS 的 DNat 就可以解决问题。</p>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Linux_Virtual_Server" target="_blank" rel="noopener">LVS</a> 是直接工作在内核的负载均衡器，调度能力很强。</p>
+</blockquote>
+<h2 id="lVS-的调度方法"><a href="#lVS-的调度方法" class="headerlink" title="lVS 的调度方法"></a>lVS 的调度方法</h2><h3 id="静态方法：仅根据算法本身进行调度"><a href="#静态方法：仅根据算法本身进行调度" class="headerlink" title="静态方法：仅根据算法本身进行调度"></a>静态方法：仅根据算法本身进行调度</h3><ul>
+<li><p>Round Robin（轮询）</p>
+</li>
+<li><p>Weighted Round Robin（加权轮询）</p>
+</li>
+<li>Source Hash（源地址哈希）： 实现 session 保持的机制，将来自同一个 IP 的请求始终调度至同一个服务器。</li>
+<li>Destination Hash（目标地址哈希）</li>
+</ul>
+<p><code>源地址哈希</code> 反向代理时为缓存做负载均衡。针对客户端经常访问的资源做缓存</p>
+<p><code>目标地址哈希</code>正向代理的时候对缓存做负载均衡，针对服务端经常被访问到的资源做缓存</p>
+<p>动态方法（考虑是否是持久连接）： lc，wlc，，sed，nq，lblc，lblcr</p>
+<p>​    overhead：active connections，inactive connections</p>
+<ul>
+<li><p>Least Connection（最少连接数）</p>
+<p>Overhead = Active * 256 + Inactive</p>
+</li>
+<li><p>Weighted LC （加权轮询）</p>
+<p>Overhead = （Active * 256+Inactive）/ weight</p>
+</li>
+<li><p>Shortest Expection Delay（最短期望延迟）</p>
+<p>Overhead = （Active+1）*256/weight</p>
+</li>
+<li><p>Never Queue</p>
+</li>
+</ul>
+<p>​    <code>最短期望延迟</code> 算法的改进（第一轮各分一个，然后根据 <code>最短期望延迟</code> 算法继续）</p>
+<ul>
+<li>LBLC： Locality-Based LC，即为动态的 <code>目标地址哈希</code> 算法</li>
+</ul>
+<p>​    实现正向代理情形下的 cache server 调度</p>
+<ul>
+<li>LBLCR：Locality-Based Least-Connection with Replication，带复制的 LBLC 算法。</li>
+</ul>
+<h2 id="LVS-模式"><a href="#LVS-模式" class="headerlink" title="LVS 模式"></a>LVS 模式</h2><ul>
+<li>一类是请求报文和响应报文都经由 Director 进行调度，在极高的负载场景中，Director 可能会成为性能瓶颈。</li>
+<li>另一类是请求报文经由 Director ，响应报文一定不经由 Director，曾经有人做过测试，LVS 的并发可以达到百万级，HAproxy 是远达不到这个量级的。 </li>
+</ul>
+<h3 id="LVS-Nat-模型"><a href="#LVS-Nat-模型" class="headerlink" title="LVS-Nat 模型"></a>LVS-Nat 模型</h3><p>多目标的 DNAT（iptables）：它通过修改请求报文的目标 IP 地址（同时可能会修改目标端口）</p>
+<p><code>Web服务器</code>应该和 <code>调度器</code> 使用私网地址，且 <code>Web服务器</code> 的网关要指向 <code>调度器</code></p>
+<p><code>请求报文</code>和<code>响应报文</code>都要经由 <code>LVS</code> 转发：极高负载的场景中， <code>LVS</code> 可能会成为系统瓶颈，支持端口映射</p>
+<p><code>Web服务器</code> 可以使用任意 OS</p>
+<p><code>Web服务器</code>的IP地址必须和<code>LVS</code> 的某个网卡地址在同一个局域网内。</p>
+<h3 id="LVS-DR-模型"><a href="#LVS-DR-模型" class="headerlink" title="LVS-DR 模型"></a>LVS-DR 模型</h3><p>预知原理详情请参考： <a href="https://blog.csdn.net/brad_chen/article/details/47807281" target="_blank" rel="noopener">lvs-dr 详解</a></p>
+<p>由于 LVS-DR 配置较复杂，这里简要概括下， 主要是利用了数据在二层网络传输的特性，在数据包到达 LVS 时，这个包的 MAC 地址其实是 LVS 的 MAC 地址，然后 LVS 准备将这个包转发给Web服务器的时候，将这个包的目标 MAC 地址修改为其中某个 Web服务器的 Mac 地址，然后再将包发送出去，这时身处同一个物理网络下对应mac地址的 Web 服务器就会收到数据包。</p>
+<p>这里需要保证的是： 数据包流入这个物理网络后，会通过 IP 来查找 MAC 地址，所以我们通过静态绑定来实现将包只发给 LVS， 因为此时，这个网络下所有主机的 IP 地址都是一样的。但是 Linux 是不允许一个网段内有相同的 IP 地址的，并且这些地址还会广播，所以要做的就是重新编译 Web服务器的 Linux 内核，将 IP 地址监听在本地回环地址上，并且只监听，不会向网络发送广播。</p>
+<ul>
+<li>通过静态绑定，保证路由器将目标 IP 为 VIP 的请求报文发送给 <code>LVS</code></li>
+<li>修改 Web服务器内核参数，让其监听某个IP地址（公网私网都可以），关闭广播功能</li>
+<li>Web服务器和LVS必须处于同一物理网络中</li>
+<li>不支持端口映射</li>
+<li><p>Web服务器可以是大多OS</p>
+</li>
+<li><p>请求报文经由 LVS 调度，但响应报文一定不能经由 LVS（Web服务器的网关不能指向 LVS）</p>
+</li>
+</ul>
+<h3 id="lVS-TUN-模式"><a href="#lVS-TUN-模式" class="headerlink" title="lVS-TUN 模式"></a>lVS-TUN 模式</h3><p>不修改请求报文 IP 首部，而是通过在原有的 IP 首部，再封装一个 IP 首部。</p>
+<p><code>Web服务器</code> IP 地址必须是公网IP，LVS至少需要两个公网地址</p>
+<p><code>Web服务器</code> 的网关不能指向 <code>LVS</code></p>
+<p>请求报文必须经由 <code>LVS</code> 调度，但响应报文一定不能经由 <code>LVS</code></p>
+<p>不支持端口映射</p>
+<p><code>Web服务器</code> 的 OS 必须支持隧道功能</p>
+<h3 id="LVS-FULLNAT-模式"><a href="#LVS-FULLNAT-模式" class="headerlink" title="LVS-FULLNAT 模式"></a>LVS-FULLNAT 模式</h3><ul>
+<li><p>请求流程</p>
+<p>客户端对 <code>Web服务器</code> 发送请求，这里的 <code>Web服务器</code> 并不是真实的 <code>Web服务器</code>，而是 LVS简称调度器（Director），<code>调度器</code> 收到请求后，将请求从另一块网卡的内网地址发出，并且将包的源地址改为 客户端IP地址变更为调度器的私有地址，将目标地址改成集群中某台服务器的IP地址，然后经过内网路由器路由到真实的Web服务器进行处理。</p>
+</li>
+<li><p>响应流程</p>
+<p>Web服务器发送响应请求时，会把目标地址改为调度器的地址，源地址改为自己的IP地址，然后经过路由器路由后到达调度器，调度器在把响应发送给客户端前将包的目标地址改为客户端IP地址，把源地址改为自己的IP地址。</p>
+</li>
+<li><p>特性：</p>
+<p>LVS 其中一块网卡地址需要是公网地址</p>
+<p><code>Web服务器</code> 和 <code>LVS</code>的某张网卡需要都是私网地址，二者无需在同一网段中</p>
+<p><code>Web服务器</code> 接收到的请求报文的原地址为 <code>LVS 私有地址</code>，因为要响应给 LVS</p>
+<p>请求报文和响应报文都必须经由 LVS</p>
+<p>支持端口映射</p>
+<p>Web服务器可以使用任意 OS</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/负载均衡/" rel="tag"># 负载均衡</a>
+              <a href="/tags/架构/" rel="tag"># 架构</a>
+              <a href="/tags/透明代理/" rel="tag"># 透明代理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/11/20/Python中的字符串对象源码剖析/" rel="prev" title="Python中的字符串对象源码剖析">
+      <i class="fa fa-chevron-left"></i> Python中的字符串对象源码剖析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/12/07/BIOS启动流程及进程0初始化/" rel="next" title="BIOS启动流程及进程0初始化">
+      BIOS启动流程及进程0初始化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lVS-的调度方法"><span class="nav-number">2.</span> <span class="nav-text">lVS 的调度方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态方法：仅根据算法本身进行调度"><span class="nav-number">2.1.</span> <span class="nav-text">静态方法：仅根据算法本身进行调度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LVS-模式"><span class="nav-number">3.</span> <span class="nav-text">LVS 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS-Nat-模型"><span class="nav-number">3.1.</span> <span class="nav-text">LVS-Nat 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS-DR-模型"><span class="nav-number">3.2.</span> <span class="nav-text">LVS-DR 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lVS-TUN-模式"><span class="nav-number">3.3.</span> <span class="nav-text">lVS-TUN 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS-FULLNAT-模式"><span class="nav-number">3.4.</span> <span class="nav-text">LVS-FULLNAT 模式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ABC</p>
+  <div class="site-description" itemprop="description">~~~~~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ABC</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
