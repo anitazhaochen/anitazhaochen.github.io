@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="~~~~~">
+  <meta name="description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 <meta property="og:type" content="website">
-<meta property="og:title" content="CCC">
+<meta property="og:title" content="我们不能失去信仰">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="CCC">
-<meta property="og:description" content="~~~~~">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CCC">
-<meta name="twitter:description" content="~~~~~">
+<meta name="twitter:title" content="我们不能失去信仰">
+<meta name="twitter:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 
 <link rel="canonical" href="http://yoursite.com/">
 
@@ -44,7 +44,7 @@
   };
 </script>
 
-  <title>CCC</title>
+  <title>我们不能失去信仰</title>
   
 
 
@@ -95,10 +95,10 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">CCC</h1>
+      <h1 class="site-title">我们不能失去信仰</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
-      <p class="site-subtitle" itemprop="description">感谢网易游戏！！</p>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
   </div>
 
   <div class="site-nav-right">
@@ -159,16 +159,180 @@
   
   
   <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/Linux双网口设置桥接让其他机器连接/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/Linux双网口设置桥接让其他机器连接/" class="post-title-link" itemprop="url">Linux双网口设置桥接让其他机器连接</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 23:36:09" itemprop="dateCreated datePublished" datetime="2021-03-13T23:36:09+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-14 16:23:59" itemprop="dateModified" datetime="2021-03-14T16:23:59+08:00">2021-03-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>家里需要连接有线网络的设备越来越多了，三台 Linux 服务器，一台树莓派设备，但是路由器上面只有三个网口，如果再买一台路由器走桥接又得多增加一个设备，多一个耗电设备，还好，其中有台 Linux 主机有两个网口，就想着应该可以设置桥接，路由器连接这台服务器，然后这台服务器的另一个网口给树莓派使用。</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><ul>
+<li><p>安装 <code>brctl</code> 工具</p>
+<p><code>sudo apt install bridge-utils</code></p>
+</li>
+<li><p>使用 <code>brctl</code> 工具创建网桥</p>
+<p><code>sudo brctl addbr br0</code></p>
+</li>
+<li><p>将两个网口都添加到网桥上，我这里的网卡名并不是 <code>eth0、eth1</code> 而是 <code>enp1s0 和 enp2s0</code> ，在执行下面的命令的时候确认好你的网口名，可以通过 <code>ifconfig</code> 命令查看。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/13/Linux双网口设置桥接让其他机器连接/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/" class="post-title-link" itemprop="url">使用Netatalk在Linux上面搭建时间机器备份</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-13 22:04:57 / 修改时间：23:26:53" itemprop="dateCreated datePublished" datetime="2021-03-13T22:04:57+08:00">2021-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MacOS/" itemprop="url" rel="index"><span itemprop="name">MacOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近本来是准备在黑群晖上面创建一个盘拿来做苹果电脑的 Time Machine 备份的，设置好了后，发现网速极慢，猜想可能是由于我 SSH 上去改了网络配置的原因。这样的事情已经发生了不止两三次了，有几次系统直接崩了，实在是难受，并且慢慢就失去了黑群晖的兴趣，系统偶尔不太稳定，自己的需求大多数时候必须要手动 SSH 上去改配置才能实现。思来想去，我为什么不直接装一台 Linux 呢，说干就干，下了 Ubuntu 最新的 20.xx 版本，先刷入 U 盘，然后改 Bios，因为我这个是蜗牛星际主机，不改 Bios 原来的设置可能会导致开机引导不识别硬盘，然后就是装系统了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -182,10 +346,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-03-11 19:28:43 / 修改时间：19:30:44" itemprop="dateCreated datePublished" datetime="2021-03-11T19:28:43+08:00">2021-03-11</time>
+              <time title="创建时间：2021-03-11 19:28:43" itemprop="dateCreated datePublished" datetime="2021-03-11T19:28:43+08:00">2021-03-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-13 16:07:36" itemprop="dateModified" datetime="2021-03-13T16:07:36+08:00">2021-03-13</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,12 +423,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -280,7 +450,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-12 20:13:13" itemprop="dateModified" datetime="2021-03-12T20:13:13+08:00">2021-03-12</time>
+                <time title="修改时间：2021-03-13 16:14:43" itemprop="dateModified" datetime="2021-03-13T16:14:43+08:00">2021-03-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,45 +493,14 @@
 <blockquote>
 <p>备注：在一些场景下，使用的就不全是默认值。比如，双 M 的主备架构里要求双写的时候，我们就可能会设置成 auto_increment_increment=2，让一个库的自增 Id 都是奇数，另一个库的自增 Id 都是偶数，避免两个库生成的主键发生冲突。</p>
 </blockquote>
-<h3 id="导致自增主键不连续的原因"><a href="#导致自增主键不连续的原因" class="headerlink" title="导致自增主键不连续的原因"></a>导致自增主键不连续的原因</h3><ol>
-<li><code>唯一键</code> 冲突，插入失败后，<code>自增主键值</code> 已经更新，不会回退</li>
-<li>同样的，事务回滚也会产生类似的现象，事务回滚不糊回退 <code>自增主键值</code></li>
-<li>自增锁优化的存在 </li>
-</ol>
-<h3 id="MySQL-没有把表的自增值改回去的原因"><a href="#MySQL-没有把表的自增值改回去的原因" class="headerlink" title="MySQL 没有把表的自增值改回去的原因"></a>MySQL 没有把表的自增值改回去的原因</h3><p>其实 <code>MySQL</code> 这么设计是为了提高性能。在并发事务时，可能会因为回退操作而导致事务执行失败。</p>
-<p>如果通过其他复杂的方法来回退以及保证重新生成自增key的正确性，可能需要对自增 Id加锁，并且需要等待上一个事务执行完成后，才能确定当前事物的自增 Id 值，会大大降低并发度。</p>
-<p>因此，<code>InnoDB</code> 放弃了这个设计，语句执行失败也不会回退自增 Id。所以自增 Id 是递增的，但不保证是连续的。</p>
-<p>自增 Id 锁并不是一个事务锁（事务锁需要等到事务结束后才能释放），而是每次申请完就马上释放，以便允许别的事务再申请。</p>
-<h3 id="自增锁的优化"><a href="#自增锁的优化" class="headerlink" title="自增锁的优化"></a>自增锁的优化</h3><p><code>MySQL</code> 5.0 版本的时候，自增锁的范围是语句界别。</p>
-<p>也就是说，如果一个语句申请了一个表的自增锁，这个锁会等语句执行结束后才释放，显然，这样设计会影响并发度。</p>
-<p><code>MySQL</code> 5.1.22 版本引入了一个新策略，新增参数 <code>innodb_autoinc_lock_mode</code> ， 默认值为1。</p>
-<blockquote>
-<ol>
-<li>这个参数设为 0 时，表示采用 MySQL 5.0 之前版本的策略，即语句执行结束后才释放锁。</li>
-<li>这个参数的值设置为 1 时。普通 insert 语句，自增锁在申请之后就马上释放。在类似 insert … select 这样的批量插入数据的语句，由于 MySQL 无法精确算出需要多少个自增 Id ，所以自增锁还是需要等到语句执行完成后才被释放。</li>
-<li>这个参数设置为 2 时，所有的申请自增主键的动作都是申请后就释放锁，但是这样会有一个问题就是 binlog 格式需要设置成 row 格式，否则会出现 binlog 数据不一致的问题。</li>
-</ol>
-</blockquote>
-<ul>
-<li><p>默认设置为 1 的情况下，为什么 insert … select 要使用语句级别的锁？为什么这个参数的默认值不是2？</p>
-<p>这么设计还是为了数据的一致性， 在原库执行的时候可能存在事物间交叉执行，导致自增 Id 不连续，如果 binlog 的格式是 statement 格式，会造成恢复出来的数据和主库的不一致。</p>
-<p>所以这里建议为了提高并发度，将 innodb_autoinc_lock_mode 设置为2 并且 binlog 的格式改为 row 格式。</p>
-</li>
-<li><p>自增锁的优化：</p>
-<p>在执行批量插入的时候，在普通的 insert 语句里面包含多个 value 值的情况下，即使 <code>innodb_autoinc_lock_mode</code> 设置为1，也不会等语句执行完成才释放锁。因为这类语句在申请自增 Id 的时候，是可以精确计算出需要多少个 Id 的，然后一次性申请，申请完成后锁就可以释放了。</p>
-<p>也就是说，批量插入数据的语句，之所以需要这么设置，是因为”不知道预先申请多少个 Id“。</p>
-<p>既然预先不知道要申请多少个自增 Id，如果是需要一个一个申请的话，按照这个逻辑就需要重复 n 次。显然，这种申请自增 Id 的策略，在大批量数据插入的情况下，不但速度慢，还会影响并发插入的性能，这是一个复杂度是 O(n) 的策略。 </p>
-<p>因此，对于批量插入数据的语句，MySQL 有一个批量申请自增 Id 的策略，以空间换时间的做法，复杂度为O(logn) 。</p>
-<ol>
-<li>语句执行过程中，第一次申请自增 Id，会分配1个</li>
-<li>1个用完后，这个语句第二次申请，会分配2个</li>
-<li>2个用完后，还是这个语句，第三次申请自增 Id，会分配4个</li>
-<li>依次类推，同一个语句去申请自增 Id，每次申请到的自增 Id 个数都是上一次的两倍。</li>
-</ol>
-</li>
-</ul>
-<p>由于自增锁的优化，这个也是出现自增主键 Id 不连续的原因之一。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/01/MySQL自增主键id不连续的原因/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -384,12 +523,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -464,12 +603,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -544,12 +683,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -630,12 +769,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -714,12 +853,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -799,12 +938,12 @@
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
+      <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -848,176 +987,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/12/01/Python3-6及以上版本中的字典默认是有序的/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/26/nginx-fastcgi-django部署/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/26/nginx-fastcgi-django部署/" class="post-title-link" itemprop="url">nginx+fastcgi+django部署</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-26 10:34:06" itemprop="dateCreated datePublished" datetime="2020-11-26T10:34:06+08:00">2020-11-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 11:43:56" itemprop="dateModified" datetime="2020-11-27T11:43:56+08:00">2020-11-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Django 项目中写一个脚本来启动 fastcgi ，可以添加上一些判断及处理，这样重启或者开启都可以执行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/26/nginx-fastcgi-django部署/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/25/Git保持干净的历史记录及清晰的提交记录/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ABC">
-      <meta itemprop="description" content="~~~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CCC">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/25/Git保持干净的历史记录及清晰的提交记录/" class="post-title-link" itemprop="url">Git保持干净的历史记录及清晰的提交记录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-25 10:43:17" itemprop="dateCreated datePublished" datetime="2020-11-25T10:43:17+08:00">2020-11-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 11:40:01" itemprop="dateModified" datetime="2020-11-27T11:40:01+08:00">2020-11-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="让-git-log-的每一条记录都有价值"><a href="#让-git-log-的每一条记录都有价值" class="headerlink" title="让 git log 的每一条记录都有价值"></a>让 git log 的每一条记录都有价值</h2><p>合作共同开发项目的大致流程是：</p>
-<ol>
-<li>分配任务给每个开发者，每个开发者负责某块业务</li>
-<li>开始开发，开发者拉取 master 分支的代码，并且创建自己的分支</li>
-<li>某个开发者开发完成后，将自己的代码推送至自己本地分支对应的远程分支</li>
-<li>在 GitLab 页面上进行 merge request 操作，请求合并到 测试分支如 dev 分支</li>
-<li>dev 分支测试完毕后，将 dev 分支合并至 master 分支。</li>
-</ol>
-<p>稍微看一下项目的 git log 日志，会发现每个人写的 commit message 基本都不一样，还可能过一阵后自己的 commit message 自己都看不懂了。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/25/Git保持干净的历史记录及清晰的提交记录/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1098,28 +1067,28 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">ABC</p>
-  <div class="site-description" itemprop="description">~~~~~</div>
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-count">140</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">181</span>
+        <span class="site-state-item-count">191</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1150,7 +1119,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">ABC</span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

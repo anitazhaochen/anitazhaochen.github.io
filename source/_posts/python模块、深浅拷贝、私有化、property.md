@@ -1,8 +1,8 @@
 ---
-title: python模块、深浅拷贝、私有化、property
+title: Python模块、深浅拷贝、私有化、property
 date: 2017-06-05 00:07:36
-tags: [python]
-category: python
+tags: [Python]
+category: Python
 ---
 
 # PYTHON 深拷贝浅拷贝等等

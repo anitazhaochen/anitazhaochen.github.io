@@ -1,8 +1,8 @@
 ---
-title: python爬虫了解
+title: Python爬虫了解
 date: 2017-07-19 12:52:14
-tags: [python, scrpy]
-category: python
+tags: [Python, Scrapy]
+category: Python
 ---
 
 

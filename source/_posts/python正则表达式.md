@@ -1,8 +1,8 @@
 ---
-title: python正则表达式
+title: Python之正则表达式
 date: 2017-08-12 01:58:23
-tags: [python, 正则]
-category: python
+tags: [python, 正则表达式]
+category: Python
 ---
 
 ~~~python

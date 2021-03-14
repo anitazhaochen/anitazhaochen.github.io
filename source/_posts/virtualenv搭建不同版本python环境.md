@@ -1,8 +1,8 @@
 ---
-title: virtualenv搭建不同版本python环境
+title: virtualenv搭建不同版本Python环境
 date: 2017-06-04 22:34:40
-tags: [python, virtualenv]
-category: python
+tags: [Python, virtualenv]
+category: Python
 ---
 
 # 使用virtualenv实现在mac 上多版本python的使用

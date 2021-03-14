@@ -1,8 +1,8 @@
 ---
-title: python文件学习
+title: Python文件学习
 date: 2017-07-28 00:32:35
-tags: [python, io]
-category: python
+tags: [Python]
+category: Python
 ---
 
 f = open("文件名称","w/r/a")  # 打开文件

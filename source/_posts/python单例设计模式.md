@@ -1,8 +1,8 @@
 ---
-title: python单例设计模式
+title: Python单例设计模式
 date: 2017-07-29 14:09:56
-tags: [python, 设计模式]
-category: python
+tags: [Python, 设计模式]
+category: Python
 ---
 
 

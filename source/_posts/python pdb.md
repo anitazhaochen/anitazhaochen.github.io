@@ -1,8 +1,8 @@
 ---
 title: python pdb模块
 date: 2017-11-04 16:47:56
-tags: [python, pdb, 调试]
-category: python
+tags: [Python, PDB]
+category: Python
 ---
 
 python pdb

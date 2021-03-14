@@ -1,8 +1,8 @@
 ---
 title: Python实现校园网模拟登陆
 date: 2017-04-20 11:42:30
-tags: [python, scrpy]
-category: python
+tags: [Python, scrapy]
+category: Python
 ---
 
 ## 初学python

@@ -1,8 +1,8 @@
 ---
-title: python md5 加密'\n'不同的问题
+title: Python MD5 加密'\n'不同的问题
 date: 2017-04-23 11:49:16
-tags: [python, md5]
-category: python
+tags: [Python, MD5]
+category: Python
 ---
 # 使用手动输入一个密码和文件读取的密码加密后值不一样
 

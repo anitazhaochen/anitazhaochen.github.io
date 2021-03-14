@@ -1,8 +1,8 @@
 ---
-title: django开发流程
+title: Django 开发流程
 date: 2017-08-14 22:13:16
-tags: [python, Django, 开发]
-category: python
+tags: [Python, Django]
+category: Python
 ---
 
 * 开发流程
