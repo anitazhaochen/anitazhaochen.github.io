@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="就不那么多废话了，也不用一点一点来讲为什么了。只是说一说流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uWSGI部署记录">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/uWSGI%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="就不那么多废话了，也不用一点一点来讲为什么了。只是说一说流程。">
+<meta property="article:published_time" content="2018-10-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.047Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/10/30/uWSGI%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>uWSGI部署记录 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/uWSGI%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          uWSGI部署记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-30 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-30T00:00:00+08:00">2018-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>就不那么多废话了，也不用一点一点来讲为什么了。只是说一说流程。</p>
+<a id="more"></a>
+
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>安装 uWSGI，建议使用 pip 进行安装。</p>
+<p>我是在 ubuntu 上面部署的，其他服务器类似，请先查一下各自版本在安装之前，需要安装什么依赖，比如，出了错，不要一股脑就把他粘上谷歌，然后看的一头雾水，出了问题好好读读报错信息，看看自己是否见过，能否解决，要不然的话，找不到根本问题，那就是问题一个接一个的来。</p>
+<p>如果开始没有 gcc 请先安装，好好看看出错信息，缺什么安什么，  uWSGI 并不是一条命令就能搞定的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command "/usr/bin/python -u -c "import setuptools, tokenize;__file__='/tmp/pip-install-wpULhz/uwsgi/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record /tmp/pip-record-axH1lT/install-record.txt --single-version-externally-managed --compile" failed with error code 1 in /tmp/pip-install-wpULhz/uwsgi/</span><br></pre></td></tr></table></figure>
+
+<p>这个是当时我报的错，由于缺少 gcc 导致的。</p>
+<p><a href="https://www.jianshu.com/p/f1ed50f22d07" target="_blank" rel="noopener">从零开始在 Ubuntu  下部署 Django + uwsgi + nginx</a></p>
+<p>这个已经说得比较清楚了，如果是在 Python2 的环境下，只需要把 3 去掉即可。</p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>uWSGI 安装完之后，试验一下能否运行，一步一步实验，否则最后东西都搭建完成了，跑不起来，还不是需要重头再来检测一下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(env, start_response)</span>:</span></span><br><span class="line">    start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>,<span class="string">'text/html'</span>)])</span><br><span class="line">    <span class="keyword">return</span> [<span class="string">b"Hello World"</span>]</span><br></pre></td></tr></table></figure>
+
+<p>把下面这个代码新建一个 test.py 复制粘贴保存</p>
+<p>然后</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uwsgi --http :8000 --wsgi-file test.py</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器输入服务器的 ip, 端口 8000 如果能看到 hello, world 就表安装 uwsgi 成功了。</p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>然后开始配置 Nginx 。</p>
+<p>Nginx 安装不是什么难事。</p>
+<p>Nginx 安装完之后，它的配置文件目录，一般都是 /etc/nginx/ 目录下有一个 uwsgi_params 文件，然后把这个文件原封不动的拷贝到你的项目的根目录。</p>
+<p>然后新建一个 自定义的 Nginx 配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">upstream django &#123;</span><br><span class="line">        server 127.0.0.1:8001;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen      8000; # 端口号</span><br><span class="line">        server_name abc; # 没有就不填，不影响</span><br><span class="line">        charset     utf-8;</span><br><span class="line">  </span><br><span class="line">        # Django media</span><br><span class="line">        location /media  &#123;</span><br><span class="line">            alias /home/yww/djangotest/Hello/media; # 媒体文件所在文件夹</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /static &#123;</span><br><span class="line">            alias /home/yww/djangotest/Hello/static; # 静态文件所在文件夹</span><br><span class="line">        &#125;</span><br><span class="line">         # max upload size</span><br><span class="line">        client_max_body_size 75M;   # adjust to taste</span><br><span class="line"></span><br><span class="line">        # Finally, send all non-media requests to the Django server.</span><br><span class="line">        location / &#123;</span><br><span class="line">            uwsgi_pass  django;</span><br><span class="line">            include     /home/yww/djangotest/Hello/uwsgi_params; #uwsgi_params 路径</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的是示例：</p>
+<p>下面是我的真实配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">upstream django &#123;</span><br><span class="line">    # server unix:///path/to/your/mysite/mysite.sock; # for a file socket</span><br><span class="line">    server 127.0.0.1:8001; # for a web port socket (we'll use this first)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> configuration of the server</span></span><br><span class="line">server &#123;</span><br><span class="line">    # the port your site will be served on</span><br><span class="line">    listen      80;</span><br><span class="line">    # the domain name it will serve for</span><br><span class="line">    server_name abc.com; # substitute your machine's IP address or FQDN</span><br><span class="line">    charset     utf-8;</span><br><span class="line"></span><br><span class="line">    # max upload size</span><br><span class="line">    client_max_body_size 75M;   # adjust to taste</span><br><span class="line"></span><br><span class="line">    # Django media</span><br><span class="line">    location /media  &#123;</span><br><span class="line">        alias /apps/beautyblock/media;  # your Django project's media files - amend as required</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /static &#123;</span><br><span class="line">        alias /apps/beautyblock/static; # your Django project's static files - amend as required</span><br><span class="line">    &#125;</span><br><span class="line">    location /resource &#123;</span><br><span class="line">        alias /apps/beautyblock/resource; # your Django project's static files - amend as required</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # Finally, send all non-media requests to the Django server.</span><br><span class="line">    location / &#123;</span><br><span class="line">        uwsgi_pass  django;</span><br><span class="line">        include     /apps/beautyblock/uwsgi_params; # the uwsgi_params file you installed</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，本来项目只有两个目录，media 和 static ，但是临时需要加一个目录，提供一些下载的服务，于是乎，我就又加了一条 resource ， 如有需要，请在 Nginx 里面配置好路径对应，然后在 Django 里面配好路由就可以了，还是比较简单的。</p>
+<p>这个文件放到 /etc/nginx/site-enabled/xxxx.conf  自己取个名字。（Nginx 主配置已经包含了这个目录，他回自动加载的）</p>
+<p>至此，Nginx 可以算是结束了。</p>
+<p>！！！！！！注意：</p>
+<p>这个时候，你去访问以下，应该会发现，访问的结果是 </p>
+<p><strong>502</strong>  Bad Gateway  </p>
+<p>那是因为你上游的服务还没启动，就是项目还没启动。这个时候就该 uWSGI 出场了。</p>
+<h2 id="开始配置-uWSGI"><a href="#开始配置-uWSGI" class="headerlink" title="开始配置 uWSGI"></a>开始配置 uWSGI</h2><p>如果遇到一些错误，不要太过于慌张，就觉得是代码写错了。  真的有可能是你在哪个目录下使用 uWSGI 命令的锅呢。  所以，最后，是在项目的根目录来进行 uwsgi 命令，然后再指明 wsgi.py 的路径进行启动，如果你的 wsgi.py 里不是那么单纯，还涉及导自己的包，那就容易出现 xxxx moudle not found 错误。</p>
+<p>所以，记住： 在项目根目录来使用 </p>
+<p><code>uwsgi --http :8000 --wsgi-file wsgi.py</code></p>
+<p>来进行服务器的启动操作</p>
+<p>还有一种 <code>--socket</code> 类型：如果跟 nginx 搭配，比较推荐 socket</p>
+<p>而使用 <code>--http</code> 其实是可以直接当做一个 Web 服务器的。而且 uWSGI 其实就可以看做是 WSGI 的 服务器部分的实现。</p>
+<p>开始的时候，可以通过一条命令来开启，然后看看是否可以正常访问，而不是出现 502 的问题。</p>
+<p>如果一切没问题，好了，那么我们就可以通过写一个配置文件来方便管理了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[uwsgi]</span><br><span class="line">socket=127.0.0.1:8001</span><br><span class="line">chdir=/apps/beautyblock</span><br><span class="line">wsgi-file=ksCMS/wsgi.py</span><br><span class="line">processes=4</span><br><span class="line">threads=2</span><br><span class="line">master=True</span><br><span class="line">pidfile=uwsgi.pid</span><br><span class="line">daemonize=uswgi.log</span><br></pre></td></tr></table></figure>
+
+<p>这是我的文件，大家看着改就行，保证 socket 和  nginx 里面的配置一致。</p>
+<p>然后，改完之后，重启 Nginx 和 uwsgi  ，否则有可能造成没有效果，又导致不必要的麻烦。</p>
+<p>最后说一个，快速停掉 uwsgi ，然后在 开启。 可以 通过 kill -9  pid 来进行全部杀死。</p>
+<p>可以通过  uwsgi –ini wsgi.py 来开启 <strong>注意是 两个 “-”</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/Web/" rel="tag"># Web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/10/28/HEXO%E6%BA%90%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD/" rel="prev" title="HEXO源文件备份">
+      <i class="fa fa-chevron-left"></i> HEXO源文件备份
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/11/06/HTTP%E7%BC%93%E5%AD%98%E5%A4%84%E7%90%86/" rel="next" title="HTTP缓存处理">
+      HTTP缓存处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步"><span class="nav-number">1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步"><span class="nav-number">2.</span> <span class="nav-text">第二步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步"><span class="nav-number">3.</span> <span class="nav-text">第三步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始配置-uWSGI"><span class="nav-number">4.</span> <span class="nav-text">开始配置 uWSGI</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

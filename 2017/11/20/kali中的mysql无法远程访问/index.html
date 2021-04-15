@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="kali挺好用的，专门渗透的系统，想要搞一搞数据库当做服务器用，可偏偏半天连不上。我的kali 是官网目前最新的2017.2 64bit版本  先把初始密码，以及数据库的权限配置完成 一下是网上摘抄的方法：  1.改表法。可能是你的帐号不允许从远程登陆，只能在localhost。这个时候只要在localhost的那台电脑，登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kali中的mysql无法远程访问">
+<meta property="og:url" content="http://yoursite.com/2017/11/20/kali%E4%B8%AD%E7%9A%84mysql%E6%97%A0%E6%B3%95%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="kali挺好用的，专门渗透的系统，想要搞一搞数据库当做服务器用，可偏偏半天连不上。我的kali 是官网目前最新的2017.2 64bit版本  先把初始密码，以及数据库的权限配置完成 一下是网上摘抄的方法：  1.改表法。可能是你的帐号不允许从远程登陆，只能在localhost。这个时候只要在localhost的那台电脑，登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “">
+<meta property="article:published_time" content="2017-11-20T13:22:30.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.043Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="kali">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/11/20/kali%E4%B8%AD%E7%9A%84mysql%E6%97%A0%E6%B3%95%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>kali中的mysql无法远程访问 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/20/kali%E4%B8%AD%E7%9A%84mysql%E6%97%A0%E6%B3%95%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kali中的mysql无法远程访问
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-20 21:22:30" itemprop="dateCreated datePublished" datetime="2017-11-20T21:22:30+08:00">2017-11-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>kali挺好用的，专门渗透的系统，想要搞一搞数据库当做服务器用，可偏偏半天连不上。<br>我的kali 是官网目前最新的2017.2 64bit版本</p>
+<ul>
+<li>先把初始密码，以及数据库的权限配置完成</li>
+<li>一下是网上摘抄的方法：</li>
+</ul>
+<p>1.改表法。可能是你的帐号不允许从远程登陆，只能在localhost。这个时候只要在localhost的那台电脑，登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从“localhost”改称“%”</p>
+<a id="more"></a>
+<p><code>mysql -u root -p</code>mysql&gt;use mysql;<code></code>mysql&gt;update user set host = ‘%’ where user = ‘root’;<code></code>mysql&gt;select host, user from user;`</p>
+<ol start="2">
+<li>授权法。例如，你想myuser使用mypassword从任何主机连接到mysql服务器的话。</li>
+</ol>
+<p><code>GRANT ALL PRIVILEGES ON *.* TO myuser@&#39;%&#39; IDENTIFIED BY &#39;mypassword&#39; WITH GRANT OPTION;</code><br><code>FLUSH   PRIVILEGES;</code></p>
+<p>如果你想允许用户myuser从ip为192.168.1.6的主机连接到mysql服务器，并使用mypassword作为密码</p>
+<p><code>GRANT ALL PRIVILEGES ON *.* TO &#39;myuser&#39;@&#39;192.168.1.3&#39; IDENTIFIED BY &#39;mypassword&#39; WITH GRANT OPTION;</code><br>  <code>FLUSH   PRIVILEGES;</code></p>
+<p>我用的第一个方法,刚开始发现不行,在网上查了一下,少执行一个语句 mysql&gt;FLUSH   PRIVILEGES<br>使修改生效.就可以了</p>
+<p>#################################</p>
+<p>开启Mysql数据库的远程连接权限：<br>一句话，并且修改root 密码为 wrx123<br><code>grant all privileges on *.* to &#39;root&#39; @&#39;%&#39; identified by &#39;wrx123&#39;;</code><br><code>flush privileges;</code></p>
+<p>开启mysql的远程连接<br>把你的HOST字段改成 % ，表示任何地址的都可以用此帐号登录，或你也可以定IP</p>
+<p><code>mysql&gt;GRANT ALL on *.* to 123@192.168.0.% identified by “456″;</code></p>
+<ul>
+<li><p>接下来完成了mysql本身的远程访问权限配置，还是无法连接。<br>  执行如下命令：<br>  <code>netstat -ntlp</code><br>  发现 mysql 那一栏显示的是127.0.0.1：3306或者localhost：3306这表示mysqld服务只监听本机，只有本机可以连接。</p>
+<p>  因为kali 的mysql配置文件不好找，也没有网上说的对应的mysql.conf,<br>  或者my.conf里面也没有什么东西，找了一会，终于找到了。<br>  在这个目录里/etc/mysql/mariadb.conf.d 改动50-server.cnf这个文件里的 bind-address    127.0.0.1 注释掉就行了，在前面加一个# 号。</p>
+<p>  然后，我开始还是不行，怎么重启服务都不行。</p>
+<p>  最后还是重启电脑好了，所以重启一下看下可以不，如果还不行的话<br>  把 bind-address    0.0.0.0   改成这样在重启一遍。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/kali/" rel="tag"># kali</a>
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/11/17/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="数据库">
+      <i class="fa fa-chevron-left"></i> 数据库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/02/04/sed%E7%BC%96%E8%BE%91%E5%99%A8/" rel="next" title="sed编辑器">
+      sed编辑器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

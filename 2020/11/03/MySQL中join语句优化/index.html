@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在 MySQL 中，使用 join 语句的时候会涉及到驱动表和被驱动表，MySQL 会自动为你优化，选择数据量较小的表作为驱动表。在分析性能的时候，可以使用straight_join 替换 join 可以便于我们分析执行中的性能问题。 1select * from table1 staight_join table2 on (table1.name&#x3D;table2.name)  上面这条 SQL 语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL中join语句优化">
+<meta property="og:url" content="http://yoursite.com/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="在 MySQL 中，使用 join 语句的时候会涉及到驱动表和被驱动表，MySQL 会自动为你优化，选择数据量较小的表作为驱动表。在分析性能的时候，可以使用straight_join 替换 join 可以便于我们分析执行中的性能问题。 1select * from table1 staight_join table2 on (table1.name&#x3D;table2.name)  上面这条 SQL 语">
+<meta property="article:published_time" content="2020-11-03T07:41:21.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.037Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="join">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>MySQL中join语句优化 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL中join语句优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-03 15:41:21" itemprop="dateCreated datePublished" datetime="2020-11-03T15:41:21+08:00">2020-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在 MySQL 中，使用 join 语句的时候会涉及到驱动表和被驱动表，MySQL 会自动为你优化，选择数据量较小的表作为驱动表。在分析性能的时候，可以使用<code>straight_join</code> 替换 <code>join</code> 可以便于我们分析执行中的性能问题。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table1 staight_join table2 <span class="keyword">on</span> (table1.name=table2.name)</span><br></pre></td></tr></table></figure>
+
+<p>上面这条 SQL 语句中，table1 是驱动表，table2 是被驱动表。</p>
+<p>这条语句的执行流程是：</p>
+<ol>
+<li>从表table1 中读入一行数据 R；</li>
+<li>从数据R中，取出name字段到表table2里去查找</li>
+<li>取出表table2中满足条件的行，跟R组成一行，放到结果集中<a id="more"></a></li>
+<li>重复以上1-3步骤，直到table1的末尾循环结束。</li>
+</ol>
+<p>这个过程类似我们写程序的嵌套循环，如果可以用得上被驱动表的索引，这种算法就称为 “Index Nested-Loop Join”，简称 NLJ。</p>
+<p>假设table1和table2各有100行数据。</p>
+<p>在table2 的name字段有索引的情况下，那么总扫描行数就是200。扫描table1的每一行拿出来对比，然后在table2中寻找，因为索引的缘故，可以粗略算为1行就找到。在这个join语句中，驱动表走的是全表扫描，被驱动表走的是树搜索。</p>
+<p>假设被驱动表的行数是M。树搜索的复杂度为 <code>lgM</code>，如果考虑到回表，那么在驱动表上查询每一行的复杂度为 <code>2 * lgM</code>, 总复杂度 <code>N + N * 2 * lgM</code>。 (lgM 表示以2为底的对数)</p>
+<p>显然，N对扫描行数的影响更大（N为驱动表的行数）。N扩大1000倍，整个式子只扩大1000倍，而 M（M为被驱动表的行数）扩大1000倍，整个式子扩大不到10倍。</p>
+<p>结论：</p>
+<p>​    如果使用join语句，需要让小表来做驱动表。</p>
+<p>在table2 的name字段没有索引的情况下，那么总扫描行数就是<code>100 * 100</code>行。</p>
+<p>MySQL 会使用一个名为 Block Nested-Loop Join 的算法，流程：</p>
+<ol>
+<li>把表 table1 的数据读入到线程内存的 join_buffer 中</li>
+<li>扫描表 table2， 把table2中的每一行取出来，跟 join_buffer 中的数据作对比，满足join条件的，放入结果集中。</li>
+</ol>
+<p>另外 MySQL 还有另一种算法叫做 Simple Nested-Loop Join， 只不过他不会利用 join buffer 。一个是一次加载，后面的操作只需要从内存读取，一个是一批一批从硬盘加载，速度肯定是内存里的快。</p>
+<p>如果 table1 和 table2 都很大，而 MySQL 选择了较小的那个表作为驱动表，但是还是无法一次性把数据读到内存，那么它就会选择分批来读取到内存。我们可以增大join_buffer 的大小，来减少分批加载的次数。</p>
+<p>结论：</p>
+<p>​    如果使用join语句，在没有索引的情况下，也建议使用小表来做驱动表。</p>
+<p>使用 Join 的原则：</p>
+<ol>
+<li>如果可以使用 Index Nested-Loop Join 算法，就是可以用得上被驱动表上的索引，就可以使用 Join</li>
+<li>如果使用 Block Nested-Loop Join 算法，扫描行数就会过多。尤其是在大表上的join操作，这样可能要扫描被驱动表很多次，会占用大量的系统资源。所以这种 join 尽量不要用。</li>
+</ol>
+<p>小表指什么？</p>
+<p>​    更准确的说，在决定哪个表做驱动表的时候，应该是两个表按照各自的条件过滤，过滤完成之后，计算参与join的各个字段的总数据量，数据小的那个表，就是“小表”，应该作为驱动表。</p>
+<h2 id="如果一定要使用Join可以如何优化"><a href="#如果一定要使用Join可以如何优化" class="headerlink" title="如果一定要使用Join可以如何优化"></a>如果一定要使用Join可以如何优化</h2><ul>
+<li>Multi-Range Read优化（MRR）这个优化的目的就是尽可能使用顺序读盘。</li>
+</ul>
+<p>对于 MySQL 来说，数据存储在磁盘上，可能在cpu、内存之间花费的时间和从磁盘读取的时间来说就相差很大了。</p>
+<p>如果随着name的递增顺序查询的话，id的值就会变成随机的，那么就会出现随机访问，性能相对较差。虽然“按行差”这个机制不能改，但是调整查询的顺序，还是可以加速的。</p>
+<p>因为大多数的数据都是按照主键递增顺序插入得到的，所以我们可以认为，如果按照主键的递增顺序查询的话，对磁盘的读比较接近顺序读，能够提升读性能。（想到这一点，innodb 必须要有主键字段常见为id，可见 id 也能表示数据的磁盘顺序）</p>
+<p>MRR开启优化： <code>set optimizer_switch=&quot;mrr_cost_based=off&quot;</code></p>
+<p>MRR能够提升性能的核心在于，查询语句在索引name上做的一个范围查询，可以得到足够多的主键id。这样通过排序后，再去主键索引查数据，就能体现出“顺序性”的优势。</p>
+<ul>
+<li>Batched Key Access（BKA算法）</li>
+</ul>
+<p>BKA算法其实是改进的 NLJ 算法，在 BNL 算法中，使用到了 join buffer 优化， 但是 BNL 本来就比 NLJ 慢，所以就在 NLJ中也加入了 join_buffer 来缓存数据。</p>
+<p><code>set optimizer_switch=&#39;mrr=on,mrr_cost_based=off,batched_key_access=on&#39;;</code></p>
+<p>通过以上语句开启 BKA 算法。 BKA算法依赖于 MRR，所以上面也开启了 MRR 的参数。</p>
+<ul>
+<li>BNL 算法优化</li>
+</ul>
+<p>使用 Block Nested-Loop Join（BNL）算法时，可能会对被驱动表做多次扫描。如果这个被驱动表是一个大的冷数据表，除了会导致IO压力大以外，还会影响缓存。</p>
+<p>InnoDB对Buffer Pool的LRU算法做了优化，即：第一次从磁盘读入内存的数据页，会先放在 old 区域。如果1秒之后这个数据也不再被访问了，就不会被移动到 LRU链表的头部，这样对 Buffer Pool 的命中率影响就不大。</p>
+<p>但是，如果一个使用 BNL 算法的 join 语句，多次扫描一个冷表，而且这个语句执行时间超过1秒，就会再次扫描冷表的时候，把冷表的数据页移动到 LRU 链的头部。这种情况对应的是冷表的数据量较小，可以完全放入 old 区域的情况。</p>
+<p>如果冷表很大，就会出现另一种请款：业务正常访问的数据也，没有机会进入 young 区域。</p>
+<p>由于这种机制的存在，一个正常访问的数据页，要进入 young 区域，需要隔1秒后再次被访问到。但是，由于我们的join语句在循环读取磁盘和淘汰页内存，这样正常访问的数据页很可能在1秒以内就被淘汰了。</p>
+<p>以上两种情况都会影响 Buffer Pool 的正常工作。</p>
+<p>结论：</p>
+<p>​    大表join操作虽然对IO有影响，但是在语句执行结束后，对IO的影响也结束了。但是，对 Buffer Pool的影响就是持续性的，需要依靠后续的查询请求慢慢恢复内存命中率。</p>
+<p>为了减少这种影响，可以考虑增大 join_buffer_size 的值，减少被驱动表的扫描次数。</p>
+<p>总结：BNL 算法对系统的影响：</p>
+<ol>
+<li>可能会多次扫描被驱动表占用IO资源</li>
+<li>判断join条件需要执行M*N次对比（M、N分别是两张表的行数），如果是大表就会占用非常多的 CPU 资源</li>
+<li>可能会导致Buffer Pool 的热数据被淘汰，影响内存命中率。</li>
+</ol>
+<p>在执行语句前，使用 explain 查看是否会使用 BNL 算法。</p>
+<ul>
+<li>BNL 优化方法</li>
+</ul>
+<ol>
+<li>通过建立临时表，然后在临时表上建立索引，将 BNL 转为 BKA 算法。</li>
+<li>扩展-hash join， 因为MySQL 的优化器和执行器不支持哈希join，所以我们可以在业务端实现，然后将其放到集合中进行判断，理论上这种操作会比临时表的方案快。</li>
+</ol>
+<p>总结：</p>
+<ol>
+<li>BKA 优化是 MySQL 已经内置支持的</li>
+<li>BNL算法效率低，建议尽量转换成 BKA 算法。给被驱动表关联的字段加上索引即可</li>
+<li>基于临时表的改进方案，对于能够提前过滤出小数据的join语句来说，效果还是很好的</li>
+<li>MySQL 目前还不支持 hash join，但是我们可以配合业务端模拟出来，理论上效果好于临时表的方案</li>
+<li>多个表做join时，使用 explain 配合 straight_join 进行观察，找出每次参与join的驱动表的数据集，越小越好，这就是最终确定的连接顺序，以及需要在表的哪些字段上加索引。</li>
+</ol>
+<p>这次业务因一些软删除数据，导致表的数据异常庞大，只是查询一下数据， 在使用了 BKA 算法的前提下，扫描行数还是达到了大约200万行的量级，速度也很慢，主要是最小的驱动表都有6万多行。</p>
+<p>解决思路就是：</p>
+<ol>
+<li>减少join数量，放弃不必要的条件限制，然后在业务端模拟 hash join</li>
+<li>定时删除无效的数据（意义并不是特别大，毕竟 join 前 where 也会过滤）</li>
+<li>重新学习设计表（主要是有两个表的join数据达到了180万行）</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/sql/" rel="tag"># sql</a>
+              <a href="/tags/join/" rel="tag"># join</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/28/%E9%85%8D%E7%BD%AEdocker-openvpn%E8%BD%AC%E5%8F%91%E6%8C%87%E5%AE%9A%E7%BD%91%E6%AE%B5%E6%B5%81%E9%87%8F/" rel="prev" title="配置docker-openvpn转发指定网段流量">
+      <i class="fa fa-chevron-left"></i> 配置docker-openvpn转发指定网段流量
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/04/InnoDB%E4%B9%8BLRU%E7%BC%93%E5%AD%98%E5%8F%8ASQL%E7%8A%B6%E6%80%81/" rel="next" title="InnoDB之LRU缓存及SQL状态">
+      InnoDB之LRU缓存及SQL状态 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如果一定要使用Join可以如何优化"><span class="nav-number">1.</span> <span class="nav-text">如果一定要使用Join可以如何优化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

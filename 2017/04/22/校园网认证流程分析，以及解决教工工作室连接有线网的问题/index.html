@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言：  准备在工作室开始搞搞东西，图书馆人太多，然后把两台电脑搬到工作室，Wi-Fi貌似不是那么给力，所以还是想连接有线网。  找了一下工作室，发现我的位置底下正好有一个网线接口，就把它和我的电脑连接起来了。  首先说一下，宿舍网络的连接认证流程，  我15年入学的时候还没有dhcp服务器，宿舍连网需要自己设置ip，网关，子网掩码，dns 的值，然后才能进行连接认证。  连接好网线之后，我假设和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="校园网认证流程分析，以及解决教工工作室连接有线网的问题">
+<meta property="og:url" content="http://yoursite.com/2017/04/22/%E6%A0%A1%E5%9B%AD%E7%BD%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%95%99%E5%B7%A5%E5%B7%A5%E4%BD%9C%E5%AE%A4%E8%BF%9E%E6%8E%A5%E6%9C%89%E7%BA%BF%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="前言：  准备在工作室开始搞搞东西，图书馆人太多，然后把两台电脑搬到工作室，Wi-Fi貌似不是那么给力，所以还是想连接有线网。  找了一下工作室，发现我的位置底下正好有一个网线接口，就把它和我的电脑连接起来了。  首先说一下，宿舍网络的连接认证流程，  我15年入学的时候还没有dhcp服务器，宿舍连网需要自己设置ip，网关，子网掩码，dns 的值，然后才能进行连接认证。  连接好网线之后，我假设和">
+<meta property="article:published_time" content="2017-04-22T06:07:27.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.051Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="校园网">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2017/04/22/%E6%A0%A1%E5%9B%AD%E7%BD%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%95%99%E5%B7%A5%E5%B7%A5%E4%BD%9C%E5%AE%A4%E8%BF%9E%E6%8E%A5%E6%9C%89%E7%BA%BF%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>校园网认证流程分析，以及解决教工工作室连接有线网的问题 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/22/%E6%A0%A1%E5%9B%AD%E7%BD%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%95%99%E5%B7%A5%E5%B7%A5%E4%BD%9C%E5%AE%A4%E8%BF%9E%E6%8E%A5%E6%9C%89%E7%BA%BF%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          校园网认证流程分析，以及解决教工工作室连接有线网的问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-04-22 14:07:27" itemprop="dateCreated datePublished" datetime="2017-04-22T14:07:27+08:00">2017-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>  准备在工作室开始搞搞东西，图书馆人太多，然后把两台电脑搬到工作室，Wi-Fi貌似不是那么给力，所以还是想连接有线网。<br>  找了一下工作室，发现我的位置底下正好有一个网线接口，就把它和我的电脑连接起来了。<br>  首先说一下，宿舍网络的连接认证流程，<br>  我15年入学的时候还没有dhcp服务器，宿舍连网需要自己设置ip，网关，子网掩码，dns 的值，然后才能进行连接认证。<br>  连接好网线之后，我假设和宿舍网络一模一样的操作。</p>
+<a id="more"></a>
+<h2 id="出了一些问题"><a href="#出了一些问题" class="headerlink" title="出了一些问题"></a>出了一些问题</h2><p>  连接之前，先确认网线是否插好，打开我的电脑，然后点击网络，然后点击网络和共享中心，然后更改适配器设置，看你的网络连接是否现实网络电缆被拔出，如果没有，则表示在物理上连接成功。<br>  （注意：有些人的电脑有多个网络连接，还是有可能看到网络电缆被拔出，但是我们主要看的是 以太网的那个网络适配器是否正常显示）<br>  确认之后，我就开始打开软件，输入账号密码进行连接了，然后还是比较欣慰，不是很快就告诉我连接失败了，而是让我等了很久，最后不得不手动结束它。<br>  它一直现实正在连接，我也没办法，然后就打开了一个抓包工具，看看到底是哪个地方出问题了。<br>  我用的抓包工具是  wireshark 非常强大，可以抓非常多协议的包，还支持扩展。<br>  然后我打开之后，继续进行认证，然后先自己想一想有可能问题出在哪里，我第一个想到的就是是否需要自己配置ip，毕竟考虑到在教学区使用有线校园网的数量应该比较少，所以有可能网络中心并没有在这里<br>布置dhcp服务器，下面是抓包的一些dhcp包，wireshark会在短时间内抓大量的包，所以，需要使用过滤器进行过滤一下，找到我们需要的包，进行分析，然后我先大致浏览了一遍，只是接受与本机mac地址通信的<br>包， 在过滤器中，输入 eth.addr eq 我的mac地址 然后就可以进行过滤了</p>
+<h3 id="下面先讲一下校园网认证工作的流程："><a href="#下面先讲一下校园网认证工作的流程：" class="headerlink" title="下面先讲一下校园网认证工作的流程："></a>下面先讲一下校园网认证工作的流程：</h3><p>首先：本机并有ip地址，然后他会先进行一个eapol 认证，eapol 就是 可扩展的局域网eap协议，<br>接下来：通过mac地址进行一个搜索认证服务器，发送认证广播，然后认证服务器就会回应，并且告诉本机认证服务器的mac地址，然后本机发送 Request Identity 请求认证 给 认证服务器，认证服务器收到之后，发送广播进行允许认证请求，接下来，本机先把认证账号发送给 认证服务器，然后服务器会返回一个加密字符串，要求本机与密码进行加密，然后加密完后发送给加密服务器，如果密码正确，他就会返回一个成功，否则返回失败，这就是一个认证流程。<br>前段时间，一直想在我自己的linux机器上写一个校园网认证的脚本。<br>认证成功后，这个时候才会启动dhcp服务器， 通过dhcp 我们可以分配到一个ip，然后就可以上网了。<br>以上就是大概的认证流程，想深入细节的，可以自己抓包进行分析。</p>
+<p>这个是eapol认证的包：</p>
+<p>可以看到 success  然后 就开始了 dhcp Discover 请求。</p>
+<h3 id="发现错误之处"><a href="#发现错误之处" class="headerlink" title="发现错误之处"></a>发现错误之处</h3><p>检查完认证流程后，发现，eapol认证并没有错误，而且返回的是成功，所以就说明是可以通过网线连接校园网的，所以比较高兴，接下里就是寻找错误的地方，把它修改就行了。<br>然后检查 dncp认证：</p>
+<p>先分析一下dhcp的工作原理：<br>  dhcp 全英文是：Dynamic Host Configuration Protocol 意思就是动态主机配置协议，有了它，可以简化网络管理员的工作。</p>
+<p>  dhcp 通过抓包分析，他是分四次握手的协议，Tcp是三次握手协议<br>  首先本机通过广播发送 DHCP Discover请求<br>  然后DHCP服务器器就会进行响应，它会回复一个 DHCP Offer 里面包含所需要的ip<br>  （如果有多台dhcp服务器，有可能会收到多个Offer）<br>  本机得到ip之后，会发送一个报文，DHCP Request 也是通过广播进行发送<br>  然后本机还会在发送一个报文，DHCP ACK 也是通过广播，就是告诉dhcp服务器本机使用了谁提供的ip。<br>  （注：每个dhcp服务器都会接收最后一个本机发的报文，然后跟自己提供的相对比，如果相同，就会标记此IP有人使用了，如果不同，它就会收回自己的ip供下一次提供给别人）</p>
+<p>然后我发现，只有本机发送的dhcp Dicover包，没有得到响应</p>
+<p>所以可以判定，要自己设定ip地址，<br>然后也不知道地址是怎么分配的，然后就只有随便设置一个，然后继续抓包，<br>在包里，看到有陌生的ip就进行试一试，只要知道ip地址，相应的子网掩码，默认网关就很好设置了。<br>通过抓包里面的arp协议的包，发现没有得到响应，就可以断定，自己的ip设置的有问题。</p>
+<p>最后就是属于设置ip的问题了，经过几经周转，得到了教学区网络分配的地址，写上ip，怀着无比期待的心情，连上啦。。。。。</p>
+<p>写这篇东西，其实没有对别人没有什么帮助，不是教程，也不是别人需要的东西，这个 只是我 分析 网络故障的一种方法，把它一点一点具体到精准部位，只能说给出一个事例，我分析网络故障的思路。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A0%A1%E5%9B%AD%E7%BD%91/" rel="tag"># 校园网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/04/21/%E4%BD%BF%E7%94%A8aircrack-ng%E7%A0%B4%E8%A7%A3wpa2%E5%8A%A0%E5%AF%86%E7%9A%84Wi-Fi%E5%AF%86%E7%A0%81/" rel="prev" title="使用aircrack-ng破解wpa2加密的Wi-Fi密码">
+      <i class="fa fa-chevron-left"></i> 使用aircrack-ng破解wpa2加密的Wi-Fi密码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/04/23/python-md5-%E5%8A%A0%E5%AF%86%E4%B8%8D%E5%90%8C%E7%9A%84%E9%97%AE%E9%A2%98/" rel="next" title="Python MD5 加密'\n'不同的问题">
+      Python MD5 加密'\n'不同的问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出了一些问题"><span class="nav-number">2.</span> <span class="nav-text">出了一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下面先讲一下校园网认证工作的流程："><span class="nav-number">2.1.</span> <span class="nav-text">下面先讲一下校园网认证工作的流程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现错误之处"><span class="nav-number">2.2.</span> <span class="nav-text">发现错误之处</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

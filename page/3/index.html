@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
+<meta property="og:type" content="website">
+<meta property="og:title" content="我们不能失去信仰">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
+<meta property="article:author" content="anitazc">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/%E9%85%8D%E7%BD%AEgrafana%E4%BD%BF%E7%94%A8GitLab-OAuth%E8%AE%A4%E8%AF%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/28/%E9%85%8D%E7%BD%AEgrafana%E4%BD%BF%E7%94%A8GitLab-OAuth%E8%AE%A4%E8%AF%81/" class="post-title-link" itemprop="url">配置grafana使用GitLab-OAuth认证</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-28 21:03:12" itemprop="dateCreated datePublished" datetime="2020-10-28T21:03:12+08:00">2020-10-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GitLab/" itemprop="url" rel="index"><span itemprop="name">GitLab</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="GitLab"><a href="#GitLab" class="headerlink" title="GitLab"></a>GitLab</h2><p>关于 GitLab 方面的问题，其实以前已经写过了，以前是在黑群晖上面使用，但是这个黑群晖越使用越发恶心，动不动死机系统无响应，终于在某天开机的过程中告诉我需要重装系统（可能和我直接暴力ssh上去操作了一波又一波有关）。最终的结果就是应用数据全丢，因为 GitLab 是以Docker形式部署的，所以也没了，不过还好，电脑的原始资料还在，就是费点时间重建一下。</p>
+<p>并且这个黑群晖的机器性能也不行，蜗牛星际矿机。干啥啥不行，我都问我自己为啥不直接装个 Linux。念在我还是几T数据在上面，还是先忍忍了。换台机器吧。</p>
+<h2 id="Ubuntu-20-04-部署-GitLab"><a href="#Ubuntu-20-04-部署-GitLab" class="headerlink" title="Ubuntu 20.04 部署 GitLab"></a>Ubuntu 20.04 部署 GitLab</h2><p>还有人说自己搞 Linux 部署会比较麻烦， 这个我肯定，但是也不是那么麻烦，毕竟现在不跟以前一样了，部署过程不叙述了，GitLab 文档写的十分清楚，就是一些配置可以说一下。</p>
+<p>由于我是内网主机部署，但是我有公网IP，所以几乎所有的服务我都需要进行转发。</p>
+<p>在转发的基础上，还是不能通过域名进行到底给内网的哪个服务，所以在路由器做了端口转发后，还需要一个反向代理，我使用Nginx做了反向代理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/28/%E9%85%8D%E7%BD%AEgrafana%E4%BD%BF%E7%94%A8GitLab-OAuth%E8%AE%A4%E8%AF%81/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/23/%E5%B9%B3%E5%9D%87%E8%B4%9F%E8%BD%BD%E7%9A%84%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/23/%E5%B9%B3%E5%9D%87%E8%B4%9F%E8%BD%BD%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">平均负载的理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-23 17:43:07" itemprop="dateCreated datePublished" datetime="2020-10-23T17:43:07+08:00">2020-10-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用 uptime 命令可以简洁的了解系统的负载情况：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> uptime</span></span><br><span class="line"> 09:46:05 up  7:13,  1 user,  load average: 0.62, 0.39, 0.37</span><br><span class="line">当前时间	系统运行时间	正在登陆的用户数 1 分钟  5 分钟 15 分钟的平均负载</span><br></pre></td></tr></table></figure>
+
+<p>可以通过查到最后三个数字来判断服务器的负载情况，如果是从左到右依次减小，那么说明系统目前的负载是在升高的，如果从左到右依次增加，那么说明系统目前的负载是在下降的。</p>
+<p>平均负载代表的是单位时间内，系统处于可运行状态（ps命令中处于 R 状态 Running/Runnable）和不可中断状态（ps 命令中处于 D 状态 Uninterruptible Sleep， 也称为 Disk Sleep）的平均进程数，也就是平均活跃进程数，它和 <strong>CPU使用率</strong> 没有直接关系。</p>
+<p>平均负载最理想的情况是等于 CPU 个数， 可以通过 <code>cat /proc/cpuinfo</code>  来进行查看 CPU 的信息。当平均负载高于 CPU 数量 70% 的时候，可能就已经开始影响进程服务，导致其变慢。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/23/%E5%B9%B3%E5%9D%87%E8%B4%9F%E8%BD%BD%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/Python%E4%B8%AD%E5%8F%98%E9%87%8F%E4%B9%98%E4%BB%A5n%E4%B8%AA%E7%9A%84%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/25/Python%E4%B8%AD%E5%8F%98%E9%87%8F%E4%B9%98%E4%BB%A5n%E4%B8%AA%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">Python中变量乘以n个的坑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-25 16:36:57" itemprop="dateCreated datePublished" datetime="2020-09-25T16:36:57+08:00">2020-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在 Python 中，如果要生成一个全是0的列表，并且这个列表的长度为100，可以使用如下操作： <code>a = [0] * 100</code> 就生成了，效果和 <code>a = [0 for _ in range(100)]</code> 一样。</p>
+<p>在某次需要生成二维数组的时候，奇怪的事情发生了，写一道题总是过不了。检查了好几遍，最终定位到问题在于 <code>[[0]* n]* n</code> 。</p>
+<p>其实从表面上看 <code>[[0] *n ]* n</code> 和 <code>[[0]*n for _ in range(n)]</code> 是一样的，但是当你改变某个位置的值的时候，却发现 后面生成的只会改变哪一个位置的值， 而前者会改变每一列的值。究其原因，发现前者生成出来的列表其实都是第一个的引用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">a = [[<span class="number">0</span>] * n] * n</span><br><span class="line"></span><br><span class="line">b = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)]</span><br><span class="line"></span><br><span class="line">a[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">b[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/GitLab-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/25/GitLab-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Blog/" class="post-title-link" itemprop="url">GitLab 自动部署Blog</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-25 11:31:20" itemprop="dateCreated datePublished" datetime="2020-09-25T11:31:20+08:00">2020-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>首先在 GitLab 上面创建项目，打开项目，然后在左侧页面点击 Setting –&gt; Integrations 然后输入回调的 url 以及设置在发生哪些事件时通知， 因为我这里主要是想实现我推送新的内容到 GitLab， 然后我的博客服务器可以收到 GitLab 发送过来的通知， 进而实现 我的博客服务器可以去自动拉取代码进行部署。</p>
+<p>不过，如果你输入的是一个私有地址，如 192.168.xxx.xxx 这样的一看就是内网地址，会提示你： <strong>url is blocked requests to the local network are not allowed</strong> 。解决方法： 需要先登陆管理员账号–&gt; Admin area –&gt; Setting –&gt; NetWork 找到 *<em>Outbound requests *</em> 把  Allow requests to local network from hooks and services 打上勾保存就可以了。</p>
+<p>从 GitLab 发请求到 服务器时，会让你设置一个 token ， 这个 token 是让你用来验证这个请求是来自 GitLab 服务器的。</p>
+<p>服务器收到请求后，接下来会从 GitLab 拉取代码，如果直接放 ssh，是否会权限有点大了，可以在 setting 里面点击 Repository 然后在 Deploy Tokens 里面申请一个 Token 。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/25/GitLab-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2Blog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/http%E8%AF%B7%E6%B1%82%E5%81%B6%E5%B0%94%E5%A4%84%E4%BA%8Epending%E5%BE%88%E4%B9%85%E6%8E%92%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/24/http%E8%AF%B7%E6%B1%82%E5%81%B6%E5%B0%94%E5%A4%84%E4%BA%8Epending%E5%BE%88%E4%B9%85%E6%8E%92%E6%9F%A5/" class="post-title-link" itemprop="url">http请求偶尔处于pending很久排查</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-24 16:33:15" itemprop="dateCreated datePublished" datetime="2020-09-24T16:33:15+08:00">2020-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题是这样的，打开我们的网站后，打开开发者工具，然后偶尔会看到某个请求一直处于 pending 状态，大概会过去个十几秒，偶尔又全部都很快，几百毫秒就完成了。</p>
+<p>看了下  TTFB， 发现基本就花在了等服务器响应的时间上。 其实到这里基本上就可以断定问题出在了服务器上，但是我有点不信邪，觉得一个 TTFB 有可能不太准确，然后就分析了 chrome 的网络日志。具体方法：</p>
+<ol>
+<li>打开 <code>chrome://net-export/</code> ，然后点击 <strong>Start Logging to Disk</strong> 然后会让你选择一个地方来存储日志文件，好了之后录制也就开始了。</li>
+<li>现在去出现问题的页面疯狂尝试重现，重现完毕后，回到第一步的那个页面<strong>Stop</strong> 就可以了。</li>
+<li>查看日志， 打开这个地址 <code>https://netlog-viewer.appspot.com/#import</code> 然后选择文件，将刚才的日志文件导入。选择 event， 搜索那个出问题的 api， 就可以查看到详细的日志，简单到点的话，看看有没有 error 之类的日志，如果没有的话，看看从哪一步开始时间边长的，我这个是从读取响应 header 的时候边长的，估计是在等待，也没有 error ， 基本就断定问题出现在了服务端。</li>
+</ol>
+<p>然后在服务端查了一会，没有查到，最后靠猜猜到的。当时有个现场就是服务器重新部署后，严谨的说应该是第一次请求，发现大量接口都处于 pending 状态，这个时候基本就可以知道结论了， 某些初始化采用了类似单例模式中的懒汉模式，就是访问的时候才进行初始化，这就导致第一次非常慢。 然后继续往下看，发现数据库的连接池有点问题， 采用了 Blocking 模式，并且也没有按需增加和减少连接数，这样的话，如果某个 库的连接急剧上涨，那后面的请求肯定得处于 pending 状态。 最终将连接池 Blocking 改掉发现 pending 消失了。 其实当时考虑到，在以前的代码中有的使用了<code>select LAST_INSERT_ID()</code> 这就搞得无法使用共享的连接池， 最终只能改成随线程创建，随线程销毁的模式的连接池，这种模式也没有 blocking 模式，最终就解决了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/24/http%E8%AF%B7%E6%B1%82%E5%81%B6%E5%B0%94%E5%A4%84%E4%BA%8Epending%E5%BE%88%E4%B9%85%E6%8E%92%E6%9F%A5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/17/Python%E5%88%A4%E6%96%AD%E6%9F%90%E4%B8%AA%E6%95%B0%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%E5%92%8C%E5%88%97%E8%A1%A8%E7%9A%84%E5%B7%AE%E8%B7%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/17/Python%E5%88%A4%E6%96%AD%E6%9F%90%E4%B8%AA%E6%95%B0%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%E5%92%8C%E5%88%97%E8%A1%A8%E7%9A%84%E5%B7%AE%E8%B7%9D/" class="post-title-link" itemprop="url">Python判断某个数是否存在使用集合和列表的差距</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-17 17:24:39" itemprop="dateCreated datePublished" datetime="2020-09-17T17:24:39+08:00">2020-09-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>其实大家都知道判断一个数字是否存在，使用集合速度会更快。这次，我实际测试了一下，结果出乎意料，也在意料之中。 出乎意料的是，这个不应该会被底层优化成集合嘛！意料之中的是，不要什么都需要底层优化来帮你优化，其实有的时候，他并不会为我们优化。 正是某些情况如： 现在不需要注意那些了， 底层都会帮你优化的，导致最终性能下降的厉害，毕竟他优化没优化我们也不知道。 说到底还是一句话，写代码规范问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr = [i <span class="keyword">for</span> i <span class="keyword">in</span>  range(<span class="number">10000</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_list</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> arr:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_set</span><span class="params">(arr)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> arr:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list_arr = arr</span><br><span class="line">set_arr = set(arr)</span><br><span class="line">start = time.time()</span><br><span class="line">test_list(list_arr)</span><br><span class="line">t_list = time.time() - start</span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line">test_set(set_arr)</span><br><span class="line">t_set = time.time() - start</span><br><span class="line"></span><br><span class="line">print(<span class="string">'列表耗时: '</span>, str(t_list))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'集合耗时: '</span>, str(t_set))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'快多少倍: '</span> , str(t_list // t_set))</span><br><span class="line"></span><br><span class="line">python3 执行结果(仅供参考)：</span><br><span class="line"></span><br><span class="line">列表耗时:  <span class="number">0.498913049697876</span></span><br><span class="line">集合耗时:  <span class="number">0.00047206878662109375</span></span><br><span class="line">快多少倍:  <span class="number">1056.0</span></span><br></pre></td></tr></table></figure>
+
+<p>直接写段代码试下就完事了，简单直观。</p>
+<p>规范的重要性油然而生。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/28/%E4%BD%BF%E7%94%A8Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2html%E4%B8%BAPDF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/28/%E4%BD%BF%E7%94%A8Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2html%E4%B8%BAPDF/" class="post-title-link" itemprop="url">使用Python批量转换html为PDF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-28 16:54:51" itemprop="dateCreated datePublished" datetime="2020-08-28T16:54:51+08:00">2020-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Chrome/" itemprop="url" rel="index"><span itemprop="name">Chrome</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>把 html 文件批量转换成 PDF 文件，然后再用 calibre 处理成 Kindle 的格式，就可以在<br>kindle 上面欣赏优秀的文章和博客了。</p>
+<p>一开始，我拿到一堆 html 文件的时候，我记得 Chrome 浏览器可以点击文件，打印，然后<br>选择保存成 PDF 格式， 于是手动转换了几个 html 文件是在觉得麻烦物料，重复的操作。</p>
+<p>正在前几天无意中看到了一个新的名词 Headless Chrome , 其实就是一个无界面的 Chrome<br>浏览器，易于通过编程来进行控制。于是我自然就联想到了是否有 文件–打印–存储为PDF<br>这个 API， 看了一会，发现确实有。</p>
+<p>于是马上开工，直接使用 Python 的 os 模块来循环执行生成，最终还算满意，都转换成了 PDF。</p>
+<p>既然能编程了，那要求可能就不能止于此了， 尝试把广告，无用的水印，无关的内容都去掉，</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/28/%E4%BD%BF%E7%94%A8Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2html%E4%B8%BAPDF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/%E5%85%B3%E4%BA%8EPython%E4%B8%ADos%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84popen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/26/%E5%85%B3%E4%BA%8EPython%E4%B8%ADos%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84popen/" class="post-title-link" itemprop="url">关于Python中os模块中的popen</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-26 17:08:30" itemprop="dateCreated datePublished" datetime="2020-08-26T17:08:30+08:00">2020-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>近期写一些脚本需要用到 os.popen 函数，然后就看了下实现，发现它返回的是一个文件描述符，就跟 open 这个操作返回的东西一样，只不过 os.popen 返回的是一个只读的。</p>
+<p>然后联想到，如果返回的是一个类似文件的fd，岂不是需要执行完命令后，需要手动 close 嘛。</p>
+<p>于是做了一个小实验来一探究竟。首先需要一些命令辅助。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef |grep demo.py|awk '&#123;print $2&#125;'</span><br></pre></td></tr></table></figure>
+
+<p>这个命令是用来查看我们运行 Python 程序后进程 PID 的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">lsof -p PID | wc -l</span><br></pre></td></tr></table></figure>
+
+<p>这个命令把上一步我们拿到的 PID 填充进去，就可以得到这个进程打开的文件数量。</p>
+<p>一般来说，就算我们的程序没有打开额外的文件，这个命令也不会显示0，因为这个进程总会打开一些 Python 库必须的文件，我这里是10个。</p>
+<p>在额外说一个命令，修改系统单个进程能够打开的最大文件句柄数量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ulimit -n       # 查看当前系统定义的单个进程最大打开的句柄数</span><br><span class="line"></span><br><span class="line">lsof -n|awk '&#123;print $2&#125;'|sort|uniq -c|sort -nr|more  #输入第一列为 PID ，第二列为数量</span><br><span class="line"></span><br><span class="line">ps aef|grep PID  # 根据进程 PID 查看进程的信息</span><br><span class="line"></span><br><span class="line">ulimit – HSn 2048  # 临时设置文件句柄数， 重启失效 H 为硬性 S为软性 n 表示设定单个进程最大的打开文件句柄数量</span><br></pre></td></tr></table></figure>
+
+<p>下面是实验的程序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">        a = os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line">        os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line"></span><br><span class="line">        c = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        c.close()</span><br><span class="line">        d = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        d.close()</span><br><span class="line">        e = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        f = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        g = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        h = open(<span class="string">'./test.sh'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'退出前20s'</span>)</span><br><span class="line">time.sleep(<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<p>你可以 删除 c.close() 、d.close() 、或者添加更多。最终得到的结论是：</p>
+<ol>
+<li><p>如果函数退出，文件描述符自动回收，即使没有手动 close 。</p>
+</li>
+<li><p>使用 popen 执行后确实会返回一个类似的fd(文件描述符)，但是在系统上使用命令查询却看不出增加了，说明其实这个只是一个 Python 内部的对象，并不需要操作系统真正的分配文件描述符。 而既然是一个对象，那么如果不 close， 最终函数执行结束了，也会被垃圾回收给清理掉。</p>
+</li>
+<li><p>内存回收机制一定不会不回收，否则就要内存泄露了，像 Python Java 这种语言应该不存在这个问题</p>
+</li>
+</ol>
+<p>看到了以上结论后，也许会问，那都可以自动回收，那为啥还要设计 close 呢。以下只是我个人的思考：</p>
+<ol>
+<li>close 设计的原因： 如果你自己不 close， 等 垃圾回收的话，比如你一个函数巨长，最终还没开始垃圾回收， 就已经无法再打开新文件了，因为超过个数了。</li>
+<li>手动 close 可以保证及时把写完的内容刷到文件里。</li>
+<li>手动 close 可以随时释放资源，提高资源利用率。</li>
+<li>要养成 close 的习惯，来避免一些难于找到又奇怪的 bug。</li>
+</ol>
+<p>除此之外，执行系统命令还可以用：</p>
+<p><code>os.system()</code> : 这个就不会返回一个 fd 了，无法获取命令的输出和返回值</p>
+<p><code>os.popen()</code> ： 可以获取到命令执行后的输出</p>
+<p><code>commands</code> : 还有这个库，可以同时获得返回值和输出</p>
+<p>参考：</p>
+<p><a href="https://my.oschina.net/dabird/blog/837784" target="_blank" rel="noopener">Linux 查看文件句柄数</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/20/MySQL%E5%91%BD%E4%BB%A4%E4%B9%8Bshow-processlist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/20/MySQL%E5%91%BD%E4%BB%A4%E4%B9%8Bshow-processlist/" class="post-title-link" itemprop="url">MySQL命令之show processlist</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-20 10:00:17" itemprop="dateCreated datePublished" datetime="2020-08-20T10:00:17+08:00">2020-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如果你是 Linux 初级用户，为什么不建议使用 root 账户，一方面 root 权限太大，这谁都知道，另一方面可能也是较为重要的一点，那就是 普通用户和 root 用户执行同一个操作，最终的结果可能不一样，而在公司工作，往往都不会使用 root 账户。这也就是有时候你查询到的资料的结果和你自己执行的结果不一样的原因。</p>
+<p>在 MySQL 中，执行 <code>show processlist;</code> 是显示用户用户正在运行的线程，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mysql&gt; show processlist;</span><br><span class="line">+<span class="comment">----------+------------+----------------------------------------+------+---------+------+-------+------------------+</span></span><br><span class="line">| Id       | User       | Host                                   | db   | Command | Time | State | Info             |</span><br><span class="line">&lt;!--more --&gt;</span><br><span class="line">+<span class="comment">----------+------------+----------------------------------------+------+---------+------+-------+------------------+</span></span><br><span class="line">| 12913293 | my_user | localhost:54716 | NULL | Query   |    0 | NULL  | <span class="keyword">show</span> <span class="keyword">processlist</span> |</span><br><span class="line">+<span class="comment">----------+------------+----------------------------------------+------+---------+------+-------+------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="keyword">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Id ： 数据库连接的id，可以在 MySQL 中使用 kill  Id 将其结束。</li>
+<li>User：用户名</li>
+<li>Host： 分为主机名和主机的主动连接的端口（这个端口是随机的）</li>
+<li>db： 选择的数据库，这里还没选择数据库就是 NULL</li>
+<li>Command： 当前正在执行的命令</li>
+<li>Time： 处于 State 显示的状态多久了，如果没有其他连接，只有这一个连接，它永远是0，因为你一执行命令他就刷新了。</li>
+<li>State： 状态取决于正在执行的 Command 命令。</li>
+<li>Info：记录线程直接的语句。默认只显示100个字符，如果要看全部信息，需要使用 <code>show full processlist</code></li>
+</ul>
+<p>State的各种状态：</p>
+<p>A thread can have any of the following <code>Command</code> values:</p>
+<ul>
+<li><p><code>Binlog Dump</code></p>
+<p>This is a thread on a replication source for sending binary log contents to a replica.</p>
+</li>
+<li><p><code>Change user</code></p>
+<p>The thread is executing a change-user operation.</p>
+</li>
+<li><p><code>Close stmt</code></p>
+<p>The thread is closing a prepared statement.</p>
+</li>
+<li><p><code>Connect</code></p>
+<p>A replica is connected to its source.</p>
+</li>
+<li><p><code>Connect Out</code></p>
+<p>A replica is connecting to its source.</p>
+</li>
+<li><p><code>Create DB</code></p>
+<p>The thread is executing a create-database operation.</p>
+</li>
+<li><p><code>Daemon</code></p>
+<p>This thread is internal to the server, not a thread that services a client connection.</p>
+</li>
+<li><p><code>Debug</code></p>
+<p>The thread is generating debugging information.</p>
+</li>
+<li><p><code>Delayed insert</code></p>
+<p>The thread is a delayed-insert handler.</p>
+</li>
+<li><p><code>Drop DB</code></p>
+<p>The thread is executing a drop-database operation.</p>
+</li>
+<li><p><code>Error</code></p>
+</li>
+<li><p><code>Execute</code></p>
+<p>The thread is executing a prepared statement.</p>
+</li>
+<li><p><code>Fetch</code></p>
+<p>The thread is fetching the results from executing a prepared statement.</p>
+</li>
+<li><p><code>Field List</code></p>
+<p>The thread is retrieving information for table columns.</p>
+</li>
+<li><p><code>Init DB</code></p>
+<p>The thread is selecting a default database.</p>
+</li>
+<li><p><code>Kill</code></p>
+<p>The thread is killing another thread.</p>
+</li>
+<li><p><code>Long Data</code></p>
+<p>The thread is retrieving long data in the result of executing a prepared statement.</p>
+</li>
+<li><p><code>Ping</code></p>
+<p>The thread is handling a server-ping request.</p>
+</li>
+<li><p><code>Prepare</code></p>
+<p>The thread is preparing a prepared statement.</p>
+</li>
+<li><p><code>Processlist</code></p>
+<p>The thread is producing information about server threads.</p>
+</li>
+<li><p><code>Query</code></p>
+<p>The thread is executing a statement.</p>
+</li>
+<li><p><code>Quit</code></p>
+<p>The thread is terminating.</p>
+</li>
+<li><p><code>Refresh</code></p>
+<p>The thread is flushing table, logs, or caches, or resetting status variable or replication server information.</p>
+</li>
+<li><p><code>Register Slave</code></p>
+<p>The thread is registering a replica server.</p>
+</li>
+<li><p><code>Reset stmt</code></p>
+<p>The thread is resetting a prepared statement.</p>
+</li>
+<li><p><code>Set option</code></p>
+<p>The thread is setting or resetting a client statement-execution option.</p>
+</li>
+<li><p><code>Shutdown</code></p>
+<p>The thread is shutting down the server.</p>
+</li>
+<li><p><code>Sleep</code></p>
+<p>The thread is waiting for the client to send a new statement to it.</p>
+</li>
+<li><p><code>Statistics</code></p>
+<p>The thread is producing server-status information.</p>
+</li>
+<li><p><code>Table Dump</code></p>
+<p>The thread is sending table contents to a replica.</p>
+</li>
+<li><p><code>Time</code></p>
+<p>Unused.</p>
+</li>
+</ul>
+<p><a href="https://dev.mysql.com/doc/refman/5.6/en/thread-commands.html" target="_blank" rel="noopener">MySQL官网</a></p>
+<p>中文解释：</p>
+<ul>
+<li>Binlog Dump: 主节点正在将二进制日志 ，同步到从节点</li>
+<li>Change User: 正在执行一个 change-user 的操作</li>
+<li>Close Stmt: 正在关闭一个Prepared Statement 对象</li>
+<li>Connect: 一个从节点连上了主节点</li>
+<li>Connect Out: 一个从节点正在连主节点</li>
+<li>Create DB: 正在执行一个create-database 的操作</li>
+<li>Daemon: 服务器内部线程，而不是来自客户端的链接</li>
+<li>Debug: 线程正在生成调试信息</li>
+<li>Delayed Insert: 该线程是一个延迟插入的处理程序</li>
+<li>Drop DB: 正在执行一个 drop-database 的操作</li>
+<li>Execute: 正在执行一个 Prepared Statement</li>
+<li>Fetch: 正在从Prepared Statement 中获取执行结果</li>
+<li>Field List: 正在获取表的列信息</li>
+<li>Init DB: 该线程正在选取一个默认的数据库</li>
+<li>Kill : 正在执行 kill 语句，杀死指定线程</li>
+<li>Long Data: 正在从Prepared Statement 中检索 long data</li>
+<li>Ping: 正在处理 server-ping 的请求</li>
+<li>Prepare: 该线程正在准备一个 Prepared Statement</li>
+<li>ProcessList: 该线程正在生成服务器线程相关信息</li>
+<li>Query: 该线程正在执行一个语句</li>
+<li>Quit: 该线程正在退出</li>
+<li>Refresh：该线程正在刷表，日志或缓存；或者在重置状态变量，或者在复制服务器信息</li>
+<li>Register Slave： 正在注册从节点</li>
+<li>Reset Stmt: 正在重置 prepared statement</li>
+<li>Set Option: 正在设置或重置客户端的 statement-execution 选项</li>
+<li>Shutdown: 正在关闭服务器</li>
+<li>Sleep: 正在等待客户端向它发送执行语句</li>
+<li>Statistics: 该线程正在生成 server-status 信息</li>
+<li>Table Dump: 正在发送表的内容到从服务器</li>
+<li>Time: Unused</li>
+</ul>
+<p><a href="https://zhuanlan.zhihu.com/p/30743094" target="_blank" rel="noopener">感谢知乎博主</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/Python%E4%B8%AD%E7%9A%84Mixin%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/Python%E4%B8%AD%E7%9A%84Mixin%E7%B1%BB/" class="post-title-link" itemprop="url">Python中的Mixin类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-18 10:29:40" itemprop="dateCreated datePublished" datetime="2020-08-18T10:29:40+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由于 Python 是支持多继承的，而 Mixin 类就是利用了这种特性。</p>
+<p>Mixin 类是只包含了一组特定的函数组合，我们将其与其他类进行混合，从而生成一个适用于实际需要的新类。</p>
+<p>直接上 code 更好理解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line">&lt;!--more --&gt;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        print(<span class="string">'I am A'</span>)</span><br><span class="line">        print(<span class="string">'say'</span> + word)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AMixin</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">(self, food)</span>:</span></span><br><span class="line">        print(<span class="string">'eat '</span> + food)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(self, word)</span>:</span></span><br><span class="line">        super().say(word + <span class="string">'from mixin'</span>)</span><br><span class="line">        print(<span class="string">'i am AMixin'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(AMixin, A)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line"></span><br><span class="line">b.say(<span class="string">'hello'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这是 Python3 的语法</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行结果：</span></span><br><span class="line"></span><br><span class="line">I am A</span><br><span class="line">sayhellofrom mixin</span><br><span class="line">i am AMixin</span><br></pre></td></tr></table></figure>
+
+<p>以上执行结果说明了一个问题，就是  AMixin 的父类并不是 A ，但是竟然可以调用 A 的 say 方法。 </p>
+<p>是因为 B 同时继承了 AMixin 和 A ， 这就是 Mixin 类的作用。 </p>
+<p>而 Mixin 类为什么可以执行到 A 的 say 方法呢，在多重继承的环境下， super() 有相对来说更加复杂的语义。它会查看你的继承链， 使用一种叫做 Methods Resolution Order（方法解析顺序）的方式，来决定调用最近的继承父类的方法。</p>
+<p>也就是说super().method() 与 self.method() 是差不多的，只是 super().method() 需要跳过当前类而已。</p>
+<p>参考：</p>
+<p>感谢 <a href="https://blog.csdn.net/u012814856/article/details/81355935" target="_blank" rel="noopener">Python 的 Mixin 类</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

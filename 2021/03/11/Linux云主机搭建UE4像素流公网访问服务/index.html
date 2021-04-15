@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言：由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。 如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。  本地内网 Windows 机器跑像素流及“信令和Web服务器” 使用 Linux 搭建支持">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux云主机搭建UE4像素流公网访问服务">
+<meta property="og:url" content="http://yoursite.com/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="前言：由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。 如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。  本地内网 Windows 机器跑像素流及“信令和Web服务器” 使用 Linux 搭建支持">
+<meta property="article:published_time" content="2021-03-11T11:28:43.000Z">
+<meta property="article:modified_time" content="2021-03-31T02:56:29.157Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="UE4">
+<meta property="article:tag" content="像素流">
+<meta property="article:tag" content="TURN">
+<meta property="article:tag" content="STUN">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Linux云主机搭建UE4像素流公网访问服务 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux云主机搭建UE4像素流公网访问服务
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-11 19:28:43" itemprop="dateCreated datePublished" datetime="2021-03-11T19:28:43+08:00">2021-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-31 10:56:29" itemprop="dateModified" datetime="2021-03-31T10:56:29+08:00">2021-03-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%83%8F%E7%B4%A0%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">像素流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>由于 UE4 像素流官方提供的服务基本都需要在 Windows 环境上面运行。考虑到具备高性能 GPU 的服务器性价比又太低，正好手上有台 Windows 机器，但是又没有公网IP，如何让其支持公网访问成了一个问题。</p>
+<p>如果能利用上现有的 Linux 公网服务器及手中的 Windows 就最好不过了。</p>
+<ol>
+<li>本地内网 Windows 机器跑像素流及“信令和Web服务器”</li>
+<li>使用 Linux 搭建支持信令服务器的网络打洞/中继服务及Web服务器的转发服务，以支持外网访问。</li>
+</ol>
+<blockquote>
+<p>信令和Web服务器： 这个词是官方的叫法，其实它实际上只表示一个组件，这个组件同时包含了信令服务器和Web服务器，他们分别有不同的用途，我们也需要分别对其进行网络穿透支持。</p>
+</blockquote>
+<p>需要解决的问题：</p>
+<ol>
+<li>UE4 像素流使用到了 <a href="https://zh.wikipedia.org/wiki/WebRTC" target="_blank" rel="noopener">WebRTC</a>（网页即时通信），在移动运营商的网络中如4G网络，一般是不支持用户通过 WebRTC 协议直接与服务器建立连接，需要自建 STUN/TURN 服务，通过中继服务器进行网络中继解决信令服务器的网络问题及在内网访问问题。</li>
+<li>信令和Web服务器，官方只提供了 Windows 版本，即无法部署到 Linux 服务器。</li>
+<li>内网穿透解决 Web服务器公网访问问题</li>
+</ol>
+<h2 id="搭建教程"><a href="#搭建教程" class="headerlink" title="搭建教程"></a>搭建教程</h2><a id="more"></a>
+
+<p><a href="https://docs.unrealengine.com/zh-CN/SharingAndReleasing/PixelStreaming/Hosting/index.html" target="_blank" rel="noopener">创建主机和网络连接指南</a> 像素流官方文档，通过查阅文档可以了解其大概的网络架构，由于其文档写的不是很具体，所以其中的参数还需要自己去多多尝试。</p>
+<ol>
+<li><p>内网的一台高性能的 Windows 机器上，包体就在这台机器上面跑。</p>
+</li>
+<li><p>信令和Web服务器官方直接提供的就是 Windows 版本，所以决定将其也放置在内网的这台高性能 Windows 上面运行，由此引发的网络问题后续解决。（如有 Windows 云主机，部署相对容易）</p>
+</li>
+<li><p>自己搭建 STUN/TURN 服务器， 在 4G 无线运营商网络下，STUN 一般也是无法穿透的，所以需要使用 TURN 当做中继服务进行中转，对带宽有一定要求。这里我们选择开源服务器 <a href="https://github.com/coturn/coturn" target="_blank" rel="noopener">coturn</a> 进行搭建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">apt install build-essential</span><br><span class="line">apt install openssl libssl-dev make</span><br><span class="line"></span><br><span class="line">wget https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz</span><br><span class="line">tar xf libevent-2.1.12-stable.tar.gz</span><br><span class="line">cd libevent-2.1.12-stable</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 接下来选择数据库，coturn 默认选择 sqllite 数据库</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 选择 sqllite 数据库 （如果机器上已有，就不要安装了）</span></span></span><br><span class="line">apt-get install sqlite libsqlite3-dev</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 coturn 源码，并编译安装</span></span><br><span class="line"></span><br><span class="line">wget https://github.com/coturn/coturn/archive/4.5.2.zip</span><br><span class="line">tar xf 4.5.2.zip</span><br><span class="line">cd coturn-4.5.2</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 报错解决方法： ERROR: pkg-config not found </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行 apt install pkg-config</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 看看上面有没有报错，数据库是否选择正确，至此安装完成</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建用户并配置 coturn</span></span><br><span class="line"></span><br><span class="line">turnadmin -a -u test -p test -r test</span><br><span class="line"><span class="meta">#</span><span class="bash">  创建用户名为 <span class="built_in">test</span> 密码为 <span class="built_in">test</span> ，同时 realm(这个参数等下配置文件中需要一致) 为 <span class="built_in">test</span></span></span><br><span class="line"></span><br><span class="line">cp /usr/local/etc/turnserver.conf.default /usr/local/etc/turnserver.conf</span><br><span class="line">vim /usr/local/etc/turnserver.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> 直接在最上面把以下配置粘贴进去， 请看注释进行微调：</span></span><br><span class="line">listening-port=3478 #监听端口</span><br><span class="line">listening-device=eth0 #监听的网卡， ifconfig 查看</span><br><span class="line">external-ip=1,2,3,4 # 服务器的公网ip</span><br><span class="line">user=test:test # 用户名:密码</span><br><span class="line">realm=test #一般与 turnadmin 创建用户时指定的 realm 一致</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后先前台运行服务器查看有无报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">turnserver -a -f -v -r test</span><br></pre></td></tr></table></figure>
+
+<p>验证监听是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:3478</span><br></pre></td></tr></table></figure>
+
+<p>如果有输出，则监听成功。</p>
+<p>通过在线检测ice服务是否正常：</p>
+<p><a href="https://webrtc.github.io/samples/src/content/peerconnection/trickle-ice/" target="_blank" rel="noopener">webrtc-官网检测服务</a></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">STUN or TURN URI: turn:ip:port</span><br><span class="line">TURN username: test</span><br><span class="line">TURN password: test</span><br><span class="line"></span><br><span class="line">选择 Add Server</span><br><span class="line"></span><br><span class="line">STUN or TURN URI: stun:ip:port</span><br><span class="line">TURN username: </span><br><span class="line">TURN password: </span><br><span class="line"></span><br><span class="line">选择 Add Server</span><br><span class="line"></span><br><span class="line">然后点击  Gather candidates</span><br><span class="line"></span><br><span class="line">稍等片刻，如果在 Protocol Address 一栏看到你的公网IP地址，说明服务搭建成功。</span><br></pre></td></tr></table></figure>
+
+<p>以上 STUN/TURN 服务搭建成功后，我们开始搭建像素流送服务。</p>
+<ol>
+<li><p>首先确保局域网跑通没问题后</p>
+</li>
+<li><p>修改”信令和WEB服务器”的配置，在其配置中加入我们的 STUN/TURN 服务地址</p>
+<p>具体操作方法：</p>
+<ol>
+<li><p>打开 <code>\Engine\Source\Programs\PixeLStreaming\WebServers\SignallingWebServer</code> 编辑里面的 <code>Start_AWS_WithTURN_SignallingServer</code> 文件， 将 $PublicIp 更改为 STUN/TURN 服务器的公网 IP，然后找到 <code>$peerConnectionOptions</code> 这一行，修改其中的 username 及 credential 为你自己设置的用户名和密码，在我这都改为 test 。然后保存。</p>
+</li>
+<li><p>在局域网运行的时候，我们启动的是 run.bat 文件， 现在我们改为启动 runAWS_WithTURN.bat 这个文件。</p>
+<p>至此，基本搭建完成。 然后我们进行这一步的测试，保证服务搭建的没问题，我们在内网进行访问，地址还是和我们在局域网的地址一样，看看能否访问，如果可以访问，则证明这条链路是没有问题的，如果不能访问，首先查看 STUN/TURN 日志，看看有没有接收到连接，如果日志没有任何连接之类的信息输出，说明我们的内网 Widnwos 并没有连接上 STUN/TURN 服务，检查是否自己刚才修改 Windows 上的配置文件哪里修改错了，或者无意间破坏了它的格式。</p>
+</li>
+<li><p>如果第二步测试没有问题，并且 STUN/TURN 服务器也有日志输出，我们继续下一步的工作，前面提到 “信令服务器” 和 “Web服务器” 在这里，它是一体的，我们部署在 Windows 上，其中 “信令服务器” 的网络问题我们已经解决，就是使用的 STUN/TURN 服务进行中继或者“打洞” 实现。我们接下来实现 Web服务器的外网访问，这个 Web 服务器的功能仅仅是为客户端提供 WebRTC 连接的js文件。以下四种解决方法供参考：</p>
+<ol>
+<li>利用 ssh 命令自带的代理服务将端口映射到服务器上的某个端口上，由于很少在 windows上面操作，所以没有使用这个方法，这个方法其实一条命令就能解决，缺点是不稳定，ssh 经常会自动断开连接。</li>
+<li>使用 Nginx 反向代理功能，前提是服务器可以访问到内网这台 Windows 主机，测试方法，在服务器上面执行 ping windows 的内网ip ， 可以在 windows 的 cmd 中输入 ipconfig 命令查看内网 IP， 如果可以 ping 通，就可以配置 Nginx 反向代理来提供 Web 服务器访问。</li>
+<li>（目前使用的方法）使用开源工具 FRP 进行内网穿透，部署方法参考<a href="https://github.com/fatedier/frp" target="_blank" rel="noopener">Frp 官网文档</a> ，需要在 Windows 部署 frpc 客户端及服务端部署 frps 服务端。</li>
+</ol>
+</li>
+<li><p>将必要的客户端文件提取出来，将其部署到公网主机上。</p>
+</li>
+</ol>
+<p>全部部署完成后，打开4G网，访问 公网ip:frp穿透到服务器的端口  看看能否访问到 web 页面，如果连页面都访问不到，请检查云主机的端口是否打开。</p>
+<p>至此，完成所有部署。</p>
+</li>
+</ol>
+<p>2021-3-17 更新：</p>
+<p>​      今天再次测试的时候，发现 Chrome 浏览器报错了 <code>failed to parse answers sdp</code> ，期初以为我改了哪个配置导致的，最终换了个浏览器就好了，可能和我更新了最新版的 Chrome 浏览器有关吧。</p>
+<p>2021-3-26更新：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/357335311" target="_blank" rel="noopener">参考某位知乎大神</a> 解决 Chrome 浏览器访问问题。</p>
+<p>注意： coturn 编译安装的时候，要注意看清 openssl 版本，使用  <code>openssl version</code> 查看，推荐 openssl 1.1.0 以上版本进行安装，如果后面启动服务器说不支持如下的，再考虑升级 openssl 版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D; Show him the instruments, Practical Frost: &#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">0: : TLS supported</span><br><span class="line">0: : DTLS supported</span><br><span class="line">0: : DTLS 1.2 is not supported</span><br><span class="line">0: : TURN&#x2F;STUN ALPN is not supported</span><br><span class="line">0: : Third-party authorization (oAuth) supported</span><br><span class="line">0: : GCM (AEAD) supported</span><br><span class="line">0: : OpenSSL compile-time version: OpenSSL 1.0.1t  3 May 2016 (0x1000114f)</span><br><span class="line">0: :</span><br></pre></td></tr></table></figure>
+
+<p>启动 turnserver 后，看下有没有报错，其中上面说了几个不支持，当时端口绑定不上，就是这个问题造成的，解决方法时升级 openssl 版本，至少升级到 1.1.0 以上版本，我用的是最新的1.1.1 版本。</p>
+<p>我原本的 openssl 是这个版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-23-93-138:~/coturn-4.5.2# openssl version</span><br><span class="line">OpenSSL 1.0.1f 6 Jan 2014</span><br></pre></td></tr></table></figure>
+
+<p>出现这个问题可以先忽略他：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-23-93-138:~/coturn-4.5.2#  turnadmin -a -u test -p test -r test</span><br><span class="line">0: : SQLite connection was closed.</span><br><span class="line">0: : log file opened: /var/log/turn_22804_2021-03-26.log</span><br></pre></td></tr></table></figure>
+
+<p>这个版本是可以编译成功 coturn 的，但是后面启动的时候就监听不到端口信息，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-23-93-138:~/coturn-4.5.2# turnserver</span><br><span class="line">0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.</span><br><span class="line">0: : log file opened: /var/log/turn_22815_2021-03-26.log</span><br><span class="line">0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.</span><br><span class="line">0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.</span><br><span class="line">0: :</span><br><span class="line">RFC 3489/5389/5766/5780/6062/6156 STUN/TURN Server</span><br><span class="line">Version Coturn-4.5.2 'dan Eider'</span><br><span class="line">0: :</span><br><span class="line">Max number of open files/sockets allowed for this process: 4096</span><br><span class="line">0: :</span><br><span class="line">Due to the open files/sockets limitation,</span><br><span class="line">max supported number of TURN Sessions possible is: 2000 (approximately)</span><br><span class="line">0: :</span><br><span class="line"></span><br><span class="line">==== Show him the instruments, Practical Frost: ====</span><br><span class="line"></span><br><span class="line">0: : TLS supported  </span><br><span class="line">0: : DTLS supported</span><br><span class="line">0: : DTLS 1.2 is not supported  # 重点看这里</span><br><span class="line">0: : TURN/STUN ALPN is not supported  # 重点看这里</span><br><span class="line">0: : Third-party authorization (oAuth) supported</span><br><span class="line">0: : GCM (AEAD) supported</span><br><span class="line">0: : OpenSSL compile-time version: OpenSSL 1.0.1f 6 Jan 2014 (0x1000106f)</span><br><span class="line">0: :</span><br><span class="line">0: : SQLite supported, default database location is /usr/local/var/db/turndb</span><br><span class="line">0: : Redis is not supported</span><br><span class="line">0: : PostgreSQL is not supported</span><br><span class="line">0: : MySQL is not supported</span><br><span class="line">0: : MongoDB is not supported</span><br><span class="line">0: :</span><br><span class="line">0: : Default Net Engine version: 3 (UDP thread per CPU core)</span><br><span class="line"></span><br><span class="line">=====================================================</span><br><span class="line"></span><br><span class="line">0: : Domain name:</span><br><span class="line">0: : Default realm:</span><br><span class="line">0: : ERROR:</span><br><span class="line">CONFIG ERROR: Empty cli-password, and so telnet cli interface is disabled! Please set a non empty cli-password!</span><br><span class="line">0: : WARNING: cannot find certificate file: turn_server_cert.pem (1)</span><br><span class="line">0: : WARNING: cannot start TLS and DTLS listeners because certificate file is not set properly</span><br><span class="line">0: : WARNING: cannot find private key file: turn_server_pkey.pem (1)</span><br><span class="line">0: : WARNING: cannot start TLS and DTLS listeners because private key file is not set properly</span><br><span class="line">0: : NO EXPLICIT LISTENER ADDRESS(ES) ARE CONFIGURED</span><br><span class="line">0: : ===========Discovering listener addresses: =========</span><br><span class="line">0: : Listener address to use: 127.0.0.1</span><br><span class="line">0: : Listener address to use: 10.23.93.138</span><br><span class="line">0: : Listener address to use: 172.17.0.1</span><br><span class="line">0: : Listener address to use: ::1</span><br><span class="line">0: : =====================================================</span><br><span class="line">0: : Total: 2 'real' addresses discovered</span><br><span class="line">0: : =====================================================</span><br><span class="line">0: : NO EXPLICIT RELAY ADDRESS(ES) ARE CONFIGURED</span><br><span class="line">0: : ===========Discovering relay addresses: =============</span><br><span class="line">0: : Relay address to use: 10.23.93.138</span><br><span class="line">0: : Relay address to use: 172.17.0.1</span><br><span class="line">0: : Relay address to use: ::1</span><br><span class="line">0: : =====================================================</span><br><span class="line">0: : Total: 3 relay addresses discovered</span><br><span class="line">0: : =====================================================</span><br><span class="line">0: : pid file created: /var/run/turnserver.pid</span><br><span class="line">0: : IO method (main listener thread): epoll (with changelist)</span><br></pre></td></tr></table></figure>
+
+<p>避免走弯路，有些问题不需要去管它，比如 cli-password 问题，重点的我在上面已经标注了。</p>
+<p>官网下载地址：<a href="https://ftp.openssl.org/source/old/1.1.0/openssl-1.1.0l.tar.gz" target="_blank" rel="noopener">openssl-1.1.0l.tar.gz</a> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://ftp.openssl.org/source/old/1.1.0/openssl-1.1.0l.tar.gz</span><br><span class="line">tar xf openssl-1.1.0l.tar.gz</span><br><span class="line">cd openssl-1.1.0l</span><br><span class="line">./config &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p>我试了 openssl-1.1.0I.tar.gz  编译安装完成后，openssl version 报了错误如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-23-93-138:~&#x2F;openssl-1.1.1k# openssl version</span><br><span class="line">openssl: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory</span><br><span class="line"></span><br><span class="line">解决方法： </span><br><span class="line">mkdir &#x2F;usr&#x2F;lib64</span><br><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;lib64&#x2F;libssl.so.1.1 &#x2F;usr&#x2F;lib64&#x2F;libssl.so.1.1</span><br><span class="line">ln -s &#x2F;usr&#x2F;local&#x2F;lib64&#x2F;libcrypto.so.1.1 &#x2F;usr&#x2F;lib64&#x2F;libcrypto.so.1.1</span><br><span class="line">echo &quot;&#x2F;usr&#x2F;local&#x2F;lib64&#x2F;&quot; &gt;&gt; &#x2F;etc&#x2F;ld.so.conf</span><br><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+
+<p>升级完成 openssl 后，可能需要重新编译 coturn ，进入文件夹同样的操作 </p>
+<p><code>./configure &amp;&amp; make &amp;&amp; make install</code> 再来一遍就好了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">root@ip-10-23-93-138:~&#x2F;coturn-4.5.2#  turnserver -a -f -v -r test</span><br><span class="line">0: : Config file found: &#x2F;usr&#x2F;local&#x2F;etc&#x2F;turnserver.conf</span><br><span class="line">0: : log file opened: &#x2F;var&#x2F;log&#x2F;turn_26454_2021-03-26.log</span><br><span class="line">0: : Config file found: &#x2F;usr&#x2F;local&#x2F;etc&#x2F;turnserver.conf</span><br><span class="line">0: :</span><br><span class="line">RFC 3489&#x2F;5389&#x2F;5766&#x2F;5780&#x2F;6062&#x2F;6156 STUN&#x2F;TURN Server</span><br><span class="line">Version Coturn-4.5.2 &#39;dan Eider&#39;</span><br><span class="line">0: :</span><br><span class="line">Max number of open files&#x2F;sockets allowed for this process: 4096</span><br><span class="line">0: :</span><br><span class="line">Due to the open files&#x2F;sockets limitation,</span><br><span class="line">max supported number of TURN Sessions possible is: 2000 (approximately)</span><br><span class="line">0: :</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D; Show him the instruments, Practical Frost: &#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">0: : TLS supported</span><br><span class="line">0: : DTLS supported</span><br><span class="line">0: : DTLS 1.2 supported</span><br><span class="line">0: : TURN&#x2F;STUN ALPN supported</span><br><span class="line">0: : Third-party authorization (oAuth) supported</span><br><span class="line">0: : GCM (AEAD) supported</span><br><span class="line">0: : OpenSSL compile-time version: OpenSSL 1.1.1k  25 Mar 2021 (0x101010bf)</span><br><span class="line">0: :</span><br><span class="line">0: : SQLite supported, default database location is &#x2F;usr&#x2F;local&#x2F;var&#x2F;db&#x2F;turndb</span><br><span class="line">0: : Redis is not supported</span><br><span class="line">0: : PostgreSQL is not supported</span><br><span class="line">0: : MySQL is not supported</span><br><span class="line">0: : MongoDB is not supported</span><br><span class="line">0: :</span><br><span class="line">0: : Default Net Engine version: 3 (UDP thread per CPU core)</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">0: : Domain name:</span><br><span class="line">0: : Default realm: test</span><br><span class="line">0: : ERROR:</span><br><span class="line">CONFIG ERROR: Empty cli-password, and so telnet cli interface is disabled! Please set a non empty cli-password!</span><br><span class="line">0: : WARNING: cannot find certificate file: turn_server_cert.pem (1)</span><br><span class="line">0: : WARNING: cannot start TLS and DTLS listeners because certificate file is not set properly</span><br><span class="line">0: : WARNING: cannot find private key file: turn_server_pkey.pem (1)</span><br><span class="line">0: : WARNING: cannot start TLS and DTLS listeners because private key file is not set properly</span><br><span class="line">0: : NO EXPLICIT LISTENER ADDRESS(ES) ARE CONFIGURED</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;Discovering listener addresses: &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : Listener address to use: 127.0.0.1</span><br><span class="line">0: : Listener address to use: 10.23.93.138</span><br><span class="line">0: : Listener address to use: 172.17.0.1</span><br><span class="line">0: : Listener address to use: ::1</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : Total: 2 &#39;real&#39; addresses discovered</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : NO EXPLICIT RELAY ADDRESS(ES) ARE CONFIGURED</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;Discovering relay addresses: &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : Relay address to use: 10.23.93.138</span><br><span class="line">0: : Relay address to use: 172.17.0.1</span><br><span class="line">0: : Relay address to use: ::1</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : Total: 3 relay addresses discovered</span><br><span class="line">0: : &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">0: : pid file created: &#x2F;var&#x2F;run&#x2F;turnserver.pid</span><br><span class="line">0: : IO method (main listener thread): epoll (with changelist)</span><br><span class="line">0: : WARNING: I cannot support STUN CHANGE_REQUEST functionality because only one IP address is provided</span><br><span class="line">0: : Wait for relay ports initialization...</span><br><span class="line">0: :   relay 10.23.93.138 initialization...</span><br><span class="line">0: :   relay 10.23.93.138 initialization done</span><br><span class="line">0: :   relay 172.17.0.1 initialization...</span><br><span class="line">0: :   relay 172.17.0.1 initialization done</span><br><span class="line">0: :   relay ::1 initialization...</span><br><span class="line">0: :   relay ::1 initialization done</span><br><span class="line">0: : Relay ports initialization done</span><br><span class="line">0: : IO method (general relay thread): epoll (with changelist)</span><br><span class="line">0: : turn server id&#x3D;1 created</span><br><span class="line">0: : IO method (general relay thread): epoll (with changelist)</span><br><span class="line">0: : turn server id&#x3D;0 created</span><br><span class="line">0: : IPv4. UDP listener opened on: 127.0.0.1:3478</span><br><span class="line">0: : IPv4. UDP listener opened on: 10.23.93.138:3478</span><br><span class="line">0: : IPv4. UDP listener opened on: 172.17.0.1:3478</span><br><span class="line">0: : IPv6. UDP listener opened on: ::1:3478</span><br><span class="line">0: : Total General servers: 2</span><br><span class="line">0: : IO method (auth thread): epoll (with changelist)</span><br><span class="line">0: : IO method (auth thread): epoll (with changelist)</span><br><span class="line">0: : IO method (admin thread): epoll (with changelist)</span><br><span class="line">0: : SQLite DB connection success: &#x2F;usr&#x2F;local&#x2F;var&#x2F;db&#x2F;turndb</span><br><span class="line">0: : IPv4. SCTP listener opened on : 127.0.0.1:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 127.0.0.1:3478</span><br><span class="line">0: : IPv4. SCTP listener opened on : 10.23.93.138:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 10.23.93.138:3478</span><br><span class="line">0: : IPv4. SCTP listener opened on : 172.17.0.1:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 172.17.0.1:3478</span><br><span class="line">0: : IPv6. SCTP listener opened on : ::1:3478</span><br><span class="line">0: : IPv6. TCP listener opened on : ::1:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 127.0.0.1:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 10.23.93.138:3478</span><br><span class="line">0: : IPv4. TCP listener opened on : 172.17.0.1:3478</span><br><span class="line">0: : IPv6. TCP listener opened on : ::1:3478</span><br></pre></td></tr></table></figure>
+
+<p>成功运行输出的日志。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/UE4/" rel="tag"># UE4</a>
+              <a href="/tags/%E5%83%8F%E7%B4%A0%E6%B5%81/" rel="tag"># 像素流</a>
+              <a href="/tags/TURN/" rel="tag"># TURN</a>
+              <a href="/tags/STUN/" rel="tag"># STUN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/01/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AEid%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8E%9F%E5%9B%A0/" rel="prev" title="MySQL自增主键id不连续的原因">
+      <i class="fa fa-chevron-left"></i> MySQL自增主键id不连续的原因
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/%E4%BD%BF%E7%94%A8Netatalk%E5%9C%A8Linux%E4%B8%8A%E9%9D%A2%E6%90%AD%E5%BB%BA%E6%97%B6%E9%97%B4%E6%9C%BA%E5%99%A8%E5%A4%87%E4%BB%BD/" rel="next" title="使用Netatalk在Linux上面搭建时间机器备份">
+      使用Netatalk在Linux上面搭建时间机器备份 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建教程"><span class="nav-number">2.</span> <span class="nav-text">搭建教程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

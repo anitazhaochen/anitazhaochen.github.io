@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="关于学习的一些思考有些操作也许永远都不会用，或者看到它的第一眼就觉得，这个用不上。 或者即使用得上也是做一些弱关联的工作，就是需要的时候就去解决，不需要就不去管它。 那天，我做完了升级某项功能的 API，代码提交了，并且通过了测试，代码在线上跑着，完全没有问题的样子。而我觉得的问题，而是代码写的不太好的问题，恰好此时又不是下班时间，手中也暂时没有其他什么事情，就准备 review 一下代码。 看着">
+<meta property="og:type" content="article">
+<meta property="og:title" content="review代码引发的悲剧之git删除分支">
+<meta property="og:url" content="http://yoursite.com/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="关于学习的一些思考有些操作也许永远都不会用，或者看到它的第一眼就觉得，这个用不上。 或者即使用得上也是做一些弱关联的工作，就是需要的时候就去解决，不需要就不去管它。 那天，我做完了升级某项功能的 API，代码提交了，并且通过了测试，代码在线上跑着，完全没有问题的样子。而我觉得的问题，而是代码写的不太好的问题，恰好此时又不是下班时间，手中也暂时没有其他什么事情，就准备 review 一下代码。 看着">
+<meta property="article:published_time" content="2020-06-30T09:37:17.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.046Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>review代码引发的悲剧之git删除分支 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          review代码引发的悲剧之git删除分支
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-30 17:37:17" itemprop="dateCreated datePublished" datetime="2020-06-30T17:37:17+08:00">2020-06-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="关于学习的一些思考"><a href="#关于学习的一些思考" class="headerlink" title="关于学习的一些思考"></a>关于学习的一些思考</h2><p>有些操作也许永远都不会用，或者看到它的第一眼就觉得，这个用不上。</p>
+<p>或者即使用得上也是做一些弱关联的工作，就是需要的时候就去解决，不需要就不去管它。</p>
+<p>那天，我做完了升级某项功能的 API，代码提交了，并且通过了测试，代码在线上跑着，完全没有问题的样子。<br>而我觉得的问题，而是代码写的不太好的问题，恰好此时又不是下班时间，手中也<br>暂时没有其他什么事情，就准备 review 一下代码。</p>
+<p>看着看着，觉得这里不好，那里冗余，想要精简一下，有时候突然发现，这一看就是 bug，改了改了。</p>
+<p>为什么会有这种心理呢，我认真想了想，觉得，当时一边写代码，一遍调试，而当时，一旦出现bug，就在哪里补上一个几句代码，或者当时思维转的比较快，以至于我后面几乎没什么印象，或者看不懂当时为什么会这样做。</p>
+<a id="more"></a>
+
+<p>review 完成，改了好几个地方，并且这些地方看似都十分简单，根本不需要测试。而从表面看，确实不需要测试， 如我在父级函数删除了一个 filter，因为子级函数同样会过滤，等等。</p>
+<p>时间过了一周，我再次接到任务，要去修改那项功能的某些API，我自然的从 dev 分支切换到了那个功能专属的分支，一顿操作后，提交代码，请求合并。</p>
+<p>这时我发现，在 Gitlab 上面发现了几个陌生的修改，而且我也一时想不起来当时为什么要这样改（这些修改就是上次修改完没有测试，也没有合并的改动）, 还好，这些修改都比较简单，一看逻辑都懂(其实并没有关联上下文来看), 好了，直接合并吧。</p>
+<p>合并后，我的新功能测试完全没有问题。过了一会，旧功能开始出现一些细微的问题， 于是我开始寻找，发现问题就是出现在我改动的那几个看似简单的代码上。</p>
+<h3 id="这里我认真反思："><a href="#这里我认真反思：" class="headerlink" title="这里我认真反思："></a>这里我认真反思：</h3><ol>
+<li>做 review 需要认真去做(我觉得 review 坑还是挺多，一不小心就进去了)，修改了任何代码，最好进行测试一遍。</li>
+<li>在 Git 使用方面，如果代码已经提交并且合并，接下来的修改如果合不合并都行，那么请不要做这个修改，或者做完修改后及早测试–合并，否则有一天你也许<br>会不认识它了，从而引发未知 bug。<ol start="3">
+<li>如果恰好，出现了画蛇添足的情况，代码已经提交到了远程分支，但是还没有合并，发现了自己画蛇添足了，可以使用 Git 命令删除这个分支的本地分支和远程分支，以防被下次误用。</li>
+</ol>
+</li>
+</ol>
+<p>总结： 提交代码就得跟进—测试—合并。不要想着以后再看，改动十分简单。</p>
+<p>终极方法： 某个分支功能完成后，请删除本地及远程分支。</p>
+<p>合理、规范的运用每一个工具，每一个技术，就不会出现那么多奇怪的问题。</p>
+<p>绝大多数情况，只是因为我们使用工具不够熟练，并不是工具本身不够好。</p>
+<h2 id="Git-删除本地及远程分支方法"><a href="#Git-删除本地及远程分支方法" class="headerlink" title="Git 删除本地及远程分支方法"></a>Git 删除本地及远程分支方法</h2><p>第一步： 查看分支<br><code>git branch -a</code></p>
+<p>第二步：删除本地分支，假设分支名称为 xxx<br><code>git branch -d xxx</code></p>
+<p>tips：如果分支没有合并, -d 是删不掉的，需要使用 -D 强制删除</p>
+<p>第三步：删除远程分支， 假设分支名称为 xxx</p>
+<p>git push origin –delete xxx</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/" rel="prev" title="iterm配合i2cssh自动登录ssh实现集群管理">
+      <i class="fa fa-chevron-left"></i> iterm配合i2cssh自动登录ssh实现集群管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/13/Python%E8%A7%A3%E6%9E%90Protobuf/" rel="next" title="Python解析Protobuf">
+      Python解析Protobuf <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于学习的一些思考"><span class="nav-number">1.</span> <span class="nav-text">关于学习的一些思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里我认真反思："><span class="nav-number">1.1.</span> <span class="nav-text">这里我认真反思：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-删除本地及远程分支方法"><span class="nav-number">2.</span> <span class="nav-text">Git 删除本地及远程分支方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="近期写一些脚本需要用到 os.popen 函数，然后就看了下实现，发现它返回的是一个文件描述符，就跟 open 这个操作返回的东西一样，只不过 os.popen 返回的是一个只读的。 然后联想到，如果返回的是一个类似文件的fd，岂不是需要执行完命令后，需要手动 close 嘛。 于是做了一个小实验来一探究竟。首先需要一些命令辅助。 1ps -ef |grep demo.py|awk &#39;&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Python中os模块中的popen">
+<meta property="og:url" content="http://yoursite.com/2020/08/26/%E5%85%B3%E4%BA%8EPython%E4%B8%ADos%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84popen/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="近期写一些脚本需要用到 os.popen 函数，然后就看了下实现，发现它返回的是一个文件描述符，就跟 open 这个操作返回的东西一样，只不过 os.popen 返回的是一个只读的。 然后联想到，如果返回的是一个类似文件的fd，岂不是需要执行完命令后，需要手动 close 嘛。 于是做了一个小实验来一探究竟。首先需要一些命令辅助。 1ps -ef |grep demo.py|awk &#39;&amp;#123;">
+<meta property="article:published_time" content="2020-08-26T09:08:30.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.049Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/26/%E5%85%B3%E4%BA%8EPython%E4%B8%ADos%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84popen/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>关于Python中os模块中的popen | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/26/%E5%85%B3%E4%BA%8EPython%E4%B8%ADos%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84popen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于Python中os模块中的popen
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-26 17:08:30" itemprop="dateCreated datePublished" datetime="2020-08-26T17:08:30+08:00">2020-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>近期写一些脚本需要用到 os.popen 函数，然后就看了下实现，发现它返回的是一个文件描述符，就跟 open 这个操作返回的东西一样，只不过 os.popen 返回的是一个只读的。</p>
+<p>然后联想到，如果返回的是一个类似文件的fd，岂不是需要执行完命令后，需要手动 close 嘛。</p>
+<p>于是做了一个小实验来一探究竟。首先需要一些命令辅助。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef |grep demo.py|awk '&#123;print $2&#125;'</span><br></pre></td></tr></table></figure>
+
+<p>这个命令是用来查看我们运行 Python 程序后进程 PID 的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">lsof -p PID | wc -l</span><br></pre></td></tr></table></figure>
+
+<p>这个命令把上一步我们拿到的 PID 填充进去，就可以得到这个进程打开的文件数量。</p>
+<p>一般来说，就算我们的程序没有打开额外的文件，这个命令也不会显示0，因为这个进程总会打开一些 Python 库必须的文件，我这里是10个。</p>
+<p>在额外说一个命令，修改系统单个进程能够打开的最大文件句柄数量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ulimit -n       # 查看当前系统定义的单个进程最大打开的句柄数</span><br><span class="line"></span><br><span class="line">lsof -n|awk '&#123;print $2&#125;'|sort|uniq -c|sort -nr|more  #输入第一列为 PID ，第二列为数量</span><br><span class="line"></span><br><span class="line">ps aef|grep PID  # 根据进程 PID 查看进程的信息</span><br><span class="line"></span><br><span class="line">ulimit – HSn 2048  # 临时设置文件句柄数， 重启失效 H 为硬性 S为软性 n 表示设定单个进程最大的打开文件句柄数量</span><br></pre></td></tr></table></figure>
+
+<p>下面是实验的程序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python env</span></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line">        a = os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line">        os.popen(<span class="string">'ls'</span>)</span><br><span class="line">        a.close()</span><br><span class="line"></span><br><span class="line">        c = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        c.close()</span><br><span class="line">        d = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        d.close()</span><br><span class="line">        e = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        f = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        g = open(<span class="string">'./test.sh'</span>)</span><br><span class="line">        h = open(<span class="string">'./test.sh'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line"></span><br><span class="line">print(<span class="string">'退出前20s'</span>)</span><br><span class="line">time.sleep(<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<p>你可以 删除 c.close() 、d.close() 、或者添加更多。最终得到的结论是：</p>
+<ol>
+<li><p>如果函数退出，文件描述符自动回收，即使没有手动 close 。</p>
+</li>
+<li><p>使用 popen 执行后确实会返回一个类似的fd(文件描述符)，但是在系统上使用命令查询却看不出增加了，说明其实这个只是一个 Python 内部的对象，并不需要操作系统真正的分配文件描述符。 而既然是一个对象，那么如果不 close， 最终函数执行结束了，也会被垃圾回收给清理掉。</p>
+</li>
+<li><p>内存回收机制一定不会不回收，否则就要内存泄露了，像 Python Java 这种语言应该不存在这个问题</p>
+</li>
+</ol>
+<p>看到了以上结论后，也许会问，那都可以自动回收，那为啥还要设计 close 呢。以下只是我个人的思考：</p>
+<ol>
+<li>close 设计的原因： 如果你自己不 close， 等 垃圾回收的话，比如你一个函数巨长，最终还没开始垃圾回收， 就已经无法再打开新文件了，因为超过个数了。</li>
+<li>手动 close 可以保证及时把写完的内容刷到文件里。</li>
+<li>手动 close 可以随时释放资源，提高资源利用率。</li>
+<li>要养成 close 的习惯，来避免一些难于找到又奇怪的 bug。</li>
+</ol>
+<p>除此之外，执行系统命令还可以用：</p>
+<p><code>os.system()</code> : 这个就不会返回一个 fd 了，无法获取命令的输出和返回值</p>
+<p><code>os.popen()</code> ： 可以获取到命令执行后的输出</p>
+<p><code>commands</code> : 还有这个库，可以同时获得返回值和输出</p>
+<p>参考：</p>
+<p><a href="https://my.oschina.net/dabird/blog/837784" target="_blank" rel="noopener">Linux 查看文件句柄数</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/20/MySQL%E5%91%BD%E4%BB%A4%E4%B9%8Bshow-processlist/" rel="prev" title="MySQL命令之show processlist">
+      <i class="fa fa-chevron-left"></i> MySQL命令之show processlist
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/28/%E4%BD%BF%E7%94%A8Python%E6%89%B9%E9%87%8F%E8%BD%AC%E6%8D%A2html%E4%B8%BAPDF/" rel="next" title="使用Python批量转换html为PDF">
+      使用Python批量转换html为PDF <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

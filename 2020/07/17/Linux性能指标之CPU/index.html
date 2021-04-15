@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="CPU123456➜  ~ uptime 10:57:12  &#x2F;&#x2F; 当前时间 up 25 days, 14:38,  &#x2F;&#x2F;系统运行时间 2 users,    &#x2F;&#x2F; 正在登录用户数 load average: 1.03, 0.58, 0.43  &#x2F;&#x2F; 平均负载➜  ~  上面是哪个数字分别表示 1分钟、 5分钟、 15分钟的平均负载。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux性能指标之CPU">
+<meta property="og:url" content="http://yoursite.com/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8BCPU/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="CPU123456➜  ~ uptime 10:57:12  &#x2F;&#x2F; 当前时间 up 25 days, 14:38,  &#x2F;&#x2F;系统运行时间 2 users,    &#x2F;&#x2F; 正在登录用户数 load average: 1.03, 0.58, 0.43  &#x2F;&#x2F; 平均负载➜  ~  上面是哪个数字分别表示 1分钟、 5分钟、 15分钟的平均负载。">
+<meta property="article:published_time" content="2020-07-17T02:56:31.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.036Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="CPU">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8BCPU/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Linux性能指标之CPU | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8BCPU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux性能指标之CPU
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-17 10:56:31" itemprop="dateCreated datePublished" datetime="2020-07-17T10:56:31+08:00">2020-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ uptime</span><br><span class="line"> 10:57:12  // 当前时间</span><br><span class="line"> up 25 days, 14:38,  //系统运行时间</span><br><span class="line"> 2 users,    // 正在登录用户数</span><br><span class="line"> load average: 1.03, 0.58, 0.43  // 平均负载</span><br><span class="line">➜  ~</span><br></pre></td></tr></table></figure>
+
+<p>上面是哪个数字分别表示 1分钟、 5分钟、 15分钟的平均负载。</p>
+<a id="more"></a>
+<ul>
+<li>平均负载：单位时间内，系统处于可运行和不可中断状态的平均进程数，也就是平均活跃进程数，它和 CPU 使用率并没有直接关系。<ul>
+<li>可运行状态： 指正在使用CPU或者正在等待CPU的进程，也就是 ps 命令看到 处于 R （Running 或 Runnable） 的进程。</li>
+<li>不可中断：进程处于内核态关键流程中的进程，这些进程不可打断，常见于等待硬件设备的 I/O响应，ps中的 D 状态 （Uninterruptible Sleep， 也称为 Disk Sleep） 的进程。这种状态实际上是系统对进程和硬件设备的一种保护机制。</li>
+</ul>
+</li>
+</ul>
+<p>理想状态下：每个CPU 刚好运行一个进程，平均负载是2 的时候。</p>
+<p>1个CPU： 意味着有一半的进程竞争不到 CPU</p>
+<p>2 个 CPU： 意味着 CPU 刚好被完全占用</p>
+<p>4 个 CPU： 意味着 CPU 有 50% 空闲</p>
+<p>平均负载最理想的情况是等于 CPU 个数。</p>
+<p>查看 CPU 命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grep 'model name' /proc/cpuinfo | wc -l</span><br><span class="line">4</span><br><span class="line">// 输出的 cpu 数量为 4</span><br><span class="line">或者通过 </span><br><span class="line">lscpu</span><br></pre></td></tr></table></figure>
+
+<p>1 分钟、 5分钟、15 分钟 负载并不是单独参考某一个，而是都要看，如果 1分钟的负载小，而 5 分钟的负载大，说明负载在下降， 如果 1分钟的负载大，5分钟的负载小，说明负载在上升。</p>
+<p>当平均负载高于 CPU 数量 70%（这个数值因具体环境而定） 的时候，如4个CPU，平均负载为 7 的时候就需要注意了。</p>
+<h4 id="平均负载与-CPU-使用率的关系"><a href="#平均负载与-CPU-使用率的关系" class="headerlink" title="平均负载与 CPU 使用率的关系"></a>平均负载与 CPU 使用率的关系</h4><p>平均负载包含等待CPU和等待 I/O 的进程。而 CPU 使用率，是单位时间内 CPU 繁忙情况统计，只包含了正在使用 CPU 的时间。</p>
+<ul>
+<li>CPU密集型进程，两者一致</li>
+<li>I/O 密集型进程，平均负载高，但是 CPU 使用率不一定高</li>
+<li>大量等待 CPU 的进程调度也会导致平均负载升高，此时 CPU 使用率也会比较高</li>
+</ul>
+<h4 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h4><p>安装 stress、sysstat， stress 是一个Linux 系统压力测试工具、sysstat 会包含两个命令 mpstat 和 pidstat</p>
+<ul>
+<li>mpstat 是一个常用的多核 CPU 性能分析工具，用来实时查看每个 CPU 的性能指标，以及所有 CPU 的平均指标。</li>
+<li>pidstat 是一个常用的进程性能分析工具，用来实时查看进程的 CPU、内存、I/O 以及上下文切换等性能指标。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> stress --cpu 1 --timeout 600 // 模拟 CPU密集型任务</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> watch -d uptime  </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mpstat -P ALL 5   // -P ALL 表示监控所有 CPU，后面数字 5 表示间隔 5 秒后输出一组数据</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pidstat -u 5 1 // 间隔 5 秒后输出一组数据</span></span><br><span class="line"></span><br><span class="line">// 测试 io 密集型</span><br><span class="line"><span class="meta">#</span><span class="bash"> stress -i 1 --timeout 600</span></span><br><span class="line"></span><br><span class="line">// 大量进程的场景</span><br><span class="line"><span class="meta">#</span><span class="bash"> stress -c 8 --timeout 600 /// 模拟 8个进程</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="CPU-上下文切换影响负载"><a href="#CPU-上下文切换影响负载" class="headerlink" title="CPU 上下文切换影响负载"></a>CPU 上下文切换影响负载</h3><p>进程竞争 CPU 的时候，并没有真正执行，为什么还会导致PCU负载上升，因为 CPU 会发生上下文切换。根据任务的不同，CPU上下文切换分为几个不同场景：</p>
+<p>根据一份测试报告，每次上下文切换都需要几十纳秒到数微秒的时间。</p>
+<ul>
+<li>一次系统调用，其实是发生了两次 CPU 上下文切换，从用户态到内核态，再从内核态到用户态。 这是在同一个进程上面切换的，系统调用过程通常称为 特权模式切换，而不是上下文切换。</li>
+</ul>
+<h3 id="定位耗时代码"><a href="#定位耗时代码" class="headerlink" title="定位耗时代码"></a>定位耗时代码</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> apt install linux-perf &amp;&amp; sysstat</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -g 开启调用关系分析，-p 指定 php-fpm 的进程号 21515</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> perf top -g -p 21515</span></span><br><span class="line">寻找调用关系，然后 查看源码</span><br><span class="line"><span class="meta">#</span><span class="bash"> grep xxx -r app/</span></span><br></pre></td></tr></table></figure>
+
+<p>总结： 使用top 、vmstat、pidstat 排查高 CPU 使用率的进程，然后再使用 perf top 工具，定位应用内部函数问题。</p>
+<h3 id="CPU-很高，但是找不到高-CPU的应用"><a href="#CPU-很高，但是找不到高-CPU的应用" class="headerlink" title="CPU 很高，但是找不到高 CPU的应用"></a>CPU 很高，但是找不到高 CPU的应用</h3><p>在一些进程是短进程的时候，很难用 top 这种间隔时间比较长的工具发现。</p>
+<p>如果对某些进程有疑问，可以先使用 pstree 找到其父进程，然后分析</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> pstree | grep nginx</span></span><br></pre></td></tr></table></figure>
+
+<p>寻找这种问题最好的办法是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 记录性能时间，等待大约15秒后退出</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> perf record -g</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看报告</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> perf report</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> perf record -ag -- sleep 2;perf report // 上面两句话合二为一</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者使用 execsnoop</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> execsnoop  // 是一个转为短时进程设计的工具。它通过 ftrace 实时监控进程的 <span class="built_in">exec</span>() 行为，并输出短时进程的基本信息，包括进程PID、父进程PID、命令行参数及执行的结果。</span></span><br></pre></td></tr></table></figure>
+
+<p>总结： 如果碰到 CPU 使用率很高，但是又找不到是哪个进程，可以看看某个应用程序是否调用了其他而进程程序失败，导致不停的崩溃重启，而启动过程的资源初始化，很可能会占用相当多的CPU。</p>
+<h3 id="进程的几个状态"><a href="#进程的几个状态" class="headerlink" title="进程的几个状态"></a>进程的几个状态</h3><p>top中进程的状态：</p>
+<ul>
+<li><p>R：Running 或 Runnable 的缩写，表示进程在 CPU 的就绪队列中，正在运行或者正在等待运行</p>
+</li>
+<li><p>D：Disk Sleep，也就是不可中断状态睡眠，一般表示进程正在跟硬件交互，并且交互过程中不允许被其他进程或中断打断。</p>
+</li>
+<li><p>Z： Zombie， 僵尸进程，实际上进程已经结束，但是父进程没有回收它的资源（比如进程的描述符、PID 等）</p>
+</li>
+<li><p>S： Interruptible Sleep， 也就是中断状态睡眠，表示进程因为等待某个事件而被系统挂起。当进程等待的事情发生时，它会被唤醒并进入 R 状态。</p>
+</li>
+<li><p>I: Idle ，空闲状态，用在不可中断睡眠的内核线程上。对某些内核线程来说，他们可能实际上并没有任何负载，用Idle 正是为了区分这种情况。D状态会导致平均升高，I状态的进程却不会。</p>
+</li>
+<li><p>T/t: Stopped 或 Traced，表示进程处于暂停或者跟踪状态</p>
+<p>向一个进程发送 SIGSTOP 信号，他就会响应这个信号，变成暂停状态；在向他发送 SIGCONT 信号，进程又会恢复运行（如果进程是终端里直接启动的，则需要用fg命令恢复到前台运行。） 当使用调试器如gdb进行调试的时候，在使用断点中断进程后，就是 t 状态。</p>
+</li>
+<li><p>X： Dead 的缩写，表示进程已消亡，所以不会在top 或者ps 中看到它。</p>
+</li>
+</ul>
+<p>僵尸进程如果其父进程一直没有回收它，父进程挂了后，由 init 进行回收。</p>
+<p>工具：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> dstat // 可以同时查看 cpu 和 io</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> -a 表示输出命令行选项</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> p 表 PID</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> s 表示指定进程的父进程</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pstree -aps 3084</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="软中断"><a href="#软中断" class="headerlink" title="软中断"></a>软中断</h3><p>中断是系统用来响应硬件设备请求的一种机制，它会打断进程的正常调度和执行，然后调用内核中的终端处理程序来响应设备的请求。</p>
+<p>中断其实是一种异步的事件处理机制，可以提高系统的并发处理能力。</p>
+<p>由于终端处理程序会打断其他进程的运行，所以，为了减少对正常进程运行调度的影响，终端处理程序就需要尽可能快地运行。如果中断本身要做的事情不多，那么处理起来也不会有太大的问题；但是如果中断要处理的事情很多，中断服务程序就有可能要运行很长时间。</p>
+<p>因为中断处理程序在响应中断时，还会临时关闭中断。就会导致在这段时间内可能会丢失中断，所以操作系统将中断处理程序执行过长和中断丢失的问题分成了两个阶段， 上半部和下半部。</p>
+<p>上半部用来快速处理中断，它在中断禁止模式下运行，主要处理跟硬件紧密相关的或时间敏感的工作</p>
+<p>下半部用来延迟处理上半部未完成的工作，通常以内核线程的方式运行。</p>
+<p>如： 网卡接收到数据包后，会通过硬中断通知内核处理， 对于上半部分来说就是把网卡数据更新到内存，然后更新硬件寄存器的状态（表示数据已经读好了），最后再发送一个软中断信号，通知下半部做进一步的处理。</p>
+<p>而下半部被软中断信号唤醒后，需要从内存中找到网络数据，再按照网络协议栈，对数据进行逐层解析和处理，然后发送给应用程序。</p>
+<p>总结：</p>
+<ul>
+<li>上半部分直接处理硬件请求，也就是我们常说的硬中断， 特点是快速执行</li>
+<li>下半部分则是由内核触发，也就是我们常说的软中断，特点是延迟执行，异步处理完成上半部分未完成的工作</li>
+<li>软中断以内核线程方式执行，并且每个CPU都对应一个软中断内核线程，名字为“ksoftirqd/CPU编号”。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cat /proc/softirqs   // 查看软中断</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> cat /proc/interrupts   // 提供了硬中断的运行情况。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ps aux | grep softirq</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="探究软中断"><a href="#探究软中断" class="headerlink" title="探究软中断"></a>探究软中断</h3><ul>
+<li>sar 是一个系统活动报告工具，既可以实时查看系统的当前活动，又可以配置保存和报告历史统计数据。</li>
+<li>hping3 是一个可以构造 TCP/IP 协议数据包的工具，可以对系统进行安全审计、防火墙测试等。</li>
+<li>tcpdump 是一个常用的网络抓包工具，常用来分析各种网络问题。</li>
+</ul>
+<p>新工具：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -S 参数表示设置 TCP 协议的 SYN（同步序列号），-p 表示目的端口为 80</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -i u100 表示每隔 100 微秒发送一个网络帧</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 注：如果你在实践过程中现象不明显，可以尝试把 100 调小，比如调成 10 甚至 1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> hping3 -S -p 80 -i u100 192.168.0.30</span></span><br></pre></td></tr></table></figure>
+
+<p>使用上面的命令发送 SYN FLOOD 攻击， 会发送很多帧，每帧都很小，发生 SYN FLOOD 攻击，让服务器一直处在中断切换之间，从而造成 CPU 升高。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/CPU/" rel="tag"># CPU</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/14/Python%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" rel="prev" title="Python常用的测试方法">
+      <i class="fa fa-chevron-left"></i> Python常用的测试方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/17/Linux%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E4%B9%8B%E5%86%85%E5%AD%98/" rel="next" title="Linux性能指标之内存">
+      Linux性能指标之内存 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU"><span class="nav-number">1.</span> <span class="nav-text">CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#平均负载与-CPU-使用率的关系"><span class="nav-number">1.0.1.</span> <span class="nav-text">平均负载与 CPU 使用率的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实践"><span class="nav-number">1.0.2.</span> <span class="nav-text">实践</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-上下文切换影响负载"><span class="nav-number">1.1.</span> <span class="nav-text">CPU 上下文切换影响负载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位耗时代码"><span class="nav-number">1.2.</span> <span class="nav-text">定位耗时代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-很高，但是找不到高-CPU的应用"><span class="nav-number">1.3.</span> <span class="nav-text">CPU 很高，但是找不到高 CPU的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的几个状态"><span class="nav-number">1.4.</span> <span class="nav-text">进程的几个状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软中断"><span class="nav-number">1.5.</span> <span class="nav-text">软中断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#探究软中断"><span class="nav-number">1.6.</span> <span class="nav-text">探究软中断</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

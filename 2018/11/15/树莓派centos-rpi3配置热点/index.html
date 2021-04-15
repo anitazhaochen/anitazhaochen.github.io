@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最开始的准备：如安装系统可参考 为树莓派装上 CentOS 7 系统 2018.11.20日更新： 通过下面的方法，有一个问题，就是我发现 WIFI 第一次可以连上，然后过一会就连不上了，通过 Wireshark 抓包分析，可以看出一直在发送广播请求，比如 DHCP 请求，导致 DHCP 一直无法成功获取 IP ，所以，有两种可能，第一 DHCP 配置有问题，第二，不兼容导致。  解决方法： 使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派centos-rpi3配置热点">
+<meta property="og:url" content="http://yoursite.com/2018/11/15/%E6%A0%91%E8%8E%93%E6%B4%BEcentos-rpi3%E9%85%8D%E7%BD%AE%E7%83%AD%E7%82%B9/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="最开始的准备：如安装系统可参考 为树莓派装上 CentOS 7 系统 2018.11.20日更新： 通过下面的方法，有一个问题，就是我发现 WIFI 第一次可以连上，然后过一会就连不上了，通过 Wireshark 抓包分析，可以看出一直在发送广播请求，比如 DHCP 请求，导致 DHCP 一直无法成功获取 IP ，所以，有两种可能，第一 DHCP 配置有问题，第二，不兼容导致。  解决方法： 使用">
+<meta property="og:image" content="http://yoursite.com/images/image-20181115175027268.png">
+<meta property="article:published_time" content="2018-11-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.051Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="ARM">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/image-20181115175027268.png">
+
+<link rel="canonical" href="http://yoursite.com/2018/11/15/%E6%A0%91%E8%8E%93%E6%B4%BEcentos-rpi3%E9%85%8D%E7%BD%AE%E7%83%AD%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>树莓派centos-rpi3配置热点 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/15/%E6%A0%91%E8%8E%93%E6%B4%BEcentos-rpi3%E9%85%8D%E7%BD%AE%E7%83%AD%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派centos-rpi3配置热点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-11-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-11-15T00:00:00+08:00">2018-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/" itemprop="url" rel="index"><span itemprop="name">树莓派</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最开始的准备：如安装系统可参考</p>
+<p><a href="https://sspai.com/post/42793" target="_blank" rel="noopener">为树莓派装上 CentOS 7 系统</a></p>
+<p>2018.11.20日更新： 通过下面的方法，有一个问题，就是我发现 WIFI 第一次可以连上，然后过一会就连不上了，通过 Wireshark 抓包分析，可以看出一直在发送广播请求，比如 DHCP 请求，导致 DHCP 一直无法成功获取 IP ，所以，有两种可能，第一 DHCP 配置有问题，第二，不兼容导致。 </p>
+<p>解决方法： 使用 dnsmasq 替换 dhcpd。</p>
+<hr>
+<a id="more"></a>
+
+
+<p><img src="/images/image-20181115175027268.png" alt="image-20181115175027268"></p>
+<h2 id="一：添加-EPEL-软件源"><a href="#一：添加-EPEL-软件源" class="headerlink" title="一：添加 EPEL 软件源"></a>一：添加 EPEL 软件源</h2><p>EPEL 软件源收录了很多自带软件源没有的常用的软件。在 x86 版 CentOS 上，我们可以很方便地用 <code>yum -y install epel-release</code> 来添加 EPEL 软件源，但是在 ARM 版 CentOS 上就行不通了。<br>不过我们可以通过手动修改 <code>yum</code> 源的配置文件来添加它。</p>
+<p>执行如下命令：</p>
+<!--more -->
+<!--more -->
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF &gt; /etc/yum.repos.d/epel.repo</span><br><span class="line">[epel]</span><br><span class="line">name=Epel rebuild for armhfp</span><br><span class="line">baseurl=https://armv7.dev.centos.org/repodir/epel-pass-1/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二：安装需要的软件"><a href="#二：安装需要的软件" class="headerlink" title="二：安装需要的软件"></a>二：安装需要的软件</h2><ul>
+<li><strong>hostapd</strong> : 至今为止用得最广泛的无线热点程序，稳定而强大，几乎你能想到的无线路由器都在使用它。</li>
+<li><strong>dhcpd</strong> : 强大的 DHCP 服务器（动态主机服务），适合用于管理多个大型网络的主机地址自动分配。</li>
+</ul>
+<p>注意：</p>
+<p>开热点需要有能够支持 AP 模式的无线网卡，如果你不确定的话可以这样查看</p>
+<p><code>iw list</code></p>
+<p>如果没有 iw 命令，可以使用 yum 安装一下。</p>
+<p>如果里面 <strong>Supported interface modes:</strong> 有　“AP” 那么意味着你的网卡支持。</p>
+<ul>
+<li><p>安装 hostapd </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install hostapd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 dhcpd</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install dhcp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完成后，可以使用 systemctl 很方便的管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start|stop|enable|disable hostapd|dhcpd</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="三：-配置安装的软件"><a href="#三：-配置安装的软件" class="headerlink" title="三： 配置安装的软件"></a>三： 配置安装的软件</h2><p>首先我们需要配置 hostapd ，它的默认配置文件在 <code>/etc/hostapd/hostapd.conf</code> 。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">hostapd 提供一个控制终端 hostapd_cli，这里配置终端接入的细节</span></span><br><span class="line">ctrl_interface=/var/run/hostapd</span><br><span class="line">ctrl_interface_group=whell</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">一些比较普通的配置。。。。</span></span><br><span class="line">macaddr_ac1=0</span><br><span class="line"><span class="meta">#</span><span class="bash">这里配置使用哪一种认证方式，0 就是开放， 1 使用 WPA 系列，2 为任意，建议选 1</span></span><br><span class="line">auth_algs=1</span><br><span class="line">ignore_boardcast_ssid=0</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">下面配置 WPA 和 WPA2 的选项</span></span><br><span class="line">wpa=3</span><br><span class="line">wpa_key_mgmt=WPA-PSK</span><br><span class="line">wpa_pairwise=TKIP</span><br><span class="line">rsn_pairwise=CCMP</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里配置你的 WI-FI 密码</span></span><br><span class="line">wpa_passphrase=SomePassword</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">配置驱动，这里一般不需要更改</span></span><br><span class="line">driver=nl80211</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">配置 WI-FI 硬件，这里改成你 WI-FI 硬件的设备名称，可以用 nmcli device show 或者 ifconfig 查找</span></span><br><span class="line">interface=wlp2s0</span><br><span class="line"><span class="meta">#</span><span class="bash">这里配置频率模式</span></span><br><span class="line">hw_mode=g</span><br><span class="line"><span class="meta">#</span><span class="bash">频道</span></span><br><span class="line">channel=7</span><br><span class="line"><span class="meta">#</span><span class="bash">SSID，WI-FI 名称</span></span><br><span class="line">ssid=SSID_NAME</span><br><span class="line"><span class="meta">#</span><span class="bash">是否用 UIF-8 编码 WI-FI 名称，启用的话就能使用各种字符来命名 WI-FI 了，但在 Windows 上面普遍会出现 WI-FI 名称乱码问题</span></span><br><span class="line">utf8-ssid=1</span><br></pre></td></tr></table></figure>
+
+
+
+<p>保存之后别急着启动，因为默认情况下网卡受 NetworkManager 托管，所以 hostapd 无法管理无线网卡。执行下面命令以让 NetworkManager 不再托管无线网卡。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmcli device set wlan0 managed no // wlan0 是我的网卡名字，名字不同自己替换</span><br></pre></td></tr></table></figure>
+
+<p>然后可以通过 下面命令进行启动 hostapd 如果没有报错，则成功。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start hostapd</span><br></pre></td></tr></table></figure>
+
+<p>接下来先给启动了的无线网卡配置 IP 地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr add 192.168.2.1/24 dev wlan0</span><br></pre></td></tr></table></figure>
+
+<p>但是这个是临时的。找了一会试了好几种静态无限网卡设置静态IP 的方法，都不怎么奏效，最后的解决方法：</p>
+<p><code>vim /etc/rc.local</code></p>
+<p>如果有 <code>exit 0</code> 请在它的上面添加(没有的话，直接在最后添加就行)</p>
+<p>使用 <code>which ip</code>先查看一下 ip 的路径。</p>
+<p><code>/usr/sbin/ip addr add 192.168.2.1/24 dev wlan0</code></p>
+<p>最后不要忘了，要给rc.local可执行权限。</p>
+<p> <code>chmod +x /etc/rc.d/rc.local</code></p>
+<p>然后每次重启都可以生效。</p>
+<p>这个地址相当于平时配路由器的路由器地址，可以根据你的需要改成其他的，不过注意下面的所有配置都得跟着改动。</p>
+<p>*后面的 <code>/24</code> 是 <code>255.255.255.0</code> 的缩写，如果想改动请自行查询子网掩码的格式</p>
+<p>dhcpd 的配置文件默认在 <code>/etc/dhcp/dhcpd.conf</code>，这个文件夹需要 root 权限才能进入。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">让 DDNS 自动刷新，适合用在这种经常变动的网络中</span></span><br><span class="line">ddns-update-style interim;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">监听 192.168.2.0 这个子网</span></span><br><span class="line">subnet 192.168.2.0 netmask 255.255.255.0 &#123;</span><br><span class="line"></span><br><span class="line">        #设置自动派 IP 的范围</span><br><span class="line">        range 192.168.2.10 192.168.2.250;</span><br><span class="line"></span><br><span class="line">        #默认的 DNS 服务器</span><br><span class="line">        option domain-name-servers 223.6.6.6,223.5.5.5;</span><br><span class="line">        #告诉客户端路由器地址</span><br><span class="line">        option routers 192.168.2.1;</span><br><span class="line">        #告诉客户端子网掩码</span><br><span class="line">        option subnet-mask 255.255.255.0;</span><br><span class="line">        #告诉客户端广播地址</span><br><span class="line">        option broadcast-address 192.168.2.255;</span><br><span class="line"></span><br><span class="line">        #IP 默认租期和最大租期</span><br><span class="line">        default-lease-time 86400;</span><br><span class="line">        max-lease-time 172800;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存之后启动 dhcpd 服务，启动没有问题就可以了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start dhcpd</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在这里并没有考虑使用 nftables ，因为它对内核的某些模块有要求。所以我就直接使用了 ipbtales 进行下面的 nat 操作。</p>
+</blockquote>
+<p>参考<a href="https://www.jianshu.com/p/d1616623cf35" target="_blank" rel="noopener">hostapd + dhcpd + nftables 在 CentOS 7 上开 WLAN 热点</a></p>
+<h2 id="设置-IPV4-转发"><a href="#设置-IPV4-转发" class="headerlink" title="设置 IPV4 转发"></a>设置 IPV4 转发</h2><p>在我们成功的转发我们的包之前，还需要做最后一件事。使用如下命令，可以立即生效不用重启：</p>
+<p><code>sudo sh -c &quot;echo 1 &gt; /proc/sys/net/ipv4/ip_forward&quot;</code></p>
+<p>但是上面的重启之后就失效了。</p>
+<p>我们可以打开<code>sysctl.conf</code>文件<code>vim /etc/sysctl.conf</code></p>
+<p>如果没有此字段（net.ipv4.ip_forward）则添加，如果有的话，把它的值改为 1</p>
+<p><code>net.ipv4.ip_forward=1</code></p>
+<p>我们需要将PI的WIFI连接分享出去，通过配置NAT在wlan0和eth0之间。使用下面命令实现。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE </span><br><span class="line"></span><br><span class="line">sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT </span><br><span class="line"></span><br><span class="line">sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>然而，我们需要这些规则去应用于我的Pi在每次重启机器的时候，所以</p>
+<p><code>sh -c &quot;iptables-save &gt; /etc/iptables.ipv4.nat</code></p>
+<p>去保存这些规则在<code>/etc/iptables.ipv4.nat</code> 文件中。现在我们需要每次重启机器时都要去启用这些规则，所以还需要配置这个文件</p>
+<p><code>vim  /etc/rc.local</code></p>
+<p>在这个文件的”exit 0”这行的上面加入下面的内容：</p>
+<p><code>iptables-restore &lt; /etc/iptables.ipv4.nat</code></p>
+<p><strong>差不多成功了！</strong></p>
+<p>现在我们只需要去重启一下我们的服务就好了：</p>
+<p><code>systemctl restart hostapd</code></p>
+<p><a href="http://www.embeddedlinux.org.cn/emb-linux/entry-level/201703/18-6294.html#" target="_blank" rel="noopener">使用HOSTAPD使你的树莓派3成为WiFi热点（AP）</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ARM/" rel="tag"># ARM</a>
+              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag"># 树莓派</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/11/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3GIL/" rel="prev" title="深入理解GIL">
+      <i class="fa fa-chevron-left"></i> 深入理解GIL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/11/20/Python%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/" rel="next" title="Python中的字符串对象源码剖析">
+      Python中的字符串对象源码剖析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一：添加-EPEL-软件源"><span class="nav-number">1.</span> <span class="nav-text">一：添加 EPEL 软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：安装需要的软件"><span class="nav-number">2.</span> <span class="nav-text">二：安装需要的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三：-配置安装的软件"><span class="nav-number">3.</span> <span class="nav-text">三： 配置安装的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置-IPV4-转发"><span class="nav-number">4.</span> <span class="nav-text">设置 IPV4 转发</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
