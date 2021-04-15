@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -26,10 +26,8 @@
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="anitazc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我们不能失去信仰">
-<meta name="twitter:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 
 <link rel="canonical" href="http://yoursite.com/">
 
@@ -158,22 +156,260 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/Linux双网口设置桥接让其他机器连接/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/13/Linux双网口设置桥接让其他机器连接/" class="post-title-link" itemprop="url">Linux双网口设置桥接让其他机器连接</a>
+            <a href="/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/" class="post-title-link" itemprop="url">MySQL主从搭建及创建新用户及远程访问</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-15 17:55:58 / 修改时间：19:21:17" itemprop="dateCreated datePublished" datetime="2021-04-15T17:55:58+08:00">2021-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="MySQL-版本"><a href="#MySQL-版本" class="headerlink" title="MySQL 版本"></a>MySQL 版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select version();</span><br><span class="line">+-------------------------+</span><br><span class="line">| version()               |</span><br><span class="line">+-------------------------+</span><br><span class="line">| 8.0.23-0ubuntu0.20.04.1 |</span><br><span class="line">+-------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>ubuntu 20.04 </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/18/Python2%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%87%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%97%E6%AE%B5%E9%99%90%E5%88%B6%E5%AF%BC%E8%87%B4json%E5%BA%8F%E5%88%97%E5%8C%96%E9%94%99%E8%AF%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/18/Python2%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%87%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%97%E6%AE%B5%E9%99%90%E5%88%B6%E5%AF%BC%E8%87%B4json%E5%BA%8F%E5%88%97%E5%8C%96%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">Python2字符串长度超过数据库字段限制导致json序列化错误</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-18 15:44:53 / 修改时间：15:58:15" itemprop="dateCreated datePublished" datetime="2021-03-18T15:44:53+08:00">2021-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天突然几个接口报错了。仔细一看是报如下错误：</p>
+<p><code>**UnicodeDecodeError: &#39;gbk&#39; codec can&#39;t decode bytes in position 8-9: illegal multibyte sequence**</code></p>
+<p>一看到这个错误立马就想到了 Python2 的编码问题，但是好好的系统看了 GIT 提交记录也没人改过编码方面的代码，接口都是封装好的，突然出现这种情况直接使用 Python2 的字符处理方法可能是处理不了的。 </p>
+<p>再看了下，是数据在返回前，要进行 json 序列化，就在序列化这一步报错了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site-packages&#x2F;simplejson&#x2F;encoder.py</span><br></pre></td></tr></table></figure>
+
+<p>然后就想看看到底是哪些地方序列化失败了，由于数据量非常庞大，这个报错也不会具体指明是哪个数据，所以我就只能使用二分法来调试，最终找到了问题所在，其中某个对象有个name字段，这个name字段出现了乱码。</p>
+<p>但是好端端的怎么可能出现乱码呢，顺着猜想打开数据库，desc 了一下表，果不其然，由于 name 字段在代码里没有限制长度，再加上 Python2 直接使用切片是会截断中文造成乱码的，最终存储到数据库里的数据的最后一位就是一个乱码字符，然后在返回的时候json序列化就报错了。</p>
+<p>下面我们来看下 Python2 中对中文字符的一些不同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="string">'我是谁'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(a)</span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(a.decode(<span class="string">'utf-8'</span>))</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.decode(<span class="string">'utf8'</span>)[<span class="number">0</span>:<span class="number">2</span>].encode(<span class="string">'utf8'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果要正确切割中文字符串，应该先 decode 后，再进行切割。</p>
+<p>还有就是写代码一定要对输入进行校验。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/15/MySQL%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%A2%E7%9A%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/15/MySQL%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%A2%E7%9A%84/" class="post-title-link" itemprop="url">MySQL是如何保证数据不丢的(binlog/redolog)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-15 10:39:59 / 修改时间：17:16:29" itemprop="dateCreated datePublished" datetime="2021-03-15T10:39:59+08:00">2021-03-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>以下讨论都基于 MySQL 的 InnoDB 存储引擎上。</p>
+<p>结论： 只要 redo log 和 binlog 保证持久化到磁盘，就能确保 MySQL 异常重启后，数据可以恢复。</p>
+<h2 id="崩溃恢复逻辑"><a href="#崩溃恢复逻辑" class="headerlink" title="崩溃恢复逻辑"></a>崩溃恢复逻辑</h2><ul>
+<li>如果 redo log 里面的事务时完整的，也就是已经有了 commit 标识，则直接提交</li>
+<li>如果 redo log 里面的事务只有完整的 prepare，则判断对应的事务 binlog 是否存在并完整，如果是则提交，否则回滚事务</li>
+</ul>
+<p>这里恢复逻辑是都依赖了 redo log 的两阶段提交中的 prepare 和 commit 。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/15/MySQL%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%A2%E7%9A%84/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/Linux%E5%8F%8C%E7%BD%91%E5%8F%A3%E8%AE%BE%E7%BD%AE%E6%A1%A5%E6%8E%A5%E8%AE%A9%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E8%BF%9E%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/Linux%E5%8F%8C%E7%BD%91%E5%8F%A3%E8%AE%BE%E7%BD%AE%E6%A1%A5%E6%8E%A5%E8%AE%A9%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E8%BF%9E%E6%8E%A5/" class="post-title-link" itemprop="url">Linux双网口设置桥接让其他机器连接</a>
         </h2>
 
         <div class="post-meta">
@@ -190,14 +426,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-14 16:23:59" itemprop="dateModified" datetime="2021-03-14T16:23:59+08:00">2021-03-14</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
                 </span>
             </span>
@@ -224,82 +460,7 @@
 <li><p>将两个网口都添加到网桥上，我这里的网卡名并不是 <code>eth0、eth1</code> 而是 <code>enp1s0 和 enp2s0</code> ，在执行下面的命令的时候确认好你的网口名，可以通过 <code>ifconfig</code> 命令查看。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/13/Linux双网口设置桥接让其他机器连接/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/" class="post-title-link" itemprop="url">使用Netatalk在Linux上面搭建时间机器备份</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-13 22:04:57 / 修改时间：23:26:53" itemprop="dateCreated datePublished" datetime="2021-03-13T22:04:57+08:00">2021-03-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MacOS/" itemprop="url" rel="index"><span itemprop="name">MacOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近本来是准备在黑群晖上面创建一个盘拿来做苹果电脑的 Time Machine 备份的，设置好了后，发现网速极慢，猜想可能是由于我 SSH 上去改了网络配置的原因。这样的事情已经发生了不止两三次了，有几次系统直接崩了，实在是难受，并且慢慢就失去了黑群晖的兴趣，系统偶尔不太稳定，自己的需求大多数时候必须要手动 SSH 上去改配置才能实现。思来想去，我为什么不直接装一台 Linux 呢，说干就干，下了 Ubuntu 最新的 20.xx 版本，先刷入 U 盘，然后改 Bios，因为我这个是蜗牛星际主机，不改 Bios 原来的设置可能会导致开机引导不识别硬盘，然后就是装系统了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/13/使用Netatalk在Linux上面搭建时间机器备份/#more" rel="contents">
+              <a class="btn" href="/2021/03/13/Linux%E5%8F%8C%E7%BD%91%E5%8F%A3%E8%AE%BE%E7%BD%AE%E6%A1%A5%E6%8E%A5%E8%AE%A9%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E8%BF%9E%E6%8E%A5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -322,22 +483,103 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/%E4%BD%BF%E7%94%A8Netatalk%E5%9C%A8Linux%E4%B8%8A%E9%9D%A2%E6%90%AD%E5%BB%BA%E6%97%B6%E9%97%B4%E6%9C%BA%E5%99%A8%E5%A4%87%E4%BB%BD/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/" class="post-title-link" itemprop="url">Linux云主机搭建UE4像素流公网访问服务</a>
+            <a href="/2021/03/13/%E4%BD%BF%E7%94%A8Netatalk%E5%9C%A8Linux%E4%B8%8A%E9%9D%A2%E6%90%AD%E5%BB%BA%E6%97%B6%E9%97%B4%E6%9C%BA%E5%99%A8%E5%A4%87%E4%BB%BD/" class="post-title-link" itemprop="url">使用Netatalk在Linux上面搭建时间机器备份</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 22:04:57" itemprop="dateCreated datePublished" datetime="2021-03-13T22:04:57+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MacOS/" itemprop="url" rel="index"><span itemprop="name">MacOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近本来是准备在黑群晖上面创建一个盘拿来做苹果电脑的 Time Machine 备份的，设置好了后，发现网速极慢，猜想可能是由于我 SSH 上去改了网络配置的原因。这样的事情已经发生了不止两三次了，有几次系统直接崩了，实在是难受，并且慢慢就失去了黑群晖的兴趣，系统偶尔不太稳定，自己的需求大多数时候必须要手动 SSH 上去改配置才能实现。思来想去，我为什么不直接装一台 Linux 呢，说干就干，下了 Ubuntu 最新的 20.xx 版本，先刷入 U 盘，然后改 Bios，因为我这个是蜗牛星际主机，不改 Bios 原来的设置可能会导致开机引导不识别硬盘，然后就是装系统了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/13/%E4%BD%BF%E7%94%A8Netatalk%E5%9C%A8Linux%E4%B8%8A%E9%9D%A2%E6%90%AD%E5%BB%BA%E6%97%B6%E9%97%B4%E6%9C%BA%E5%99%A8%E5%A4%87%E4%BB%BD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">Linux云主机搭建UE4像素流公网访问服务</a>
         </h2>
 
         <div class="post-meta">
@@ -354,15 +596,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-13 16:07:36" itemprop="dateModified" datetime="2021-03-13T16:07:36+08:00">2021-03-13</time>
+                <time title="修改时间：2021-03-31 10:56:29" itemprop="dateModified" datetime="2021-03-31T10:56:29+08:00">2021-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/像素流/" itemprop="url" rel="index"><span itemprop="name">像素流</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%83%8F%E7%B4%A0%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">像素流</span></a>
                 </span>
             </span>
 
@@ -395,7 +637,7 @@
 <h2 id="搭建教程"><a href="#搭建教程" class="headerlink" title="搭建教程"></a>搭建教程</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/11/Linux云主机搭建UE4像素流公网访问服务/#more" rel="contents">
+              <a class="btn" href="/2021/03/11/Linux%E4%BA%91%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAUE4%E5%83%8F%E7%B4%A0%E6%B5%81%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -418,22 +660,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/01/MySQL自增主键id不连续的原因/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/01/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AEid%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8E%9F%E5%9B%A0/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/01/MySQL自增主键id不连续的原因/" class="post-title-link" itemprop="url">MySQL自增主键id不连续的原因</a>
+            <a href="/2021/03/01/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AEid%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8E%9F%E5%9B%A0/" class="post-title-link" itemprop="url">MySQL自增主键id不连续的原因</a>
         </h2>
 
         <div class="post-meta">
@@ -450,14 +692,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-13 16:14:43" itemprop="dateModified" datetime="2021-03-13T16:14:43+08:00">2021-03-13</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
                 </span>
             </span>
@@ -495,7 +737,7 @@
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/03/01/MySQL自增主键id不连续的原因/#more" rel="contents">
+              <a class="btn" href="/2021/03/01/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AEid%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8E%9F%E5%9B%A0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -518,22 +760,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/18/如何实现一个通用的高性能的排序函数/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/27/MySQL%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/18/如何实现一个通用的高性能的排序函数/" class="post-title-link" itemprop="url">如何实现一个通用的高性能的排序函数</a>
+            <a href="/2020/12/27/MySQL%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">MySQL事务的隔离级别及锁机制</a>
         </h2>
 
         <div class="post-meta">
@@ -542,17 +784,112 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-18 14:26:30 / 修改时间：15:20:55" itemprop="dateCreated datePublished" datetime="2020-12-18T14:26:30+08:00">2020-12-18</time>
+              <time title="创建时间：2020-12-27 01:17:07" itemprop="dateCreated datePublished" datetime="2020-12-27T01:17:07+08:00">2020-12-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-08 15:41:39" itemprop="dateModified" datetime="2021-04-08T15:41:39+08:00">2021-04-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="数据库是如何实现隔离级别-InnoDB"><a href="#数据库是如何实现隔离级别-InnoDB" class="headerlink" title="数据库是如何实现隔离级别(InnoDB)"></a>数据库是如何实现隔离级别(InnoDB)</h2><p>事务隔离性，本质上解决事务的读写冲突。</p>
+<ul>
+<li><p>事务的四个特性ACID</p>
+<p><strong>原子性(Atomicity)</strong>、<strong>一致性(Consistency)</strong>、<strong>隔离性(Isolation)</strong>、<strong>持久性(Durability)</strong></p>
+</li>
+<li><p>事务的隔离级别</p>
+<p>事务的隔离级别分为 <strong>未提交读</strong> 、<strong>提交读</strong> 、 <strong>可重复读</strong>、 <strong>串行化</strong> 。</p>
+</li>
+<li><p>隔离级别的实现</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/27/MySQL%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%8F%8A%E9%94%81%E6%9C%BA%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/18/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/18/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">如何实现一个通用的高性能的排序函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-18 14:26:30" itemprop="dateCreated datePublished" datetime="2020-12-18T14:26:30+08:00">2020-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -575,7 +912,7 @@
 <h3 id="优化快速排序"><a href="#优化快速排序" class="headerlink" title="优化快速排序"></a>优化快速排序</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/12/18/如何实现一个通用的高性能的排序函数/#more" rel="contents">
+              <a class="btn" href="/2020/12/18/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%80%9A%E7%94%A8%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -598,22 +935,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/17/Linux使用find命令查找并删除某天前的文件/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/17/Linux%E4%BD%BF%E7%94%A8find%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E5%B9%B6%E5%88%A0%E9%99%A4%E6%9F%90%E5%A4%A9%E5%89%8D%E7%9A%84%E6%96%87%E4%BB%B6/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/17/Linux使用find命令查找并删除某天前的文件/" class="post-title-link" itemprop="url">Linux使用find命令查找并删除某天前的文件</a>
+            <a href="/2020/12/17/Linux%E4%BD%BF%E7%94%A8find%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E5%B9%B6%E5%88%A0%E9%99%A4%E6%9F%90%E5%A4%A9%E5%89%8D%E7%9A%84%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">Linux使用find命令查找并删除某天前的文件</a>
         </h2>
 
         <div class="post-meta">
@@ -622,16 +959,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-17 20:11:24 / 修改时间：20:21:16" itemprop="dateCreated datePublished" datetime="2020-12-17T20:11:24+08:00">2020-12-17</time>
+              <time title="创建时间：2020-12-17 20:11:24" itemprop="dateCreated datePublished" datetime="2020-12-17T20:11:24+08:00">2020-12-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
                 </span>
             </span>
@@ -647,353 +990,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> find /xxx/ -type f -atime +30 -exec rm -f &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+          <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> find /xxx/ -<span class="built_in">type</span> f -atime +30 -<span class="built_in">exec</span> rm -f &#123;&#125; \;</span></span><br></pre></td></tr></table></figure>
+
 <p>mtime 表示最后内容修改</p>
 <p>ctime 表示最后状态修改</p>
 <p>atime 表示最后访问</p>
 <p>[m|c|a]time 表示的是天数，</p>
-<p>-days 表示距现在 days 内修改过的文件<br>
+<p>-days 表示距现在 days 内修改过的文件</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/12/17/Linux使用find命令查找并删除某天前的文件/#more" rel="contents">
+              <a class="btn" href="/2020/12/17/Linux%E4%BD%BF%E7%94%A8find%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E5%B9%B6%E5%88%A0%E9%99%A4%E6%9F%90%E5%A4%A9%E5%89%8D%E7%9A%84%E6%96%87%E4%BB%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/17/冒泡排序和插入排序的性能分析/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/17/冒泡排序和插入排序的性能分析/" class="post-title-link" itemprop="url">冒泡排序和插入排序的性能分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-12-17 14:55:36 / 修改时间：15:31:51" itemprop="dateCreated datePublished" datetime="2020-12-17T14:55:36+08:00">2020-12-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="分析一个排序算法的执行效率"><a href="#分析一个排序算法的执行效率" class="headerlink" title="分析一个排序算法的执行效率"></a>分析一个排序算法的执行效率</h3><ul>
-<li>最好情况、最坏情况、平均情况时间复杂度</li>
-</ul>
-<p>排序算法在面对排序数组的原始情况时，会出现不同的复杂度。有的接近有序，有的完全无序，有序程度不同的数据，对于排序的执行时间肯定是有影响的。</p>
-<ul>
-<li>时间复杂度的系数、常数、低阶</li>
-</ul>
-<p>时间复杂度反应的是数据规模n很大的时候的一个增长趋势，所以它表示的时候会忽略系数、常数、低阶。但是实际的软件开发中，我们排序的可能是10个、100个、1000个这丫昂规模很小的数据，所以在对同一阶时间复杂度的排序算法性能对比的时候，我们就要把系数、常数、低阶也考虑进来。</p>
-<ul>
-<li>比较次数和交换（或移动）次数</li>
-</ul>
-<p>基于比较的排序算法的执行过程，会涉及两种操作，一种是元素比较大小，另一种是元素交换或移动。所以，我们在分析排序算法的执行效率的时候，应该把比较次数和交换（或移动）次数也考虑进去。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/17/冒泡排序和插入排序的性能分析/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/15/数组链表容器的一些问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/15/数组链表容器的一些问题/" class="post-title-link" itemprop="url">数组链表容器的一些问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-15 14:17:58" itemprop="dateCreated datePublished" datetime="2020-12-15T14:17:58+08:00">2020-12-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-18 11:12:31" itemprop="dateModified" datetime="2020-12-18T11:12:31+08:00">2020-12-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"><a href="#大多数编程语言中，数组要从0开始编号，而不是从1开始呢？" class="headerlink" title="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"></a>大多数编程语言中，数组要从0开始编号，而不是从1开始呢？</h3><p>从数组存储的内存模型来看，“下标”最确切的定义应该是“偏移（offset）”。<br>如果用 a 来表示数组的首地址，a[0] 就是偏移为0的位置，也就是首地址，a[k]就表示偏移k个type_size的位置，<br>所以计算a[k]的内存地址只需要用这个公式：<br><code>a[k]_address = base_address + k * type_size</code></p>
-<p>但是如果数组从1开始计数，那我们计算数组元素a[k]就会变成为：<br><code>a[k]_address = base_address + (k - 1) * type_size</code></p>
-<p>对于以上两个公司，从1开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就是多了一次减法指令。</p>
-<p>另一方面，可能也是历史原因造成的，C语言设计者用0开始计数数组下标，之后的 Java、JavaScript 等高级语言都效仿了 C 语言，或者说，为了在一定程度上减少 C 语言程序员学习 Java 的成本，因此沿用了从0开始计数的习惯。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/15/数组链表容器的一些问题/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/11/代码设计思想总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/11/代码设计思想总结/" class="post-title-link" itemprop="url">代码设计思想总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-11 10:47:30" itemprop="dateCreated datePublished" datetime="2020-12-11T10:47:30+08:00">2020-12-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-16 11:49:26" itemprop="dateModified" datetime="2020-12-16T11:49:26+08:00">2020-12-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计思想/" itemprop="url" rel="index"><span itemprop="name">设计思想</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>对于封装的理解就是提供有限必要的方法给调用者，而不是全部让调用者自行选择，随意修改任何东西。比如在 Java 中， public 、protected、private 就可以实现对变量的访问控制，实现封装。函数也是封装。 </p>
-<p>举例： 封装的好处，比如在一个类中，不加以任何限制，调用者可以随便修改类的属性，这样不仅会增加调用者上手的难度，并且还容易出错，某些变量可能和具体业务有关，并不能随意修改。就好比一个冰箱，只给你常见的几个按键让你使用，和给你一堆按键让你使用，后者出错的概率大大增加，也会增加上手的难度。</p>
-<p>邓庄也叫做信息隐藏或者数据访问保护。类通过暴露有限的访问接口，授权外部仅能通过类提供的方式来访问内部信息或者数据。它需要编程语言提供权限访问控制语法来支持。封装特性存在的意义，一方面是保护数据不被随意修改，提高代码的可维护性；另一方面是仅暴露有限的必要接口，提高类的易用性。</p>
-<h3 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h3><p>抽象就是隐藏方法的具体实现，让使用者只需要关心提供了哪些功能，不需要知道这些功能是如何实现的。抽象可以通过接口类或者抽象类方法实现。抽象存在的意义，一方面是提高代码的可扩展性、维护性，修改实现不需要改变定义，减少代码的改动返回；另一方面，它也是处理复杂系统的有效手段，能有效地过滤掉不必要关注的信息。</p>
-<p>定义类或命名类的方法的时候，也需要有抽象思维，不要再方法定义中，暴露太多的实现细节，以保证在某个时间点需要改变方法的实现逻辑的时候，不用去修改其定义。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/11/代码设计思想总结/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/Python3-6及以上版本中的字典默认是有序的/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/01/Python3-6及以上版本中的字典默认是有序的/" class="post-title-link" itemprop="url">Python3.6及以上版本中的字典默认是有序的</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-12-01 16:03:37 / 修改时间：16:08:13" itemprop="dateCreated datePublished" datetime="2020-12-01T16:03:37+08:00">2020-12-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Python3.6 及以上版本的字典默认是有序的</p>
-<p><a href="https://www.cnblogs.com/xieqiankun/p/python_dict.html" target="_blank" rel="noopener">参考</a>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/01/Python3-6及以上版本中的字典默认是有序的/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
+    </div>
 
     
     
@@ -1009,7 +1022,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1066,7 +1079,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -1075,20 +1088,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1121,7 +1134,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -1141,9 +1154,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

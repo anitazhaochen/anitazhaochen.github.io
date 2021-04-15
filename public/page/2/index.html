@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -26,10 +26,8 @@
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="anitazc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我们不能失去信仰">
-<meta name="twitter:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 
 <link rel="canonical" href="http://yoursite.com/page/2/">
 
@@ -158,22 +156,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/26/nginx-fastcgi-django部署/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/17/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/26/nginx-fastcgi-django部署/" class="post-title-link" itemprop="url">nginx+fastcgi+django部署</a>
+            <a href="/2020/12/17/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">冒泡排序和插入排序的性能分析</a>
         </h2>
 
         <div class="post-meta">
@@ -183,22 +181,22 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-11-26 10:34:06" itemprop="dateCreated datePublished" datetime="2020-11-26T10:34:06+08:00">2020-11-26</time>
+              <time title="创建时间：2020-12-17 14:55:36" itemprop="dateCreated datePublished" datetime="2020-12-17T14:55:36+08:00">2020-12-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 11:43:56" itemprop="dateModified" datetime="2020-11-27T11:43:56+08:00">2020-11-27</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
@@ -213,10 +211,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Django 项目中写一个脚本来启动 fastcgi ，可以添加上一些判断及处理，这样重启或者开启都可以执行。</p>
+          <h3 id="分析一个排序算法的执行效率"><a href="#分析一个排序算法的执行效率" class="headerlink" title="分析一个排序算法的执行效率"></a>分析一个排序算法的执行效率</h3><ul>
+<li>最好情况、最坏情况、平均情况时间复杂度</li>
+</ul>
+<p>排序算法在面对排序数组的原始情况时，会出现不同的复杂度。有的接近有序，有的完全无序，有序程度不同的数据，对于排序的执行时间肯定是有影响的。</p>
+<ul>
+<li>时间复杂度的系数、常数、低阶</li>
+</ul>
+<p>时间复杂度反应的是数据规模n很大的时候的一个增长趋势，所以它表示的时候会忽略系数、常数、低阶。但是实际的软件开发中，我们排序的可能是10个、100个、1000个这丫昂规模很小的数据，所以在对同一阶时间复杂度的排序算法性能对比的时候，我们就要把系数、常数、低阶也考虑进来。</p>
+<ul>
+<li>比较次数和交换（或移动）次数</li>
+</ul>
+<p>基于比较的排序算法的执行过程，会涉及两种操作，一种是元素比较大小，另一种是元素交换或移动。所以，我们在分析排序算法的执行效率的时候，应该把比较次数和交换（或移动）次数也考虑进去。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/26/nginx-fastcgi-django部署/#more" rel="contents">
+              <a class="btn" href="/2020/12/17/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -239,22 +248,354 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/25/Git保持干净的历史记录及清晰的提交记录/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/15/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/25/Git保持干净的历史记录及清晰的提交记录/" class="post-title-link" itemprop="url">Git保持干净的历史记录及清晰的提交记录</a>
+            <a href="/2020/12/15/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">数组链表容器的一些问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-15 14:17:58" itemprop="dateCreated datePublished" datetime="2020-12-15T14:17:58+08:00">2020-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"><a href="#大多数编程语言中，数组要从0开始编号，而不是从1开始呢？" class="headerlink" title="大多数编程语言中，数组要从0开始编号，而不是从1开始呢？"></a>大多数编程语言中，数组要从0开始编号，而不是从1开始呢？</h3><p>从数组存储的内存模型来看，“下标”最确切的定义应该是“偏移（offset）”。<br>如果用 a 来表示数组的首地址，a[0] 就是偏移为0的位置，也就是首地址，a[k]就表示偏移k个type_size的位置，<br>所以计算a[k]的内存地址只需要用这个公式：<br><code>a[k]_address = base_address + k * type_size</code></p>
+<p>但是如果数组从1开始计数，那我们计算数组元素a[k]就会变成为：<br><code>a[k]_address = base_address + (k - 1) * type_size</code></p>
+<p>对于以上两个公司，从1开始编号，每次随机访问数组元素都多了一次减法运算，对于 CPU 来说，就是多了一次减法指令。</p>
+<p>另一方面，可能也是历史原因造成的，C语言设计者用0开始计数数组下标，之后的 Java、JavaScript 等高级语言都效仿了 C 语言，或者说，为了在一定程度上减少 C 语言程序员学习 Java 的成本，因此沿用了从0开始计数的习惯。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/15/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/11/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/11/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">代码设计思想总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-11 10:47:30" itemprop="dateCreated datePublished" datetime="2020-12-11T10:47:30+08:00">2020-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3/" itemprop="url" rel="index"><span itemprop="name">设计思想</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>对于封装的理解就是提供有限必要的方法给调用者，而不是全部让调用者自行选择，随意修改任何东西。比如在 Java 中， public 、protected、private 就可以实现对变量的访问控制，实现封装。函数也是封装。 </p>
+<p>举例： 封装的好处，比如在一个类中，不加以任何限制，调用者可以随便修改类的属性，这样不仅会增加调用者上手的难度，并且还容易出错，某些变量可能和具体业务有关，并不能随意修改。就好比一个冰箱，只给你常见的几个按键让你使用，和给你一堆按键让你使用，后者出错的概率大大增加，也会增加上手的难度。</p>
+<p>邓庄也叫做信息隐藏或者数据访问保护。类通过暴露有限的访问接口，授权外部仅能通过类提供的方式来访问内部信息或者数据。它需要编程语言提供权限访问控制语法来支持。封装特性存在的意义，一方面是保护数据不被随意修改，提高代码的可维护性；另一方面是仅暴露有限的必要接口，提高类的易用性。</p>
+<h3 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h3><p>抽象就是隐藏方法的具体实现，让使用者只需要关心提供了哪些功能，不需要知道这些功能是如何实现的。抽象可以通过接口类或者抽象类方法实现。抽象存在的意义，一方面是提高代码的可扩展性、维护性，修改实现不需要改变定义，减少代码的改动返回；另一方面，它也是处理复杂系统的有效手段，能有效地过滤掉不必要关注的信息。</p>
+<p>定义类或命名类的方法的时候，也需要有抽象思维，不要再方法定义中，暴露太多的实现细节，以保证在某个时间点需要改变方法的实现逻辑的时候，不用去修改其定义。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/11/%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E6%80%BB%E7%BB%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/01/Python3-6%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E4%B8%AD%E7%9A%84%E5%AD%97%E5%85%B8%E9%BB%98%E8%AE%A4%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/01/Python3-6%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E4%B8%AD%E7%9A%84%E5%AD%97%E5%85%B8%E9%BB%98%E8%AE%A4%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84/" class="post-title-link" itemprop="url">Python3.6及以上版本中的字典默认是有序的</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-01 16:03:37" itemprop="dateCreated datePublished" datetime="2020-12-01T16:03:37+08:00">2020-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Python3.6 及以上版本的字典默认是有序的</p>
+<p><a href="https://www.cnblogs.com/xieqiankun/p/python_dict.html" target="_blank" rel="noopener">参考</a>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/01/Python3-6%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E4%B8%AD%E7%9A%84%E5%AD%97%E5%85%B8%E9%BB%98%E8%AE%A4%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/26/nginx-fastcgi-django%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/26/nginx-fastcgi-django%E9%83%A8%E7%BD%B2/" class="post-title-link" itemprop="url">nginx+fastcgi+django部署</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-26 10:34:06" itemprop="dateCreated datePublished" datetime="2020-11-26T10:34:06+08:00">2020-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Django 项目中写一个脚本来启动 fastcgi ，可以添加上一些判断及处理，这样重启或者开启都可以执行。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/26/nginx-fastcgi-django%E9%83%A8%E7%BD%B2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/25/Git%E4%BF%9D%E6%8C%81%E5%B9%B2%E5%87%80%E7%9A%84%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%B8%85%E6%99%B0%E7%9A%84%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/25/Git%E4%BF%9D%E6%8C%81%E5%B9%B2%E5%87%80%E7%9A%84%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%B8%85%E6%99%B0%E7%9A%84%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">Git保持干净的历史记录及清晰的提交记录</a>
         </h2>
 
         <div class="post-meta">
@@ -271,14 +612,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 11:40:01" itemprop="dateModified" datetime="2020-11-27T11:40:01+08:00">2020-11-27</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
                 </span>
             </span>
@@ -302,17 +643,17 @@
 <li>在 GitLab 页面上进行 merge request 操作，请求合并到 测试分支如 dev 分支</li>
 <li>dev 分支测试完毕后，将 dev 分支合并至 master 分支。</li>
 </ol>
-<p>稍微看一下项目的 git log 日志，会发现每个人写的 commit message 基本都不一样，还可能过一阵后自己的 commit message 自己都看不懂了。<br>
+<p>稍微看一下项目的 git log 日志，会发现每个人写的 commit message 基本都不一样，还可能过一阵后自己的 commit message 自己都看不懂了。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/25/Git保持干净的历史记录及清晰的提交记录/#more" rel="contents">
+              <a class="btn" href="/2020/11/25/Git%E4%BF%9D%E6%8C%81%E5%B9%B2%E5%87%80%E7%9A%84%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%B8%85%E6%99%B0%E7%9A%84%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -328,22 +669,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/06/Linux查看cpu信息/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/06/Linux%E6%9F%A5%E7%9C%8Bcpu%E4%BF%A1%E6%81%AF/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/06/Linux查看cpu信息/" class="post-title-link" itemprop="url">Linux查看cpu信息</a>
+            <a href="/2020/11/06/Linux%E6%9F%A5%E7%9C%8Bcpu%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">Linux查看cpu信息</a>
         </h2>
 
         <div class="post-meta">
@@ -352,16 +693,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-06 11:41:47 / 修改时间：11:54:29" itemprop="dateCreated datePublished" datetime="2020-11-06T11:41:47+08:00">2020-11-06</time>
+              <time title="创建时间：2020-11-06 11:41:47" itemprop="dateCreated datePublished" datetime="2020-11-06T11:41:47+08:00">2020-11-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Liunx/" itemprop="url" rel="index"><span itemprop="name">Liunx</span></a>
                 </span>
             </span>
@@ -384,17 +731,17 @@
 <ol>
 <li>查看 cpu 个数：</li>
 </ol>
-<p><code>grep &#39;physical id&#39; /proc/cpuinfo | uniq -c | wc -l</code><br>
+<p><code>grep &#39;physical id&#39; /proc/cpuinfo | uniq -c | wc -l</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/06/Linux查看cpu信息/#more" rel="contents">
+              <a class="btn" href="/2020/11/06/Linux%E6%9F%A5%E7%9C%8Bcpu%E4%BF%A1%E6%81%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -410,22 +757,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/InnoDB之LRU缓存及SQL状态/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/InnoDB%E4%B9%8BLRU%E7%BC%93%E5%AD%98%E5%8F%8ASQL%E7%8A%B6%E6%80%81/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/04/InnoDB之LRU缓存及SQL状态/" class="post-title-link" itemprop="url">InnoDB之LRU缓存及SQL状态</a>
+            <a href="/2020/11/04/InnoDB%E4%B9%8BLRU%E7%BC%93%E5%AD%98%E5%8F%8ASQL%E7%8A%B6%E6%80%81/" class="post-title-link" itemprop="url">InnoDB之LRU缓存及SQL状态</a>
         </h2>
 
         <div class="post-meta">
@@ -434,16 +781,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-04 15:45:57 / 修改时间：16:49:46" itemprop="dateCreated datePublished" datetime="2020-11-04T15:45:57+08:00">2020-11-04</time>
+              <time title="创建时间：2020-11-04 15:45:57" itemprop="dateCreated datePublished" datetime="2020-11-04T15:45:57+08:00">2020-11-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
                 </span>
             </span>
@@ -471,7 +824,7 @@
 <p>我们使用 show processlist 会看到有关的状态：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/04/InnoDB之LRU缓存及SQL状态/#more" rel="contents">
+              <a class="btn" href="/2020/11/04/InnoDB%E4%B9%8BLRU%E7%BC%93%E5%AD%98%E5%8F%8ASQL%E7%8A%B6%E6%80%81/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -494,22 +847,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/03/MySQL中join语句优化/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/11/03/MySQL中join语句优化/" class="post-title-link" itemprop="url">MySQL中join语句优化</a>
+            <a href="/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">MySQL中join语句优化</a>
         </h2>
 
         <div class="post-meta">
@@ -518,16 +871,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-03 15:41:21 / 修改时间：17:19:45" itemprop="dateCreated datePublished" datetime="2020-11-03T15:41:21+08:00">2020-11-03</time>
+              <time title="创建时间：2020-11-03 15:41:21" itemprop="dateCreated datePublished" datetime="2020-11-03T15:41:21+08:00">2020-11-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
                 </span>
             </span>
@@ -545,6 +904,7 @@
       
           <p>在 MySQL 中，使用 join 语句的时候会涉及到驱动表和被驱动表，MySQL 会自动为你优化，选择数据量较小的表作为驱动表。在分析性能的时候，可以使用<code>straight_join</code> 替换 <code>join</code> 可以便于我们分析执行中的性能问题。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table1 staight_join table2 <span class="keyword">on</span> (table1.name=table2.name)</span><br></pre></td></tr></table></figure>
+
 <p>上面这条 SQL 语句中，table1 是驱动表，table2 是被驱动表。</p>
 <p>这条语句的执行流程是：</p>
 <ol>
@@ -553,14 +913,14 @@
 <li>取出表table2中满足条件的行，跟R组成一行，放到结果集中
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/11/03/MySQL中join语句优化/#more" rel="contents">
+              <a class="btn" href="/2020/11/03/MySQL%E4%B8%ADjoin%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </div>
 
     
     
@@ -576,22 +936,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置docker-openvpn转发指定网段流量/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/%E9%85%8D%E7%BD%AEdocker-openvpn%E8%BD%AC%E5%8F%91%E6%8C%87%E5%AE%9A%E7%BD%91%E6%AE%B5%E6%B5%81%E9%87%8F/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/28/配置docker-openvpn转发指定网段流量/" class="post-title-link" itemprop="url">配置docker-openvpn转发指定网段流量</a>
+            <a href="/2020/10/28/%E9%85%8D%E7%BD%AEdocker-openvpn%E8%BD%AC%E5%8F%91%E6%8C%87%E5%AE%9A%E7%BD%91%E6%AE%B5%E6%B5%81%E9%87%8F/" class="post-title-link" itemprop="url">配置docker-openvpn转发指定网段流量</a>
         </h2>
 
         <div class="post-meta">
@@ -608,14 +968,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 11:16:09" itemprop="dateModified" datetime="2020-10-29T11:16:09+08:00">2020-10-29</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/vpn/" itemprop="url" rel="index"><span itemprop="name">vpn</span></a>
                 </span>
             </span>
@@ -641,339 +1001,14 @@
 <li><p>tun模式： 相当于打通了一条隧道，拿到的ip是vpn分配的私有ip，就相当于在路由器子网中的子网，一般来说去访问家里的内网设备是没有问题的，但是如果家里的设备要反向来访问就不行了，而 tap 模式可以实现，在tap模式下甚至，我在连接 vpn 的情况下，晚上回到家里，打开家里的电脑可以直接连接公司的电脑。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/10/28/配置docker-openvpn转发指定网段流量/#more" rel="contents">
+              <a class="btn" href="/2020/10/28/%E9%85%8D%E7%BD%AEdocker-openvpn%E8%BD%AC%E5%8F%91%E6%8C%87%E5%AE%9A%E7%BD%91%E6%AE%B5%E6%B5%81%E9%87%8F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
-      
-    </li></ul></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/28/配置grafana使用GitLab-OAuth认证/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/28/配置grafana使用GitLab-OAuth认证/" class="post-title-link" itemprop="url">配置grafana使用GitLab-OAuth认证</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-28 21:03:12" itemprop="dateCreated datePublished" datetime="2020-10-28T21:03:12+08:00">2020-10-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-29 16:01:31" itemprop="dateModified" datetime="2020-10-29T16:01:31+08:00">2020-10-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/GitLab/" itemprop="url" rel="index"><span itemprop="name">GitLab</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="GitLab"><a href="#GitLab" class="headerlink" title="GitLab"></a>GitLab</h2><p>关于 GitLab 方面的问题，其实以前已经写过了，以前是在黑群晖上面使用，但是这个黑群晖越使用越发恶心，动不动死机系统无响应，终于在某天开机的过程中告诉我需要重装系统（可能和我直接暴力ssh上去操作了一波又一波有关）。最终的结果就是应用数据全丢，因为 GitLab 是以Docker形式部署的，所以也没了，不过还好，电脑的原始资料还在，就是费点时间重建一下。</p>
-<p>并且这个黑群晖的机器性能也不行，蜗牛星际矿机。干啥啥不行，我都问我自己为啥不直接装个 Linux。念在我还是几T数据在上面，还是先忍忍了。换台机器吧。</p>
-<h2 id="Ubuntu-20-04-部署-GitLab"><a href="#Ubuntu-20-04-部署-GitLab" class="headerlink" title="Ubuntu 20.04 部署 GitLab"></a>Ubuntu 20.04 部署 GitLab</h2><p>还有人说自己搞 Linux 部署会比较麻烦， 这个我肯定，但是也不是那么麻烦，毕竟现在不跟以前一样了，部署过程不叙述了，GitLab 文档写的十分清楚，就是一些配置可以说一下。</p>
-<p>由于我是内网主机部署，但是我有公网IP，所以几乎所有的服务我都需要进行转发。</p>
-<p>在转发的基础上，还是不能通过域名进行到底给内网的哪个服务，所以在路由器做了端口转发后，还需要一个反向代理，我使用Nginx做了反向代理。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/28/配置grafana使用GitLab-OAuth认证/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/23/平均负载的理解/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/23/平均负载的理解/" class="post-title-link" itemprop="url">平均负载的理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-10-23 17:43:07 / 修改时间：18:12:05" itemprop="dateCreated datePublished" datetime="2020-10-23T17:43:07+08:00">2020-10-23</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用 uptime 命令可以简洁的了解系统的负载情况：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> uptime</span><br><span class="line"> 09:46:05 up  7:13,  1 user,  load average: 0.62, 0.39, 0.37</span><br><span class="line">当前时间	系统运行时间	正在登陆的用户数 1 分钟  5 分钟 15 分钟的平均负载</span><br></pre></td></tr></table></figure>
-<p>可以通过查到最后三个数字来判断服务器的负载情况，如果是从左到右依次减小，那么说明系统目前的负载是在升高的，如果从左到右依次增加，那么说明系统目前的负载是在下降的。</p>
-<p>平均负载代表的是单位时间内，系统处于可运行状态（ps命令中处于 R 状态 Running/Runnable）和不可中断状态（ps 命令中处于 D 状态 Uninterruptible Sleep， 也称为 Disk Sleep）的平均进程数，也就是平均活跃进程数，它和 <strong>CPU使用率</strong> 没有直接关系。</p>
-<p>平均负载最理想的情况是等于 CPU 个数， 可以通过 <code>cat /proc/cpuinfo</code>  来进行查看 CPU 的信息。当平均负载高于 CPU 数量 70% 的时候，可能就已经开始影响进程服务，导致其变慢。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/23/平均负载的理解/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/Python中变量乘以n个的坑/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/25/Python中变量乘以n个的坑/" class="post-title-link" itemprop="url">Python中变量乘以n个的坑</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-25 16:36:57" itemprop="dateCreated datePublished" datetime="2020-09-25T16:36:57+08:00">2020-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在 Python 中，如果要生成一个全是0的列表，并且这个列表的长度为100，可以使用如下操作： <code>a = [0] * 100</code> 就生成了，效果和 <code>a = [0 for _ in range(100)]</code> 一样。</p>
-<p>在某次需要生成二维数组的时候，奇怪的事情发生了，写一道题总是过不了。检查了好几遍，最终定位到问题在于 <code>[[0]* n]* n</code> 。</p>
-<p>其实从表面上看 <code>[[0] *n ]* n</code> 和 <code>[[0]*n for _ in range(n)]</code> 是一样的，但是当你改变某个位置的值的时候，却发现 后面生成的只会改变哪一个位置的值， 而前者会改变每一列的值。究其原因，发现前者生成出来的列表其实都是第一个的引用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">a = [[<span class="number">0</span>] * n] * n</span><br><span class="line"></span><br><span class="line">b = [[<span class="number">0</span>] * n <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)]</span><br><span class="line"></span><br><span class="line">a[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">b[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">print(a)</span><br><span class="line"></span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
-
       
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/25/GitLab-自动部署Blog/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/25/GitLab-自动部署Blog/" class="post-title-link" itemprop="url">GitLab 自动部署Blog</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-25 11:31:20" itemprop="dateCreated datePublished" datetime="2020-09-25T11:31:20+08:00">2020-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>首先在 GitLab 上面创建项目，打开项目，然后在左侧页面点击 Setting –&gt; Integrations 然后输入回调的 url 以及设置在发生哪些事件时通知， 因为我这里主要是想实现我推送新的内容到 GitLab， 然后我的博客服务器可以收到 GitLab 发送过来的通知， 进而实现 我的博客服务器可以去自动拉取代码进行部署。</p>
-<p>不过，如果你输入的是一个私有地址，如 192.168.xxx.xxx 这样的一看就是内网地址，会提示你： <strong>url is blocked requests to the local network are not allowed</strong> 。解决方法： 需要先登陆管理员账号–&gt; Admin area –&gt; Setting –&gt; NetWork 找到 <strong>Outbound requests </strong> 把  Allow requests to local network from hooks and services 打上勾保存就可以了。</p>
-<p>从 GitLab 发请求到 服务器时，会让你设置一个 token ， 这个 token 是让你用来验证这个请求是来自 GitLab 服务器的。</p>
-<p>服务器收到请求后，接下来会从 GitLab 拉取代码，如果直接放 ssh，是否会权限有点大了，可以在 setting 里面点击 Repository 然后在 Deploy Tokens 里面申请一个 Token 。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/25/GitLab-自动部署Blog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
 
     
     
@@ -989,7 +1024,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1046,7 +1081,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -1055,20 +1090,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1101,7 +1136,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -1121,9 +1156,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

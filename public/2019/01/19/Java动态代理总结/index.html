@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,22 +21,22 @@
   </script>
 
   <meta name="description" content="Java 动态代理 动态代理应用场景  日志集中打印 事务 权限管理 AOP   Spring AOP 当中可以使用的方式实现，和区别。">
-<meta name="keywords" content="Java,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java动态代理">
-<meta property="og:url" content="http://yoursite.com/2019/01/19/Java动态代理总结/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/01/19/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="Java 动态代理 动态代理应用场景  日志集中打印 事务 权限管理 AOP   Spring AOP 当中可以使用的方式实现，和区别。">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/image-20190305010815160.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20190305012723659.png">
-<meta property="og:updated_time" content="2020-10-19T06:07:55.890Z">
+<meta property="article:published_time" content="2019-01-19T10:46:20.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.034Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java动态代理">
-<meta name="twitter:description" content="Java 动态代理 动态代理应用场景  日志集中打印 事务 权限管理 AOP   Spring AOP 当中可以使用的方式实现，和区别。">
 <meta name="twitter:image" content="http://yoursite.com/images/image-20190305010815160.png">
 
-<link rel="canonical" href="http://yoursite.com/2019/01/19/Java动态代理总结/">
+<link rel="canonical" href="http://yoursite.com/2019/01/19/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%80%BB%E7%BB%93/">
 
 
 <script id="page-configurations">
@@ -164,16 +164,16 @@
     
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/Java动态代理总结/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%80%BB%E7%BB%93/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
@@ -195,14 +195,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
@@ -255,8 +255,10 @@
 </ol>
 <p>使用 Aspectj 和 instrumentation 一般是不会出现 方法区内存溢出的问题。并且性能比较高。</p>
 <h2 id="Java-Proxy-代理详解"><a href="#Java-Proxy-代理详解" class="headerlink" title="Java Proxy 代理详解"></a>Java Proxy 代理详解</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
-<li>在 Java 中 java.lang.reflect 包下提供了一个 Proxy 类和一个 InvocationHandler 接口</li>
-<li>通过使用使用这个类和接口就可以生成动态代理对象</li>
+<li><p>在 Java 中 java.lang.reflect 包下提供了一个 Proxy 类和一个 InvocationHandler 接口</p>
+</li>
+<li><p>通过使用使用这个类和接口就可以生成动态代理对象</p>
+</li>
 <li><p>JDK 提供的代理（ 即 java proxy）只能针对<strong>接口</strong>做代理。</p>
 </li>
 <li><p>Proxy 通过 newProxyInstance(ClassLoader loader,Class&lt;?&gt;[]  interfaces,InvocationHandler  h) 创建代理对象。</p>
@@ -271,6 +273,7 @@
 <p>动态代理，通过 Proxy 里包含的 InvocationHandler 里包含的 target Object 来进行一层一层的调用。</p>
 <h3 id="示例需求"><a href="#示例需求" class="headerlink" title="示例需求"></a>示例需求</h3><p>原来的 UserServiceImpl 需要在 注册和删除用户的时候，做一下权限校验，和日志记录，不能修改源代码。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.enjoyms.proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 创建对象</span></span><br><span class="line">        UserServiceImpl usi = <span class="keyword">new</span> UserServiceImpl();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 创建代理对象</span></span><br><span class="line">        UserService proxy = (UserService) Proxy.newProxyInstance(usi.getClass().getClassLoader(),</span><br><span class="line">                usi.getClass().getInterfaces(),</span><br><span class="line">                <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                        System.out.println(method);</span><br><span class="line">                        System.out.println(<span class="string">"权限检验....."</span>);</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 拦截了方法</span></span><br><span class="line">                        Object returnObj = method.invoke(usi, args);</span><br><span class="line"></span><br><span class="line">                        System.out.println(<span class="string">"日志记录"</span>);</span><br><span class="line">                        <span class="keyword">return</span> returnObj;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">        proxy.registerUser();</span><br><span class="line">        proxy.deleteUser();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerUser</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"注册一个用户"</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"删除一个用户"</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这样就可以，通过 </p>
 <p><code>Object returnObj = method.invoke(usi, args);</code></p>
 <p>来执行原来的方法，并且在方法前面和后面加上一些新增的功能。</p>
@@ -293,7 +296,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Java/" rel="tag"># Java</a>
-              <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
           </div>
 
         
@@ -302,11 +305,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/01/19/Java类加载及反射/" rel="prev" title="Java 类加载及反射">
+    <a href="/2019/01/19/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%8F%8D%E5%B0%84/" rel="prev" title="Java 类加载及反射">
       <i class="fa fa-chevron-left"></i> Java 类加载及反射
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/01/19/Java模板设计模式/" rel="next" title="Java模板设计模式">
+    <a href="/2019/01/19/Java%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="Java模板设计模式">
       Java模板设计模式 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -372,7 +375,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -381,20 +384,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -427,7 +430,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -447,9 +450,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

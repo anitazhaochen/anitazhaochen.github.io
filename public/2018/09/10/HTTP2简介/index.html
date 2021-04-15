@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,14 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="HTTP2简介先说一下 HTTP 的发展简史，以及 HTTP/2.0  的优势在哪里。  HTTP/0.91991年发布的 HTTP/0.9 版本 是基于 TCP/IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。 请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.">
-<meta name="keywords" content="http,协议">
+  <meta name="description" content="HTTP2简介先说一下 HTTP 的发展简史，以及 HTTP&#x2F;2.0  的优势在哪里。  HTTP&#x2F;0.91991年发布的 HTTP&#x2F;0.9 版本 是基于 TCP&#x2F;IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。 请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从过去到未来 关于 HTTP2 的研究">
-<meta property="og:url" content="http://yoursite.com/2018/09/10/HTTP2简介/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/09/10/HTTP2%E7%AE%80%E4%BB%8B/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
-<meta property="og:description" content="HTTP2简介先说一下 HTTP 的发展简史，以及 HTTP/2.0  的优势在哪里。  HTTP/0.91991年发布的 HTTP/0.9 版本 是基于 TCP/IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。 请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="HTTP2简介先说一下 HTTP 的发展简史，以及 HTTP&#x2F;2.0  的优势在哪里。  HTTP&#x2F;0.91991年发布的 HTTP&#x2F;0.9 版本 是基于 TCP&#x2F;IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。 请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.">
 <meta property="og:image" content="http://yoursite.com/images/image-20180925163449365.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20180925154917714.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20180925152722166.png">
@@ -36,13 +34,15 @@
 <meta property="og:image" content="http://yoursite.com/images/image-20180925160350878.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20180925160508950.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20180925155506937.png">
-<meta property="og:updated_time" content="2020-10-19T06:07:55.889Z">
+<meta property="article:published_time" content="2018-09-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.032Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="http">
+<meta property="article:tag" content="协议">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从过去到未来 关于 HTTP2 的研究">
-<meta name="twitter:description" content="HTTP2简介先说一下 HTTP 的发展简史，以及 HTTP/2.0  的优势在哪里。  HTTP/0.91991年发布的 HTTP/0.9 版本 是基于 TCP/IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。 请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.">
 <meta name="twitter:image" content="http://yoursite.com/images/image-20180925163449365.png">
 
-<link rel="canonical" href="http://yoursite.com/2018/09/10/HTTP2简介/">
+<link rel="canonical" href="http://yoursite.com/2018/09/10/HTTP2%E7%AE%80%E4%BB%8B/">
 
 
 <script id="page-configurations">
@@ -170,16 +170,16 @@
     
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/HTTP2简介/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/HTTP2%E7%AE%80%E4%BB%8B/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
@@ -201,15 +201,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议分析/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
                 </span>
             </span>
 
@@ -229,6 +229,7 @@
 <h3 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h3><p>1991年发布的 HTTP/0.9 版本 是基于 TCP/IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。</p>
 <p>请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.html ， 并且协议规定， 服务器只能回应 HTML 格式的字符串， 不能回应别的格式。 服务器发送完毕后， 就关闭连接。</p>
 <a id="more"></a>
+
 <h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><p>1996年5月， HTTP/1.0 版本发布。</p>
 <p>首先： 加入了很多格式的内容都可以发送，这使得互联网不仅可以传输文字，还能传输图像、视频、二进制文件。 通过这次的更新，为互联网的大发展奠定了基础。</p>
 <p>其次： 除了GET命令，还加入了 POST 、HEAD 等命令， 丰富了浏览器与服务器的交互手段。</p>
@@ -306,7 +307,8 @@
 <p><img src="/images/image-20180925152857946.png" alt="image-20180925152857946"></p>
 <h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><p>2015年， HTTP/2 发布。它不叫 HTTP/2.0 ，是因为标准委员会不打算再发布自版本了，下一个新版本将是 HTTP/3。</p>
 <ul>
-<li>改进<ul>
+<li><p>改进</p>
+<ul>
 <li>降低协议对延迟的敏感</li>
 <li>修复 pipelining 和 head of line blocking 问题</li>
 <li>防止主机需要更高的连接数量</li>
@@ -354,7 +356,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/http/" rel="tag"># http</a>
-              <a href="/tags/协议/" rel="tag"># 协议</a>
+              <a href="/tags/%E5%8D%8F%E8%AE%AE/" rel="tag"># 协议</a>
           </div>
 
         
@@ -363,11 +365,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/08/13/tcp连接及常见网络攻击分析/" rel="prev" title="TCP 连接及常见网络攻击分析">
+    <a href="/2018/08/13/tcp%E8%BF%9E%E6%8E%A5%E5%8F%8A%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/" rel="prev" title="TCP 连接及常见网络攻击分析">
       <i class="fa fa-chevron-left"></i> TCP 连接及常见网络攻击分析
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/09/20/文件描述符是什么/" rel="next" title="文件描述符是什么">
+    <a href="/2018/09/20/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%98%AF%E4%BB%80%E4%B9%88/" rel="next" title="文件描述符是什么">
       文件描述符是什么 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -428,12 +430,12 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP2简介"><span class="nav-number">1.</span> <span class="nav-text">HTTP2简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-0-9"><span class="nav-number">1.0.1.</span> <span class="nav-text">HTTP/0.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.0.2.</span> <span class="nav-text">HTTP/1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">HTTP/1.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPDY协议"><span class="nav-number">1.0.4.</span> <span class="nav-text">SPDY协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-number">1.0.5.</span> <span class="nav-text">HTTP/2</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP2简介"><span class="nav-number">1.</span> <span class="nav-text">HTTP2简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-0-9"><span class="nav-number">1.0.1.</span> <span class="nav-text">HTTP&#x2F;0.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.0.2.</span> <span class="nav-text">HTTP&#x2F;1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">1.0.3.</span> <span class="nav-text">HTTP&#x2F;1.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPDY协议"><span class="nav-number">1.0.4.</span> <span class="nav-text">SPDY协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-number">1.0.5.</span> <span class="nav-text">HTTP&#x2F;2</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -442,20 +444,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -488,7 +490,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -508,9 +510,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

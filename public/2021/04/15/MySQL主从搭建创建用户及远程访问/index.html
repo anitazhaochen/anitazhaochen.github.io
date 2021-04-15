@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="MySQL 版本1234567mysql&gt; select version();+-------------------------+| version()               |+-------------------------+| 8.0.23-0ubuntu0.20.04.1 |+-------------------------+1 row in set (0.00 sec)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL主从搭建及创建新用户及远程访问">
+<meta property="og:url" content="http://yoursite.com/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/index.html">
+<meta property="og:site_name" content="我们不能失去信仰">
+<meta property="og:description" content="MySQL 版本1234567mysql&gt; select version();+-------------------------+| version()               |+-------------------------+| 8.0.23-0ubuntu0.20.04.1 |+-------------------------+1 row in set (0.00 sec)">
+<meta property="article:published_time" content="2021-04-15T09:55:58.000Z">
+<meta property="article:modified_time" content="2021-04-15T11:21:17.873Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>MySQL主从搭建及创建新用户及远程访问 | 我们不能失去信仰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">我们不能失去信仰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">我们在这个世界上不停地奔跑...</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/15/MySQL%E4%B8%BB%E4%BB%8E%E6%90%AD%E5%BB%BA%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%8F%8A%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL主从搭建及创建新用户及远程访问
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-15 17:55:58 / 修改时间：19:21:17" itemprop="dateCreated datePublished" datetime="2021-04-15T17:55:58+08:00">2021-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="MySQL-版本"><a href="#MySQL-版本" class="headerlink" title="MySQL 版本"></a>MySQL 版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select version();</span><br><span class="line">+-------------------------+</span><br><span class="line">| version()               |</span><br><span class="line">+-------------------------+</span><br><span class="line">| 8.0.23-0ubuntu0.20.04.1 |</span><br><span class="line">+-------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>ubuntu 20.04 </p>
+<a id="more"></a>
+
+<!-- more -->
+
+<h2 id="Master-（主库）配置"><a href="#Master-（主库）配置" class="headerlink" title="Master （主库）配置"></a>Master （主库）配置</h2><p>修改配置文件： <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id&#x3D;1 </span><br><span class="line"># server-id 保证唯一，必须与从库不同</span><br><span class="line"></span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line"># 开启二进制日志，主库必须开启</span><br><span class="line"></span><br><span class="line">binlog_expire_logs_seconds&#x3D;2592000</span><br><span class="line"># 自动删除 2592000 秒(30天)前的日志（可选）</span><br><span class="line"></span><br><span class="line">binlog_format&#x3D;mixed</span><br><span class="line"># binlog 记录模式：</span><br><span class="line"># statement 模式不会记录每一条更改语句，节约资源但是会造成主从数据不一致</span><br><span class="line"># row 模式记录每一条更改的语句，日志量非常大</span><br><span class="line"># mixed 模式是前两者有点的综合，日志结构较复杂</span><br><span class="line"></span><br><span class="line">binlog-do-db&#x3D;demo</span><br><span class="line"># 设置只记录 binlog 的库 （可选）</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Slave（从库）配置"><a href="#Slave（从库）配置" class="headerlink" title="Slave（从库）配置"></a>Slave（从库）配置</h2><p>修改配置文件： <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id&#x3D;2</span><br><span class="line"># 设置 server-id, 唯一值，必须与主库不同</span><br><span class="line"></span><br><span class="line">replicate-do-db&#x3D;demo</span><br><span class="line"># 设置只同步 binlog 的库。</span><br><span class="line"></span><br><span class="line">read_only&#x3D;1</span><br><span class="line"># 设置从库只读 （可选）</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="导出主库并还原从库（如果你是临时加了一台从库）"><a href="#导出主库并还原从库（如果你是临时加了一台从库）" class="headerlink" title="导出主库并还原从库（如果你是临时加了一台从库）"></a>导出主库并还原从库（如果你是临时加了一台从库）</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p --skip-<span class="keyword">lock</span>-tables --single-transaction --flush-logs --hex-blob --master-data=<span class="number">2</span> demo &gt; /demo.sql</span><br></pre></td></tr></table></figure>
+
+<p>–skip-lock-tables：不锁表</p>
+<p>–single-transaction：设定事务级别为可重复读</p>
+<p>–flush-logs：开启一个新的binlog文件</p>
+<p>–hex-blob：以16进制导出blob数据</p>
+<p>–master-data=2：导出数据库时将binlog信息也一并导出，2表示注释binglog信息</p>
+<p>接下来，将导出的文件传输到从服务器上面，然后将SQL文件导出到从库，导入前记得先创建好和主库一致的数据库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use demo;</span><br><span class="line"></span><br><span class="line">mysql&gt; source &#x2F;xxx&#x2F;xxx&#x2F;demo.sql;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>创建主从专用账号（Recommand）</li>
+</ul>
+<p>从库连接主库需要一个用户，也可以直接使用 root 账户进行配置，但是不建议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user &#39;copy&#39;@&#39;%&#39; identified by &#39;copy@copy&#39;;</span><br><span class="line"></span><br><span class="line">grant replication slave,replication client on *.* to &#39;copy&#39;@&#39;%&#39;;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建了一个用户名为 copy 的用户，可从任意地址访问，密码为：copy@copy</li>
+<li>将 replication slave （没有这个权限将不能同步数据）、replication client（用于查看从库状态即：show slave status 命令） 权限赋予给 copy 用户。</li>
+</ol>
+<h2 id="配置主从"><a href="#配置主从" class="headerlink" title="配置主从"></a>配置主从</h2><p>我们刚才从主库导出数据的时候，将binlog信息也一块导出来了，我们使用如下命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat demo.sql | grep CHANGE</span><br><span class="line"></span><br><span class="line">-- CHANGE MASTER TO MASTER_LOG_FILE&#x3D;&#39;mysql-bin.000005&#39;, MASTER_LOG_POS&#x3D;630;</span><br></pre></td></tr></table></figure>
+
+<p>上图说明主库目前正在使用 <code>mysql-bin.000005</code> 这个binlog文件，位置为 630。</p>
+<p>在从服务器上执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"># 假设主服务器IP为 192.168.1.2 并且默认端口为 3306。</span><br><span class="line"></span><br><span class="line">mysql&gt; change master to master_host&#x3D;&#39;192.168.1.2&#39;,</span><br><span class="line">    -&gt; master_port&#x3D;3306,</span><br><span class="line">    -&gt; master_user&#x3D;&#39;copy&#39;,</span><br><span class="line">    -&gt; master_password&#x3D;&#39;copy@copy&#39;,</span><br><span class="line">    -&gt; master_log_file&#x3D;&#39;mysql-bin.000005&#39;,</span><br><span class="line">    -&gt; master_log_pos&#x3D;630;</span><br><span class="line">Query OK, 0 rows affected, 2 warnings (0.02 sec)</span><br><span class="line"></span><br><span class="line"># 最后开启主从复制</span><br><span class="line">mysql&gt; start slave;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 查看主从连接状态</span><br><span class="line"></span><br><span class="line">mysql&gt; show slave status\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">               Slave_IO_State: Waiting for master to send event</span><br><span class="line">                  Master_Host: ip</span><br><span class="line">                  Master_User: username</span><br><span class="line">                  Master_Port: 3306</span><br><span class="line">                Connect_Retry: 60</span><br><span class="line">              Master_Log_File: mysql-bin.000007</span><br><span class="line">          Read_Master_Log_Pos: 517</span><br><span class="line">               Relay_Log_File: adam-relay-bin.000010</span><br><span class="line">                Relay_Log_Pos: 685</span><br><span class="line">        Relay_Master_Log_File: mysql-bin.000007</span><br><span class="line">             Slave_IO_Running: Yes  # 正常为 YES</span><br><span class="line">            Slave_SQL_Running: Yes  # 正常为 YES</span><br><span class="line">              Replicate_Do_DB: demo</span><br><span class="line">          Replicate_Ignore_DB: </span><br><span class="line">           Replicate_Do_Table: </span><br><span class="line">       Replicate_Ignore_Table: </span><br><span class="line">      Replicate_Wild_Do_Table: </span><br><span class="line">  Replicate_Wild_Ignore_Table: </span><br><span class="line">                   Last_Errno: 0</span><br><span class="line">                   Last_Error: </span><br><span class="line">                 Skip_Counter: 0</span><br><span class="line">          Exec_Master_Log_Pos: 517</span><br><span class="line">              Relay_Log_Space: 1108</span><br><span class="line">              Until_Condition: None</span><br><span class="line">               Until_Log_File: </span><br><span class="line">                Until_Log_Pos: 0</span><br><span class="line">           Master_SSL_Allowed: No</span><br><span class="line">           Master_SSL_CA_File: </span><br><span class="line">           Master_SSL_CA_Path: </span><br><span class="line">              Master_SSL_Cert: </span><br><span class="line">            Master_SSL_Cipher: </span><br><span class="line">               Master_SSL_Key: </span><br><span class="line">        Seconds_Behind_Master: 0</span><br><span class="line">Master_SSL_Verify_Server_Cert: No</span><br><span class="line">                Last_IO_Errno: 0</span><br><span class="line">                Last_IO_Error: </span><br><span class="line">               Last_SQL_Errno: 0</span><br><span class="line">               Last_SQL_Error: </span><br><span class="line">  Replicate_Ignore_Server_Ids: </span><br><span class="line">             Master_Server_Id: 1</span><br><span class="line">                  Master_UUID: 10d10288-32ce-11eb-8674-00163e086d97</span><br><span class="line">             Master_Info_File: mysql.slave_master_info</span><br><span class="line">                    SQL_Delay: 0</span><br><span class="line">          SQL_Remaining_Delay: NULL</span><br><span class="line">      Slave_SQL_Running_State: Slave has read all relay log; waiting for more updates</span><br><span class="line">           Master_Retry_Count: 86400</span><br><span class="line">                  Master_Bind: </span><br><span class="line">      Last_IO_Error_Timestamp: </span><br><span class="line">     Last_SQL_Error_Timestamp: </span><br><span class="line">               Master_SSL_Crl: </span><br><span class="line">           Master_SSL_Crlpath: </span><br><span class="line">           Retrieved_Gtid_Set: </span><br><span class="line">            Executed_Gtid_Set: </span><br><span class="line">                Auto_Position: 0</span><br><span class="line">         Replicate_Rewrite_DB: </span><br><span class="line">                 Channel_Name: </span><br><span class="line">           Master_TLS_Version: </span><br><span class="line">       Master_public_key_path: </span><br><span class="line">        Get_master_public_key: 0</span><br><span class="line">            Network_Namespace: </span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>上面的两个指标： Slave_IO_Running 和 Slave_SQL_Running 都为 Yes 的时候表示主从同步正常。</p>
+<h2 id="远程连接"><a href="#远程连接" class="headerlink" title="远程连接"></a>远程连接</h2><p>不建议使用 root 用户进行远程连接，如果非得使用 root，可自行查阅资料。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#39;remote_user&#39;@&#39;%&#39; IDENTIFIED BY &#39;v4QA7K7wOJTM@&#39;;</span><br><span class="line"># 创建一个 MySQL 专门的用户, 使用这个用户对数据库进行操作, 这里我创建了一个 </span><br><span class="line"># 用户名为 remote_user ，密码为 v4QA7K7wOJTM@ 的用户。 注意密码最好随机生成，否则可能会提示你密码不满足，就无法创建用户。</span><br><span class="line"></span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;school&#39;@&#39;%&#39;;</span><br><span class="line"># 赋予这个用户库权限，这里给了这个用户 school 库权限</span><br><span class="line"></span><br><span class="line">FLUSH PRIVILEGES;</span><br><span class="line"># 刷新权限，然后就可以远程使用这个用户进行登录了。</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="QAQ"><a href="#QAQ" class="headerlink" title="QAQ"></a>QAQ</h1><ul>
+<li><p>我设置了从库只读，在配置文件中加入了 read_only，但是使用 root 用户登录到 MySQL 后还是可以执行增删改操作？</p>
+<p>首先 read_only=1 只读状态，是不会影响主从复制功能的。仅仅是限定普通用户进行数据修改操作，但不会限定具有 super 权限的用户的数据修改操作。如果要限制 root 用户也无法进行修改操作，可以加入 super_read_only=1 就可以了， 这个变量也不会影响主从复制功能。</p>
+</li>
+</ul>
+<ul>
+<li><p>在 Ubuntu 20.04 上直接通过 apt 安装完 mysql (8.0.23版本)后，发现无论怎么设置，root 用户都无法远程连接， 有些设置完后，连 MySQL 都连接不上了。</p>
+<p>操作方法： 首先 <code>service mysql stop</code> 停止 MySQL 服务，然后在配置文件中 <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code> 加入 <code>skip-grant-tables</code> 参数，然后开启服务 <code>service mysql start</code> 后，就可以直接通过 <code>mysql -uroot</code> 进行连接，然后再把我们修改的地方修改回去就可以了。修改完后，记得把配置文件中加的跳过权限校验的参数去掉。</p>
+</li>
+<li><p>在 MySQL 的 mysql.user 表中，将 root 的 host 改为 <code>%</code> 依旧无法远程登录</p>
+<p><a href="https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost" target="_blank" rel="noopener">stackoverflow 讨论</a> 我使用第一种方式后，MySQL 直接无法登录，第二种方式创建一个新的用户是可行的。</p>
+</li>
+</ul>
+<p><a href="https://www.jianshu.com/p/e33c861c2141" target="_blank" rel="noopener">参考MySQL 8 主从搭建</a></p>
+<p><a href="https://www.cnblogs.com/qlqwjy/p/8541959.html" target="_blank" rel="noopener">限制MySQL从服务器为只读状态</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/18/Python2%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%87%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%97%E6%AE%B5%E9%99%90%E5%88%B6%E5%AF%BC%E8%87%B4json%E5%BA%8F%E5%88%97%E5%8C%96%E9%94%99%E8%AF%AF/" rel="prev" title="Python2字符串长度超过数据库字段限制导致json序列化错误">
+      <i class="fa fa-chevron-left"></i> Python2字符串长度超过数据库字段限制导致json序列化错误
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-版本"><span class="nav-number">1.</span> <span class="nav-text">MySQL 版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Master-（主库）配置"><span class="nav-number">2.</span> <span class="nav-text">Master （主库）配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slave（从库）配置"><span class="nav-number">3.</span> <span class="nav-text">Slave（从库）配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出主库并还原从库（如果你是临时加了一台从库）"><span class="nav-number">3.1.</span> <span class="nav-text">导出主库并还原从库（如果你是临时加了一台从库）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置主从"><span class="nav-number">4.</span> <span class="nav-text">配置主从</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程连接"><span class="nav-number">5.</span> <span class="nav-text">远程连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QAQ"><span class="nav-number"></span> <span class="nav-text">QAQ</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">anitazc</p>
+  <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anitazc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

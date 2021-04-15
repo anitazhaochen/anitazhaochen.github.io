@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,23 +21,24 @@
   </script>
 
   <meta name="description" content="Tornado 对比 DjangoDjango 的 web 应用部署时采用 wsgi 协议与服务器对接，而这类服务器通常都是基于多线程的，也就是说每一个网络请求都会有一个对应的线程来进行处理。 Django 是走大而全的方向，注重的是高效开发，它最出名的是其全自动化的管理后台：只需要使用起ORM，做简单的对象定义，它就能自动生成数据库结构、以及全功能的管理后台。 Django 提供的方便，也意味着">
-<meta name="keywords" content="python,Tornado,异步">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tornado异步的研究">
-<meta property="og:url" content="http://yoursite.com/2018/10/15/Tornado的一些研究/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="Tornado 对比 DjangoDjango 的 web 应用部署时采用 wsgi 协议与服务器对接，而这类服务器通常都是基于多线程的，也就是说每一个网络请求都会有一个对应的线程来进行处理。 Django 是走大而全的方向，注重的是高效开发，它最出名的是其全自动化的管理后台：只需要使用起ORM，做简单的对象定义，它就能自动生成数据库结构、以及全功能的管理后台。 Django 提供的方便，也意味着">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/tornado_performance.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20181014220657248.png">
 <meta property="og:image" content="http://yoursite.com/images/image-20181014220810189.png">
-<meta property="og:updated_time" content="2020-10-19T06:07:55.895Z">
+<meta property="article:published_time" content="2018-10-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-15T02:17:55.041Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="Tornado">
+<meta property="article:tag" content="异步">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tornado异步的研究">
-<meta name="twitter:description" content="Tornado 对比 DjangoDjango 的 web 应用部署时采用 wsgi 协议与服务器对接，而这类服务器通常都是基于多线程的，也就是说每一个网络请求都会有一个对应的线程来进行处理。 Django 是走大而全的方向，注重的是高效开发，它最出名的是其全自动化的管理后台：只需要使用起ORM，做简单的对象定义，它就能自动生成数据库结构、以及全功能的管理后台。 Django 提供的方便，也意味着">
 <meta name="twitter:image" content="http://yoursite.com/images/tornado_performance.png">
 
-<link rel="canonical" href="http://yoursite.com/2018/10/15/Tornado的一些研究/">
+<link rel="canonical" href="http://yoursite.com/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/">
 
 
 <script id="page-configurations">
@@ -165,16 +166,16 @@
     
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Tornado的一些研究/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
@@ -196,14 +197,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
                 </span>
             </span>
@@ -231,6 +232,7 @@
 </li>
 </ul>
 <a id="more"></a>
+
 <p>Tornado走的是<strong>少而精</strong>的方向，注重的是<strong>性能优越</strong>，它最出名的是异步非阻塞的设计方式。</p>
 <ul>
 <li>HTTP服务器</li>
@@ -260,6 +262,7 @@
 <p>tornado 分为框架 和 服务器，推荐一起使用它的框架和服务器，否则就无法很好的发挥异步非阻塞的优势。</p>
 <h2 id="对于-Tornado-的研究"><a href="#对于-Tornado-的研究" class="headerlink" title="对于 Tornado 的研究"></a>对于 Tornado 的研究</h2><p>首先，一个简单的 Tornado 代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tornado.web</span><br><span class="line"><span class="keyword">import</span> tornado.ioloop</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IndexHandler</span><span class="params">(tornado.web.RequestHandler)</span>:</span></span><br><span class="line">    <span class="string">"""主路由处理类"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""对应http的get请求方式"""</span></span><br><span class="line">        self.write(<span class="string">"Hello World!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    app = tornado.web.Application([</span><br><span class="line">        (<span class="string">r"/"</span>, IndexHandler),</span><br><span class="line">    ])</span><br><span class="line">    app.listen(<span class="number">8000</span>)</span><br><span class="line">    tornado.ioloop.IOLoop.current().start()</span><br></pre></td></tr></table></figure>
+
 <p>保存为 hello.py 文件，执行</p>
 <p><code># python hello.py</code></p>
 <p>打开浏览器，输入网址127.0.0.1:8000（或localhost:8000），查看效果： </p>
@@ -299,6 +302,7 @@
 <p>要创建一个生成器，有很多种方法。第一种方法很简单，只要把一个列表生成式的 [ ] 改成 ( )</p>
 <p>generator非常强大。如果推算的算法比较复杂，用类似列表生成式的 for 循环无法实现的时候，还可以用函数来实现。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用函数实现一个生成器，需要使用到 yield </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(times)</span>:</span></span><br><span class="line"> 	n = <span class="number">0</span></span><br><span class="line">   	a,b = <span class="number">0</span>,<span class="number">1</span></span><br><span class="line">   	<span class="keyword">while</span> n&lt;times:</span><br><span class="line">    	<span class="keyword">yield</span> b</span><br><span class="line">        a,b = b,a+b</span><br><span class="line">        n+=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
 <p>生成器是这样一个函数，它记住上一次返回时在函数体中的位置。对生成器函数的第二次（或第 n 次）调用跳转至该函数中间，而上次调用的所有局部变量都保持不变。</p>
 <p>生成器不仅“记住”了它数据状态；生成器还“记住”了它在流控制构造（在命令式编程中，这种构造不只是数据值）中的位置。</p>
 <p>生成器的特点：</p>
@@ -310,16 +314,20 @@
 <h2 id="Tornado官方文档阅读"><a href="#Tornado官方文档阅读" class="headerlink" title="Tornado官方文档阅读"></a>Tornado官方文档阅读</h2><p><a href="https://tornado-zh.readthedocs.io/zh/latest/guide/intro.html" target="_blank" rel="noopener">Tornado官方文档中文版本</a></p>
 <p>主要记录一下，在阅读文档时候，遇到的一些问题：</p>
 <p>一个简单的同步函数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from tornado.httpclient import HTTPClient</span><br><span class="line"></span><br><span class="line">def synchronous_fetch(url):</span><br><span class="line">    http_client = HTTPClient()</span><br><span class="line">    response = http_client.fetch(url)</span><br><span class="line">    return response.body</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from tornado.httpclient import HTTPClient</span><br><span class="line"></span><br><span class="line">def synchronous_fetch(url):</span><br><span class="line">    http_client &#x3D; HTTPClient()</span><br><span class="line">    response &#x3D; http_client.fetch(url)</span><br><span class="line">    return response.body</span><br></pre></td></tr></table></figure>
+
 <p>把上面的例子用回调参数重写的异步函数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from tornado.httpclient import AsyncHTTPClient</span><br><span class="line"></span><br><span class="line">def asynchronous_fetch(url, callback):</span><br><span class="line">    http_client = AsyncHTTPClient()</span><br><span class="line">    def handle_response(response):</span><br><span class="line">        callback(response.body)</span><br><span class="line">    http_client.fetch(url, callback=handle_response)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from tornado.httpclient import AsyncHTTPClient</span><br><span class="line"></span><br><span class="line">def asynchronous_fetch(url, callback):</span><br><span class="line">    http_client &#x3D; AsyncHTTPClient()</span><br><span class="line">    def handle_response(response):</span><br><span class="line">        callback(response.body)</span><br><span class="line">    http_client.fetch(url, callback&#x3D;handle_response)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>协程库 (<a href="https://tornado-zh.readthedocs.io/zh/latest/gen.html#module-tornado.gen" target="_blank" rel="noopener"><code>tornado.gen</code></a>) 允许异步代码写的更直接而不用链式回调的方式。</p>
 </blockquote>
 <p>使用 <a href="https://tornado-zh.readthedocs.io/zh/latest/concurrent.html#tornado.concurrent.Future" target="_blank" rel="noopener"><code>Future</code></a> 代替回调:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from tornado.concurrent import Future</span><br><span class="line"></span><br><span class="line">def async_fetch_future(url):</span><br><span class="line">    http_client = AsyncHTTPClient()</span><br><span class="line">    my_future = Future()</span><br><span class="line">    fetch_future = http_client.fetch(url)</span><br><span class="line">    fetch_future.add_done_callback(</span><br><span class="line">        lambda f: my_future.set_result(f.result()))</span><br><span class="line">    return my_future</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from tornado.concurrent import Future</span><br><span class="line"></span><br><span class="line">def async_fetch_future(url):</span><br><span class="line">    http_client &#x3D; AsyncHTTPClient()</span><br><span class="line">    my_future &#x3D; Future()</span><br><span class="line">    fetch_future &#x3D; http_client.fetch(url)</span><br><span class="line">    fetch_future.add_done_callback(</span><br><span class="line">        lambda f: my_future.set_result(f.result()))</span><br><span class="line">    return my_future</span><br></pre></td></tr></table></figure>
+
 <p><a href="https://tornado-zh.readthedocs.io/zh/latest/concurrent.html#tornado.concurrent.Future" target="_blank" rel="noopener"><code>Future</code></a> 版本明显更加复杂，但是 <code>Futures</code> 却是Tornado中推荐的写法 因为它有两个主要的优势.首先是错误处理更加一致,因为 <a href="https://tornado-zh.readthedocs.io/zh/latest/concurrent.html#tornado.concurrent.Future.result" target="_blank" rel="noopener"><code>Future.result</code></a> 方法可以简单的抛出异常(相较于常见的回调函数接口特别指定错误处理), 而且 <code>Futures</code> 很适合和协程一起使用.协程会在后面深入讨论.这里是上 面例子的协程版本,和最初的同步版本很像:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from tornado import gen</span><br><span class="line"></span><br><span class="line">@gen.coroutine</span><br><span class="line">def fetch_coroutine(url):</span><br><span class="line">    http_client = AsyncHTTPClient()</span><br><span class="line">    response = yield http_client.fetch(url)</span><br><span class="line">    raise gen.Return(response.body)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from tornado import gen</span><br><span class="line"></span><br><span class="line">@gen.coroutine</span><br><span class="line">def fetch_coroutine(url):</span><br><span class="line">    http_client &#x3D; AsyncHTTPClient()</span><br><span class="line">    response &#x3D; yield http_client.fetch(url)</span><br><span class="line">    raise gen.Return(response.body)</span><br></pre></td></tr></table></figure>
+
 <p><code>raise gen.Return(response.body)</code> 声明是在Python 2 (and 3.2)下人为 执行的, 因为在其中生成器不允许返回值.为了克服这个问题,Tornado的协程 抛出一种特殊的叫 <a href="https://tornado-zh.readthedocs.io/zh/latest/gen.html#tornado.gen.Return" target="_blank" rel="noopener"><code>Return</code></a> 的异常. 协程捕获这个异常并把它作为返回值. 在Python 3.3和更高版本,使用 <code>return response.body</code> 有相同的结果.</p>
 <h3 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h3><p>Future 类重要成员函数:</p>
 <p><strong>def done(self):</strong></p>
@@ -365,7 +373,7 @@
           <div class="post-tags">
               <a href="/tags/python/" rel="tag"># python</a>
               <a href="/tags/Tornado/" rel="tag"># Tornado</a>
-              <a href="/tags/异步/" rel="tag"># 异步</a>
+              <a href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag"># 异步</a>
           </div>
 
         
@@ -374,12 +382,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/10/15/Python中的类及元类metaclass/" rel="prev" title="Python中的类及元类metaclass">
-      <i class="fa fa-chevron-left"></i> Python中的类及元类metaclass
+    <a href="/2018/10/12/Python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" rel="prev" title="Python垃圾回收机制">
+      <i class="fa fa-chevron-left"></i> Python垃圾回收机制
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/10/28/HEXO源文件备份/" rel="next" title="HEXO源文件备份">
-      HEXO源文件备份 <i class="fa fa-chevron-right"></i>
+    <a href="/2018/10/15/Python%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8F%8A%E5%85%83%E7%B1%BBmetaclass/" rel="next" title="Python中的类及元类metaclass">
+      Python中的类及元类metaclass <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -444,7 +452,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -453,20 +461,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -499,7 +507,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -519,9 +527,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

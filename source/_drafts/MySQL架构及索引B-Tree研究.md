@@ -1,55 +1,30 @@
 ---
 title: mysql架构及索引B+Tree原理分析
 date: 2018-3-27 01:17:07
-tags: [mysql, arch]
-category: 数据库
+tags: [MySQL]
+category: MySQL
 ---
-
-### 
-
-
 
 ## MySQL 索引
 
-索引用于快速查找具有特定值得行。如果没有索引，MySQL必须从第一行开始，通过遍历整个表来进行查找，表越大，花费的时间越多。如果表中有相关列的索引，MySQL可以快速确定要在数据文件中查找的位置，而不必查看所有数据，这比顺序读取每一行要快得多。
+索引用于快速查找具有特定值得行。如果没有索引，MySQL必须从第一行开始，通过遍历整个表来进行查找，表越大，花费的时间越多。如果表中有相关列的索引，MySQL 可以快速确定要在数据文件中查找的位置，而不必查看所有数据，这比顺序读取每一行要快得多。
 
-大多数 MySQL索引(主键、唯一索引、普通索引、全文索引)存储在 B树。
+大多数 MySQL 索引(主键、唯一索引、普通索引、全文索引)都存储在 B+Tree 中。
 
-## mysql架构图简介
+## 
 
-首先是一张官方给的 MySQL 架构图：
+官方 MySQL 架构图：
 
-![image-20181012102719852](/images/image-20181012102719852.png)
+![](../images/image-20181012102719852.png)
 
-MySQL 是基于单进程多线程。
+MySQL 是基于单进程多线程。用户连接，连接线程，支持长短连接。    
 
-
-用户连接：连接线程，支持长短连接    
-
-MySql 线程池：Connection Pool
-包含： Authentication 、Thread Reuse、Connection Limits、Check Memory、Caches
+MySQL 线程池：Connection Pool [参考链接](https://www.cnblogs.com/rickiyang/p/12239907.html)
 <!-- more -->
 
-SQL 接口 SQL interface 
-分析语句
+MySQL 插件式引擎，可以任意切换，如： MyISAM、InnoDB、NDB、Archive、Memory、Federate 等引擎。
 
-Parser 解析：
-解析语句，检测用户是否有权限执行某些语句
-
-Optimizer 检查多条路径，根据统计数据选择最低开销执行 （优化查询）
-
-Caches & Buffers
-
-MySQL 插件式引擎，可以任意切换
-如： MyISAM、InnoDB、NDB、Archive、Memory、Federate 等等引擎
-
-MySQL 数据文件类型
-
-​	数据文件、索引文件
-
-​	重做日志、撤销日志、二进制日志、错误日志、查询日志、慢查询日志、中继日志
-
-Management Service & Utilitles 管理服务及工具
+MySQL 数据文件类型分为：数据文件、索引文件、重做(redo)日志、撤销(undo)日志、二进制(binlog)日志、错误日志、查询日志、慢查询日志等。
 
 ​	备份恢复工具、安全工具、集群服务、应用工具、管理配置工具、迁移工具
 

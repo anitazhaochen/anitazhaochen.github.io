@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -26,10 +26,8 @@
 <meta property="og:url" content="http://yoursite.com/page/9/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="anitazc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我们不能失去信仰">
-<meta name="twitter:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 
 <link rel="canonical" href="http://yoursite.com/page/9/">
 
@@ -158,22 +156,449 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/使用docker构建HTTP2服务/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Python%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8F%8A%E5%85%83%E7%B1%BBmetaclass/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/10/08/使用docker构建HTTP2服务/" class="post-title-link" itemprop="url">使用Docker构建 HTTP2 服务</a>
+            <a href="/2018/10/15/Python%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8F%8A%E5%85%83%E7%B1%BBmetaclass/" class="post-title-link" itemprop="url">Python中的类及元类metaclass</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-15T00:00:00+08:00">2018-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Python中的类及元类metaclass"><a href="#Python中的类及元类metaclass" class="headerlink" title="Python中的类及元类metaclass"></a>Python中的类及元类metaclass</h1><blockquote>
+<p>先来说说 Python 中最基本的类。</p>
+</blockquote>
+<h3 id="类也是对象"><a href="#类也是对象" class="headerlink" title="类也是对象"></a>类也是对象</h3><p>在 Python 中，类也是一种对象。在 Python 解释器执行的时候，就会创建一个对象。这个对象（类对象）拥有创建对象（实例对象）的能力。但是，它的本质仍然是一个对象所以，我们可以：</p>
+<ul>
+<li>将它赋值给一个变量</li>
+<li>拷贝它</li>
+<li>为它增加属性</li>
+<li>将它作为函数参数进行传递
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/15/Python%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8F%8A%E5%85%83%E7%B1%BBmetaclass/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/" class="post-title-link" itemprop="url">Tornado异步的研究</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-15T00:00:00+08:00">2018-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Tornado-对比-Django"><a href="#Tornado-对比-Django" class="headerlink" title="Tornado 对比 Django"></a>Tornado 对比 Django</h2><p>Django 的 web 应用部署时采用 wsgi 协议与服务器对接，而这类服务器通常都是基于<strong>多线程</strong>的，也就是说每一个网络请求都会有一个对应的线程来进行处理。</p>
+<p>Django 是走<strong>大而全</strong>的方向，注重的是<strong>高效开发</strong>，它最出名的是其全自动化的管理后台：只需要使用起ORM，做简单的对象定义，它就能自动生成数据库结构、以及全功能的管理后台。</p>
+<p>Django 提供的方便，也意味着 Django 内置的 ORM 跟框架内的其他模块耦合程度高，应用程序必须使用 Django内置的ORM，否则就不能享受到框架内提供的种种基于其 ORM 的便利。</p>
+<ul>
+<li><p>session功能</p>
+</li>
+<li><p>后台管理</p>
+</li>
+<li><p>ORM</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/15/Tornado%E7%9A%84%E4%B8%80%E4%BA%9B%E7%A0%94%E7%A9%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/12/Python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/12/Python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">Python垃圾回收机制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-12T00:00:00+08:00">2018-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="小整数对象池"><a href="#小整数对象池" class="headerlink" title="小整数对象池"></a>小整数对象池</h2><p>整数在程序中的使用非常广泛，Python 为了优化速度，使用了小整数对象池， 避免为整数频繁申请和销毁内存空间。</p>
+<p>Python 对小整数的定义是 [-5, 257) 这些整数对象是提前建立好的，不会被垃圾回收。 Python 程序中，所有位于这个范围内的整数使用的都是同一个对象。</p>
+<p>同理，单个字母也是这样的。</p>
+<h3 id="大整数对象池"><a href="#大整数对象池" class="headerlink" title="大整数对象池"></a>大整数对象池</h3><p>每个大整数，均创建一个新的对象。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/12/Python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/NGINX%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/10/NGINX%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">NGINX架构模型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-10 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-10T00:00:00+08:00">2018-10-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-22 17:15:38" itemprop="dateModified" datetime="2021-03-22T17:15:38+08:00">2021-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Nginx 采用 <code>Master-Worker</code> 的多进程模型。</p>
+<p>Nginx 启动后，Master 进程会去加载配置文件，建立好需要 <code>Listen</code> 的 <code>Socket(Listenfd)</code> 之后，然后 <code>Fork</code> 出多个 <code>Worker</code> 进程，<code>Master</code> 进程负责管理<code>Worker</code> 进程以及接收来自外接的信号，向各个 <code>Worker</code> 进程发送信号，监控 <code>Worker</code> 进程的运行状态，如有 <code>Worker</code> 异常退出，<code>Master</code> 进程会重新启动新的 <code>Worker</code> 进程。请求的处理是放在 <code>Worker</code> 进程中进行。</p>
+<p>采用 <code>Master-Worker</code> 多进程的模式有诸多好处。</p>
+<ol>
+<li>如果程序有 <code>bug</code> 导致 <code>Worker</code> 异常退出，<code>Master</code> 会启动新的 <code>Worker</code> 补充上，这样就不会对其他没有异常的服务造成影响，就不至于造成整个服务都无法访问。</li>
+<li><code>Worker</code> 个数是确定的，一般 <code>CPU</code> 有多少核，就设置成多少，这样就不会造成无意义的进程切换及进程竞争开销。</li>
+</ol>
+<p><code>Nginx</code>  是采用多路复用I/O模型（严谨点的话不能说是异步非阻塞I/O模型），所以它的并发量会比 <code>Apache</code> 高非常多，并且性能更好，更轻量。</p>
+<p><code>Apache</code> 中每个请求会独占一个工作线程，当并发数达到几千时，就同时有几千的线程在处理请求了。这对操作系统来说，是个不小的挑战，线程带来的内存占用非常大，线程的上下文切换带来的 <code>CPU</code> 开销很大，性能自然就上不去了，而且这些开销完全是没有意义的。阻塞的系统调用会导致 <code>CPU</code> 空闲，<code>CPU</code> 的利用率就会下降。</p>
+<blockquote>
+<p>同步阻塞：线程会阻塞在那里等待返回，并让出 CPU</p>
+<p>非阻塞：线程发现数据还没有可用的，就先直接先去做其他事情，定时自己来检查数据状态</p>
+<p>异步非阻塞：线程发现数据没有可用的，然后把这个监控数据的任务交给操作系统，由操作系统来通知线程数据是否已经准备好。</p>
+<p>有时候经常把异步非阻塞和非阻塞调用搞混，到底算不算异步，取决于进程向内核发起读取数据操作的时候，在内核把数据从内核态复制到用户态的这一时间内，进程是否处于阻塞状态。</p>
+</blockquote>
+<p><code>Nginx</code> 使用的是 <code>epoll</code> 模型，可以并发处理大量请求，但是同一时间能处理的请求当然也只有一个，只是在请求间不断地切换而已，切换是因为事件未准备好，而主动让出的。这里的切换是没有任何代价的，这跟 <code>Apache</code> 由于阻塞让出 <code>CPU</code> 是完全不同的。与多线程相比，<code>Nginx</code> 的处理机制有很大的优势，不需要创建线程，每个请求占用的内存也很少，没有上下文切换，不会造成竞争 <code>CPU</code>，事件处理也非常的轻量级。并发数再多也不会导致无谓的资源浪费。更多的连接只会造成更多的内存占用，在 1 G 的机器上，可容纳的连接数可达 10 万左右。</p>
+<blockquote>
+<p>Linux I/O 模型</p>
+<p>select、poll、epoll 请看我很早写的另一篇文章：</p>
+<p><a href="https://anitazhaochen.github.io/2018/09/27/Linux-I-O%E6%A8%A1%E5%9E%8B%E4%B9%8Bselect-poll-epoll/" target="_blank" rel="noopener">Linux I/O 模型之select、poll、epoll</a></p>
+<p>着重讲了什么阻塞、非阻塞、异步、同步 及 select、poll、epoll 解析</p>
+</blockquote>
+<h2 id="Nginx-如何热部署"><a href="#Nginx-如何热部署" class="headerlink" title="Nginx 如何热部署"></a>Nginx 如何热部署</h2><p>当Nginx reload 发生的时候，比如执行 <code>nginx -s reload</code></p>
+<p><code>Master</code> 进程收到信号后，会重新加载配置文件，然后向当前的 Worker 发出信号，并且告诉他们把当前手中的任务处理完你们就可以光荣退休了，不要再去竞争新的连接，然后 <code>Master</code> 会 <code>Fork</code> 出新的 <code>Worker</code>，此时新的 <code>Worker</code> 就是具备新的配置文件属性，因此就完成了热重启。</p>
+<h2 id="Nginx-负载均衡"><a href="#Nginx-负载均衡" class="headerlink" title="Nginx 负载均衡"></a>Nginx 负载均衡</h2><p>Nginx 负载均衡通过配置 <code>upstream</code> 模块来实现，内置了三种负载均衡策略。</p>
+<ul>
+<li><p>s轮询（默认）/ 加权轮询</p>
+<p>轮询：Nginx 根据请求次数，将每次请求均匀分配到每台服务器，如果每台服务器的性能都一样，那么在一定程度上是可以使用这种模式的。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">192.168.0.100:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">192.168.0.101:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> example.com:<span class="number">8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://web1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>加权轮询：如果在 <code>upstream 中的 server</code> 参数最后面加上 weight=n ，就变成了加权轮询：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">    <span class="attribute">server</span> <span class="number">192.168.1.2:8080</span> weight=<span class="number">1</span>; <span class="comment"># 分担 1/6 的请求</span></span><br><span class="line">    <span class="attribute">server</span> <span class="number">192.168.1.3:8080</span> weight=<span class="number">2</span>; <span class="comment"># 分担 2/6 的请求</span></span><br><span class="line">    <span class="attribute">server</span> test.com weight=<span class="number">3</span>;  <span class="comment"># 分担 3/6 的请求</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 除了 <code>weight</code> 还支持其他的一些参数比如下面这条语句：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1&#123;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.2:8080</span> weight=<span class="number">2</span> max_fails=<span class="number">3</span> fail_timeout=<span class="number">15</span>;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.10:8080</span> backup;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一条<code>server</code> 语句的意思是 <code>192.168.1.2:8080</code> 这台服务器的权重是2，如果出现了 3 次请求失败，就等待 15 秒后再重新检测节点健康状态。</p>
+<p>第二条 <code>server</code> 语句的意思是 <code>192.168.1.10:8080</code> 这台服务器作为备份机，所有服务器挂了之后才会生效。</p>
+<p>即使请求转发到了不可用的节点，此次请求也不会丢失，因为 Nginx 会把此次请求转发到另一个可用节点，如果节点全部不可用，Nginx 会返回最后一个节点返回的信息响应给客户端。</p>
+<p>请求失败的定义：与服务端建立连接、向服务端发送请求或者解析服务端响应头时，发生异常或超时被认为是通信失败，服务端返回的响应为空或不合法会被认为是通信失败，如果配置了 http_500、http_502、http_503、http_504 和 http_429，服务端返回这些状态码会被认为是通信失败，服务端返回 http_403、 http_404 永远不会被认为通信失败。</p>
+<p>upstream 存在一些问题： </p>
+<ul>
+<li>无法主动感知服务器状态</li>
+<li>配置不灵活，无法自定义通信失败判断头条（仅提供少数定义好的状态码可供使用）</li>
+</ul>
+<blockquote>
+<p><code>backup</code>: 备份机，所有服务器挂了之后才会生效</p>
+<p><code>max_fails</code>: 默认为1，某台 Server 允许请求失败的次数，超过最大次数后，在 fail_timeout 时间内，新的请求将不会分配给这台机器。如果设置为0，Nginx 会将这台 Server 置为永久无效状态，然后将请求发送到其他 handler 来处理这次的错误请求。</p>
+<p><code>fail_timeout</code>: 默认10秒。某台 <code>Server</code> 达到 max_fails 次失败请求后，在 <code>fail_timeout</code>期间内， <code>Nginx</code> 会认为这台 <code>Server</code> 暂时不可用，不会将请求分配给它。</p>
+<p><code>max_conns</code>: 限制分配给某台 Server 当前正在处理的最大连接数量，超过这个数量，将不会分配新的连接给它。默认为0，表示不限制。1.5.9 以后才有这个参数</p>
+<p><code>resolve</code>:  将 server 指令配置的域名，指定域名解析服务器。需要在 http 模块下配置 resolver 指令，指定域名解析服务。</p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">  <span class="attribute">resolver</span> <span class="number">192.168.1.20</span>; <span class="comment"># dns 服务器地址</span></span><br><span class="line">  </span><br><span class="line">  <span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">    <span class="attribute">server</span> abc.com resolve;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最少连接</p>
+<p>将请求分配给连接数最少的服务器。 <code>Nginx</code> 会统计哪些服务器的连接数最少</p>
+</li>
+<li><p>IP Hash</p>
+<p>绑定处理请求的服务器。第一次请求时，根据客户端的 <code>IP</code> 算出一个 <code>HASH</code> 值，将请求分配到集群中的某一台服务器上。后面该客户端的所有请求，都将通过 HASH 算法，找到之前处理这台客户端请求的服务器，然后将请求交给它来处理。</p>
+</li>
+<li><p>URL_Hash</p>
+<p>在1.7.2版本之后，加入了 url_hash 策略，按照请求 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，服务器做缓存时比较有效。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.3:8080</span>;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.4:8080</span>;</span><br><span class="line">  <span class="attribute">hash</span> <span class="variable">$request_uri</span>;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p><a href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html#server" target="_blank" rel="noopener">Nginx 官方配置参数</a></p>
+<p>除了以上三种是官方自带的负载均衡策略，还有第三方的，比较常用的有一下几个</p>
+<h3 id="fair"><a href="#fair" class="headerlink" title="fair"></a>fair</h3><p>根据服务器的响应时间来分配请求，响应时间短的优先分配，即负载压力小的优先会分配。</p>
+<p>使用第三方模块时，我们需要在编译 <code>Nginx</code> 源码时，将其添加到 <code>Nginx</code> 模块中，具体方法可以查看第三方模块 README。</p>
+<p><a href="https://github.com/gnosek/nginx-upstream-fair" target="_blank" rel="noopener">nginx-upstream-fair Github地址</a></p>
+<h2 id="Nginx-心跳检测"><a href="#Nginx-心跳检测" class="headerlink" title="Nginx 心跳检测"></a>Nginx 心跳检测</h2><ul>
+<li><p><strong>nginx_upstream_check_module</strong></p>
+<p>这个模块时由淘宝开发，后端服务器健康检查状态都存在于共享内存中，共享内存的大小需要根据服务器数量进行设置</p>
+</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">check_shm_size</span> <span class="number">1M</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="attribute">upstream</span> springboot &#123;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">10.3.73.223:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">10.3.73.223:8090</span>;</span><br><span class="line">        <span class="attribute">check</span> interval=<span class="number">3000</span> rise=<span class="number">2</span> fall=<span class="number">5</span> timeout=<span class="number">1000</span> type=http;</span><br><span class="line">        <span class="attribute">check_keepalive_requests</span> <span class="number">1</span>;</span><br><span class="line">        <span class="attribute">check_http_send</span> <span class="string">"GET /test HTTP/1.0\r\n\r\n"</span>;</span><br><span class="line">        <span class="attribute">check_http_expect_alive</span> http_2xx;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span>  localhost;</span><br><span class="line"> </span><br><span class="line">        <span class="attribute">location</span> /test &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://springboot;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="attribute">location</span> /status &#123;</span><br><span class="line">            check_status;</span><br><span class="line">            <span class="attribute">access_log</span>   <span class="literal">off</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>check_shm_size: 共享内存大小</li>
+<li>interval：向后端服务器发送健康检测的间隔时间</li>
+<li>fall：连续失败的次数叨叨fall_count，服务器被认为是 down 状态</li>
+<li>rise：连续成功次数达到 rise_count，服务器被认为是 up 状态</li>
+<li>timeout：健康检查请求超时时间</li>
+<li>default_down：设定初始服务器的状态，如果是 true，服务器默认是 down 状态，如果是 false，服务器默认是 up 状态，默认值是 true，也就是一开始服务器都被认为不可用，要等健康检查请求达到一定成功次数以后才会被认为是健康的。</li>
+<li>type：健康检查请求协议类型，支持 TCP、HTTP、SSL_HELLO、MySQL 和 AJP</li>
+<li>PORT：健康检查请求发送端口，可以与后端服务器服务端口不同</li>
+<li>check_keepalive_requests：一个连接可发送的请求数，默认值为1，表示完成1次请求后即关闭连接</li>
+<li>check_http_send：HTTP 接口健康检查发送的请求内容，为了减少传输数据量，推荐采用 HEAD 方法。默认值 “GET / HTTP/1.0 \r\n\r\n”</li>
+<li>check_http_expect_alive：HTTP 接口健康检查成功状态码，默认值 http_2xx | http+3xx</li>
+<li>后端服务器状态查询页面，提供三种展示方式，语法： check_status [html |csv |json]，默认值 html</li>
+<li>check_http_send 发送到 TOMCAT服务器，可能需要配置 HOST，否则可能一直发送心跳检测，一直判定为失败</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> xx&#123;</span><br><span class="line">     <span class="attribute">check_http_send</span> <span class="string">"GET /admin/health_check.htm HTTP/1.0\r\nHost: 127.0.0.1\r\n\r\n"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx-正向代理和反向代理的区别"><a href="#Nginx-正向代理和反向代理的区别" class="headerlink" title="Nginx 正向代理和反向代理的区别"></a>Nginx 正向代理和反向代理的区别</h2><h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>请求到 Nginx 后， Nginx 帮你去请求你的目标地址，目标地址把请求响应发送给 Nginx，Nginx 再重新组装包返回给客户端。这样可以隐藏客户端的IP地址。</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>请求到 Nginx 后， Nginx 将请求分发给后端服务器进行处理，后端服务器再将响应返回给Nginx，再由 Nginx 将响应做一些修改后，返回给客户端。在这个过程中， 后端真实服务器地址对客户端是不可见的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/08/%E4%BD%BF%E7%94%A8docker%E6%9E%84%E5%BB%BAHTTP2%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/08/%E4%BD%BF%E7%94%A8docker%E6%9E%84%E5%BB%BAHTTP2%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">使用Docker构建 HTTP2 服务</a>
         </h2>
 
         <div class="post-meta">
@@ -190,14 +615,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/HTTP2/" itemprop="url" rel="index"><span itemprop="name">HTTP2</span></a>
                 </span>
             </span>
@@ -218,17 +643,17 @@
 <p><code># docker search nginx</code></p>
 <p>可以看到以下内容：</p>
 <p><img src="/images/image-20181008143929082.png" alt="image-20181008143929082"></p>
-<p>我们可以用第一个官方的就可以。<br>
+<p>我们可以用第一个官方的就可以。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/10/08/使用docker构建HTTP2服务/#more" rel="contents">
+              <a class="btn" href="/2018/10/08/%E4%BD%BF%E7%94%A8docker%E6%9E%84%E5%BB%BAHTTP2%E6%9C%8D%E5%8A%A1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -244,22 +669,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/HTTPS加密传输机制/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/HTTPS%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/09/30/HTTPS加密传输机制/" class="post-title-link" itemprop="url">HTTPS加密传输机制</a>
+            <a href="/2018/09/30/HTTPS%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">HTTPS加密传输机制</a>
         </h2>
 
         <div class="post-meta">
@@ -276,15 +701,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议分析/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
                 </span>
             </span>
 
@@ -307,17 +732,17 @@
 <p>后来，反复审视自己的问题。觉得了解一个东西不要太表面。他也没深问，我也没往下说。</p>
 <h2 id="HTTP-存在的风险（切身经历）"><a href="#HTTP-存在的风险（切身经历）" class="headerlink" title="HTTP 存在的风险（切身经历）"></a>HTTP 存在的风险（切身经历）</h2><h3 id="为什么我的-js-代码偶尔无法运行"><a href="#为什么我的-js-代码偶尔无法运行" class="headerlink" title="为什么我的 js 代码偶尔无法运行"></a>为什么我的 js 代码偶尔无法运行</h3><p>我自己是写了一个线上的 WEB 应用，偶尔就会接到反馈说我的网页怎么点击按钮没反应。</p>
 <p>然后我反复纠结是否是我 js 代码写的有问题，无论怎么改，都会出现十次有两三次的现象，按钮无效，无法提交表单。</p>
-<p>细心观察发现，那些无法执行的时候，页面上总是有些乱七八糟的广告，要么就是有个移动流量的圆球，要么就是什么吸引眼球的点击网页。<br>
+<p>细心观察发现，那些无法执行的时候，页面上总是有些乱七八糟的广告，要么就是有个移动流量的圆球，要么就是什么吸引眼球的点击网页。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/09/30/HTTPS加密传输机制/#more" rel="contents">
+              <a class="btn" href="/2018/09/30/HTTPS%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -333,22 +758,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/Mac正则sed的问题/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/Mac%E6%AD%A3%E5%88%99sed%E7%9A%84%E9%97%AE%E9%A2%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/09/30/Mac正则sed的问题/" class="post-title-link" itemprop="url">Mac中sed无法正常保存</a>
+            <a href="/2018/09/30/Mac%E6%AD%A3%E5%88%99sed%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Mac中sed无法正常保存</a>
         </h2>
 
         <div class="post-meta">
@@ -365,14 +790,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Mac/" itemprop="url" rel="index"><span itemprop="name">Mac</span></a>
                 </span>
             </span>
@@ -415,22 +840,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/27/Linux-I-O模型之select-poll-epoll/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/27/Linux-I-O%E6%A8%A1%E5%9E%8B%E4%B9%8Bselect-poll-epoll/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/09/27/Linux-I-O模型之select-poll-epoll/" class="post-title-link" itemprop="url">Linux I/O 模型之 select、poll、epoll</a>
+            <a href="/2018/09/27/Linux-I-O%E6%A8%A1%E5%9E%8B%E4%B9%8Bselect-poll-epoll/" class="post-title-link" itemprop="url">Linux I/O 模型之 select、poll、epoll</a>
         </h2>
 
         <div class="post-meta">
@@ -447,14 +872,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-13 16:07:36" itemprop="dateModified" datetime="2021-03-13T16:07:36+08:00">2021-03-13</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
                 </span>
             </span>
@@ -486,7 +911,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/09/27/Linux-I-O模型之select-poll-epoll/#more" rel="contents">
+              <a class="btn" href="/2018/09/27/Linux-I-O%E6%A8%A1%E5%9E%8B%E4%B9%8Bselect-poll-epoll/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -509,22 +934,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/Redis总结/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/Redis%E6%80%BB%E7%BB%93/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/09/25/Redis总结/" class="post-title-link" itemprop="url">单线程 Redis 为什么那么快</a>
+            <a href="/2018/09/25/Redis%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">单线程 Redis 为什么那么快</a>
         </h2>
 
         <div class="post-meta">
@@ -541,15 +966,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
                 </span>
             </span>
 
@@ -574,37 +999,35 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:center">I/O 类型</th>
-<th style="text-align:center">花费的 CPU 时钟周期</th>
+<th align="center">I/O 类型</th>
+<th align="center">花费的 CPU 时钟周期</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">CUP一级缓存</td>
-<td style="text-align:center">3</td>
+<tbody><tr>
+<td align="center">CUP一级缓存</td>
+<td align="center">3</td>
 </tr>
 <tr>
-<td style="text-align:center">CPU二级缓存</td>
-<td style="text-align:center">14</td>
+<td align="center">CPU二级缓存</td>
+<td align="center">14</td>
 </tr>
 <tr>
-<td style="text-align:center">内存</td>
-<td style="text-align:center">250</td>
+<td align="center">内存</td>
+<td align="center">250</td>
 </tr>
 <tr>
-<td style="text-align:center">硬盘</td>
-<td style="text-align:center">41000000</td>
+<td align="center">硬盘</td>
+<td align="center">41000000</td>
 </tr>
 <tr>
-<td style="text-align:center">网络</td>
-<td style="text-align:center">240000000</td>
+<td align="center">网络</td>
+<td align="center">240000000</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>Redis 采用的是基于内存的单进程单线程模型的 KV 数据库， 由 C 语言编写，官方提供的数据是可以达到 10万+ 的 QPS（每秒内查询次数）。 这个数据不比采用单进程多线程同样基于内存的 KV 数据库 Memcached 差，官方给的基准程序测试：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/09/25/Redis总结/#more" rel="contents">
+              <a class="btn" href="/2018/09/25/Redis%E6%80%BB%E7%BB%93/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -627,22 +1050,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/数串拼接得到最大数/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/%E6%95%B0%E4%B8%B2%E6%8B%BC%E6%8E%A5%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E6%95%B0/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/09/22/数串拼接得到最大数/" class="post-title-link" itemprop="url">数串拼接得到最大数</a>
+            <a href="/2018/09/22/%E6%95%B0%E4%B8%B2%E6%8B%BC%E6%8E%A5%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E6%95%B0/" class="post-title-link" itemprop="url">数串拼接得到最大数</a>
         </h2>
 
         <div class="post-meta">
@@ -659,15 +1082,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
                 </span>
             </span>
 
@@ -683,358 +1106,11 @@
 
       
           <p>设有n个正整数，将他们连接成一排，组成一个最大的多位整数。<br>如:n=3时，3个整数13,312,343,连成的最大整数为34331213。<br>如:n=4时,4个整数7,13,4,246连接成的最大整数为7424613。<br>输入<br>2<br>12 123<br>输出<br>12312</p>
-<p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys        </span><br><span class="line">num = raw_input()</span><br><span class="line">nums = sys.stdin.readline().strip(<span class="string">'\n'</span>).split(<span class="string">' '</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">''</span>.join(sorted(nums,cmp = <span class="keyword">lambda</span> x, y: int(str(x)+str(y))-int(str(y)+str(x)), reverse=<span class="keyword">True</span>))</span><br></pre></td></tr></table></figure></p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys        </span><br><span class="line">num = raw_input()</span><br><span class="line">nums = sys.stdin.readline().strip(<span class="string">'\n'</span>).split(<span class="string">' '</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">''</span>.join(sorted(nums,cmp = <span class="keyword">lambda</span> x, y: int(str(x)+str(y))-int(str(y)+str(x)), reverse=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+
 <p>主要是实现一个比较器来决定每个数据的排序顺序。</p>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/数组中未出现的最小正整数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/20/数组中未出现的最小正整数/" class="post-title-link" itemprop="url">数组中未出现的最小正整数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-09-20 16:03:15" itemprop="dateCreated datePublished" datetime="2018-09-20T16:03:15+08:00">2018-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/刷题/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>leetcode: First Missing Positive</p>
-<ul>
-<li><p>首先先拿出最强方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">firstMissingPositive</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        L = <span class="number">0</span></span><br><span class="line">        R = len(nums)</span><br><span class="line">        <span class="keyword">while</span> L &lt; R:</span><br><span class="line">            <span class="keyword">if</span> nums[L] == L + <span class="number">1</span>:</span><br><span class="line">                L += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> nums[L] &gt; R <span class="keyword">or</span> nums[L] &lt;= <span class="number">0</span> <span class="keyword">or</span> nums[L] == nums[nums[L]<span class="number">-1</span>]:</span><br><span class="line">                R = R - <span class="number">1</span></span><br><span class="line">                nums[L], nums[R] = nums[R], nums[L]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp = nums[L] - <span class="number">1</span></span><br><span class="line">                nums[L], nums[tmp] = nums[tmp], nums[L]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> L + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试用例</span></span><br><span class="line">s = Solution()</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">3</span>,<span class="number">4</span>,<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">2</span>,<span class="number">1</span>])</span><br><span class="line"><span class="keyword">print</span> s.firstMissingPositive([<span class="number">2</span>,<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/20/数组中未出现的最小正整数/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/文件描述符是什么/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/20/文件描述符是什么/" class="post-title-link" itemprop="url">文件描述符是什么</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-09-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-20T00:00:00+08:00">2018-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文件描述符是什么"><a href="#文件描述符是什么" class="headerlink" title="文件描述符是什么"></a>文件描述符是什么</h2><p>在 Linux 系统中，一切可以看成是文件，文件可分为：普通文件、目录文件、链接文件和设备文件。文件描述符 (file descriptor) 是内核为了高效管理已经被打开的文件所创建的索引，它是一个非负整数（通常是小整数），用于指代被打开的文件。 </p>
-<p>程序刚启动的时候，0是标准输入，1是标准输出，2是标准错误，如果此时去打开一个新的文件，它的文件描述符会是3. </p>
-<p>POSIX（Protable Operating System Interface）， 是 IEEE 为要在各种UNIX操作系统上运行软件，而定义 API 的一系列互相关联的标准的总称，其正式称呼为 IEEE Std1003，国际化标准名称为 ISO/IEC 9945.</p>
-<p>应 POSIX 标准要求，每次打开文件时（含socket）必须使用当前进程中最小可用的文件描述符号码。</p>
-<p>文件描述符与打开的文件对应模型</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/20/文件描述符是什么/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/HTTP2简介/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/09/10/HTTP2简介/" class="post-title-link" itemprop="url">从过去到未来 关于 HTTP2 的研究</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-09-10 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-10T00:00:00+08:00">2018-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/协议分析/" itemprop="url" rel="index"><span itemprop="name">协议分析</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="HTTP2简介"><a href="#HTTP2简介" class="headerlink" title="HTTP2简介"></a>HTTP2简介</h1><p>先说一下 HTTP 的发展简史，以及 HTTP/2.0  的优势在哪里。</p>
-<p><img src="/images/image-20180925163449365.png" alt="image-20180925163449365"></p>
-<h3 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h3><p>1991年发布的 HTTP/0.9 版本 是基于 TCP/IP 协议的应用层协议。它不涉及数据包的传输，只规定了客户端和服务器之间的通信格式，默认使用80端口，该版本极其简单，只有一个命令 GET ， 并且只支持文本传输。</p>
-<p>请求过程： TCP 建立后，客户端向服务器请求 网页 如 index.html ， 并且协议规定， 服务器只能回应 HTML 格式的字符串， 不能回应别的格式。 服务器发送完毕后， 就关闭连接。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/09/10/HTTP2简介/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/tcp连接及常见网络攻击分析/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/13/tcp连接及常见网络攻击分析/" class="post-title-link" itemprop="url">TCP 连接及常见网络攻击分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-13 17:08:09" itemprop="dateCreated datePublished" datetime="2018-08-13T17:08:09+08:00">2018-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络安全/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><p>TCP协议</p>
-<ul>
-<li><p>tcp协议是一种面向连接的，可靠的字节流服务。</p>
-</li>
-<li><p>可靠性：TCP 在传输过程中可以通过校验和，确认和重传机制保证可靠传输</p>
-</li>
-<li>TCP 给数据分节进行排序，并使用累计确认保证数据的顺序不变和非重复</li>
-<li>TCP 使用滑动窗口机制来实现流量控制，通过动态改变窗口的大小进行拥塞控制</li>
-</ul>
-</li>
-<li><p>下面来分析TCP的三次握手与四次挥手</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/13/tcp连接及常见网络攻击分析/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -1052,7 +1128,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1109,7 +1185,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -1118,20 +1194,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1164,7 +1240,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -1184,9 +1260,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

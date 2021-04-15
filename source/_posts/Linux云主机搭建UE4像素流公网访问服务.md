@@ -58,6 +58,10 @@ category: 像素流
  ./configure
  make && make install
  
+ # 报错解决方法： ERROR: pkg-config not found 
+ # 执行 apt install pkg-config
+ 
+ 
  # 看看上面有没有报错，数据库是否选择正确，至此安装完成
  
  # 创建用户并配置 coturn
@@ -138,3 +142,248 @@ TURN password:
    全部部署完成后，打开4G网，访问 公网ip:frp穿透到服务器的端口  看看能否访问到 web 页面，如果连页面都访问不到，请检查云主机的端口是否打开。
    
    至此，完成所有部署。
+
+
+
+2021-3-17 更新：
+
+​	  今天再次测试的时候，发现 Chrome 浏览器报错了 `failed to parse answers sdp` ，期初以为我改了哪个配置导致的，最终换了个浏览器就好了，可能和我更新了最新版的 Chrome 浏览器有关吧。
+
+
+
+2021-3-26更新：
+
+[参考某位知乎大神](https://zhuanlan.zhihu.com/p/357335311) 解决 Chrome 浏览器访问问题。
+
+
+
+注意： coturn 编译安装的时候，要注意看清 openssl 版本，使用  `openssl version` 查看，推荐 openssl 1.1.0 以上版本进行安装，如果后面启动服务器说不支持如下的，再考虑升级 openssl 版本。
+
+```
+
+==== Show him the instruments, Practical Frost: ====
+
+0: : TLS supported
+0: : DTLS supported
+0: : DTLS 1.2 is not supported
+0: : TURN/STUN ALPN is not supported
+0: : Third-party authorization (oAuth) supported
+0: : GCM (AEAD) supported
+0: : OpenSSL compile-time version: OpenSSL 1.0.1t  3 May 2016 (0x1000114f)
+0: :
+```
+
+启动 turnserver 后，看下有没有报错，其中上面说了几个不支持，当时端口绑定不上，就是这个问题造成的，解决方法时升级 openssl 版本，至少升级到 1.1.0 以上版本，我用的是最新的1.1.1 版本。
+
+我原本的 openssl 是这个版本：
+
+```shell
+root@ip-10-23-93-138:~/coturn-4.5.2# openssl version
+OpenSSL 1.0.1f 6 Jan 2014
+```
+
+出现这个问题可以先忽略他：
+
+```shell
+root@ip-10-23-93-138:~/coturn-4.5.2#  turnadmin -a -u test -p test -r test
+0: : SQLite connection was closed.
+0: : log file opened: /var/log/turn_22804_2021-03-26.log
+```
+
+这个版本是可以编译成功 coturn 的，但是后面启动的时候就监听不到端口信息，如下：
+
+```shell
+root@ip-10-23-93-138:~/coturn-4.5.2# turnserver
+0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.
+0: : log file opened: /var/log/turn_22815_2021-03-26.log
+0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.
+0: : WARNING: Cannot find config file: turnserver.conf. Default and command-line settings will be used.
+0: :
+RFC 3489/5389/5766/5780/6062/6156 STUN/TURN Server
+Version Coturn-4.5.2 'dan Eider'
+0: :
+Max number of open files/sockets allowed for this process: 4096
+0: :
+Due to the open files/sockets limitation,
+max supported number of TURN Sessions possible is: 2000 (approximately)
+0: :
+
+==== Show him the instruments, Practical Frost: ====
+
+0: : TLS supported  
+0: : DTLS supported
+0: : DTLS 1.2 is not supported  # 重点看这里
+0: : TURN/STUN ALPN is not supported  # 重点看这里
+0: : Third-party authorization (oAuth) supported
+0: : GCM (AEAD) supported
+0: : OpenSSL compile-time version: OpenSSL 1.0.1f 6 Jan 2014 (0x1000106f)
+0: :
+0: : SQLite supported, default database location is /usr/local/var/db/turndb
+0: : Redis is not supported
+0: : PostgreSQL is not supported
+0: : MySQL is not supported
+0: : MongoDB is not supported
+0: :
+0: : Default Net Engine version: 3 (UDP thread per CPU core)
+
+=====================================================
+
+0: : Domain name:
+0: : Default realm:
+0: : ERROR:
+CONFIG ERROR: Empty cli-password, and so telnet cli interface is disabled! Please set a non empty cli-password!
+0: : WARNING: cannot find certificate file: turn_server_cert.pem (1)
+0: : WARNING: cannot start TLS and DTLS listeners because certificate file is not set properly
+0: : WARNING: cannot find private key file: turn_server_pkey.pem (1)
+0: : WARNING: cannot start TLS and DTLS listeners because private key file is not set properly
+0: : NO EXPLICIT LISTENER ADDRESS(ES) ARE CONFIGURED
+0: : ===========Discovering listener addresses: =========
+0: : Listener address to use: 127.0.0.1
+0: : Listener address to use: 10.23.93.138
+0: : Listener address to use: 172.17.0.1
+0: : Listener address to use: ::1
+0: : =====================================================
+0: : Total: 2 'real' addresses discovered
+0: : =====================================================
+0: : NO EXPLICIT RELAY ADDRESS(ES) ARE CONFIGURED
+0: : ===========Discovering relay addresses: =============
+0: : Relay address to use: 10.23.93.138
+0: : Relay address to use: 172.17.0.1
+0: : Relay address to use: ::1
+0: : =====================================================
+0: : Total: 3 relay addresses discovered
+0: : =====================================================
+0: : pid file created: /var/run/turnserver.pid
+0: : IO method (main listener thread): epoll (with changelist)
+
+```
+
+避免走弯路，有些问题不需要去管它，比如 cli-password 问题，重点的我在上面已经标注了。
+
+官网下载地址：[openssl-1.1.0l.tar.gz](https://ftp.openssl.org/source/old/1.1.0/openssl-1.1.0l.tar.gz) 
+
+```shell
+wget https://ftp.openssl.org/source/old/1.1.0/openssl-1.1.0l.tar.gz
+tar xf openssl-1.1.0l.tar.gz
+cd openssl-1.1.0l
+./config && make && make install
+```
+
+我试了 openssl-1.1.0I.tar.gz  编译安装完成后，openssl version 报了错误如下：
+
+```
+root@ip-10-23-93-138:~/openssl-1.1.1k# openssl version
+openssl: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+
+解决方法： 
+mkdir /usr/lib64
+ln -s /usr/local/lib64/libssl.so.1.1 /usr/lib64/libssl.so.1.1
+ln -s /usr/local/lib64/libcrypto.so.1.1 /usr/lib64/libcrypto.so.1.1
+echo "/usr/local/lib64/" >> /etc/ld.so.conf
+ldconfig
+```
+
+升级完成 openssl 后，可能需要重新编译 coturn ，进入文件夹同样的操作 
+
+`./configure && make && make install` 再来一遍就好了。
+
+```
+root@ip-10-23-93-138:~/coturn-4.5.2#  turnserver -a -f -v -r test
+0: : Config file found: /usr/local/etc/turnserver.conf
+0: : log file opened: /var/log/turn_26454_2021-03-26.log
+0: : Config file found: /usr/local/etc/turnserver.conf
+0: :
+RFC 3489/5389/5766/5780/6062/6156 STUN/TURN Server
+Version Coturn-4.5.2 'dan Eider'
+0: :
+Max number of open files/sockets allowed for this process: 4096
+0: :
+Due to the open files/sockets limitation,
+max supported number of TURN Sessions possible is: 2000 (approximately)
+0: :
+
+==== Show him the instruments, Practical Frost: ====
+
+0: : TLS supported
+0: : DTLS supported
+0: : DTLS 1.2 supported
+0: : TURN/STUN ALPN supported
+0: : Third-party authorization (oAuth) supported
+0: : GCM (AEAD) supported
+0: : OpenSSL compile-time version: OpenSSL 1.1.1k  25 Mar 2021 (0x101010bf)
+0: :
+0: : SQLite supported, default database location is /usr/local/var/db/turndb
+0: : Redis is not supported
+0: : PostgreSQL is not supported
+0: : MySQL is not supported
+0: : MongoDB is not supported
+0: :
+0: : Default Net Engine version: 3 (UDP thread per CPU core)
+
+=====================================================
+
+0: : Domain name:
+0: : Default realm: test
+0: : ERROR:
+CONFIG ERROR: Empty cli-password, and so telnet cli interface is disabled! Please set a non empty cli-password!
+0: : WARNING: cannot find certificate file: turn_server_cert.pem (1)
+0: : WARNING: cannot start TLS and DTLS listeners because certificate file is not set properly
+0: : WARNING: cannot find private key file: turn_server_pkey.pem (1)
+0: : WARNING: cannot start TLS and DTLS listeners because private key file is not set properly
+0: : NO EXPLICIT LISTENER ADDRESS(ES) ARE CONFIGURED
+0: : ===========Discovering listener addresses: =========
+0: : Listener address to use: 127.0.0.1
+0: : Listener address to use: 10.23.93.138
+0: : Listener address to use: 172.17.0.1
+0: : Listener address to use: ::1
+0: : =====================================================
+0: : Total: 2 'real' addresses discovered
+0: : =====================================================
+0: : NO EXPLICIT RELAY ADDRESS(ES) ARE CONFIGURED
+0: : ===========Discovering relay addresses: =============
+0: : Relay address to use: 10.23.93.138
+0: : Relay address to use: 172.17.0.1
+0: : Relay address to use: ::1
+0: : =====================================================
+0: : Total: 3 relay addresses discovered
+0: : =====================================================
+0: : pid file created: /var/run/turnserver.pid
+0: : IO method (main listener thread): epoll (with changelist)
+0: : WARNING: I cannot support STUN CHANGE_REQUEST functionality because only one IP address is provided
+0: : Wait for relay ports initialization...
+0: :   relay 10.23.93.138 initialization...
+0: :   relay 10.23.93.138 initialization done
+0: :   relay 172.17.0.1 initialization...
+0: :   relay 172.17.0.1 initialization done
+0: :   relay ::1 initialization...
+0: :   relay ::1 initialization done
+0: : Relay ports initialization done
+0: : IO method (general relay thread): epoll (with changelist)
+0: : turn server id=1 created
+0: : IO method (general relay thread): epoll (with changelist)
+0: : turn server id=0 created
+0: : IPv4. UDP listener opened on: 127.0.0.1:3478
+0: : IPv4. UDP listener opened on: 10.23.93.138:3478
+0: : IPv4. UDP listener opened on: 172.17.0.1:3478
+0: : IPv6. UDP listener opened on: ::1:3478
+0: : Total General servers: 2
+0: : IO method (auth thread): epoll (with changelist)
+0: : IO method (auth thread): epoll (with changelist)
+0: : IO method (admin thread): epoll (with changelist)
+0: : SQLite DB connection success: /usr/local/var/db/turndb
+0: : IPv4. SCTP listener opened on : 127.0.0.1:3478
+0: : IPv4. TCP listener opened on : 127.0.0.1:3478
+0: : IPv4. SCTP listener opened on : 10.23.93.138:3478
+0: : IPv4. TCP listener opened on : 10.23.93.138:3478
+0: : IPv4. SCTP listener opened on : 172.17.0.1:3478
+0: : IPv4. TCP listener opened on : 172.17.0.1:3478
+0: : IPv6. SCTP listener opened on : ::1:3478
+0: : IPv6. TCP listener opened on : ::1:3478
+0: : IPv4. TCP listener opened on : 127.0.0.1:3478
+0: : IPv4. TCP listener opened on : 10.23.93.138:3478
+0: : IPv4. TCP listener opened on : 172.17.0.1:3478
+0: : IPv6. TCP listener opened on : ::1:3478
+```
+
+成功运行输出的日志。
+

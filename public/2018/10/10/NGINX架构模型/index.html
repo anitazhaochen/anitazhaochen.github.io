@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -21,19 +21,19 @@
   </script>
 
   <meta name="description" content="Nginx 采用 Master-Worker 的多进程模型。 Nginx 启动后，Master 进程会去加载配置文件，建立好需要 Listen 的 Socket(Listenfd) 之后，然后 Fork 出多个 Worker 进程，Master 进程负责管理Worker 进程以及接收来自外接的信号，向各个 Worker 进程发送信号，监控 Worker 进程的运行状态，如有 Worker 异常退出">
-<meta name="keywords" content="Linux,NGINX">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NGINX架构模型">
-<meta property="og:url" content="http://yoursite.com/2018/10/10/NGINX架构模型/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/NGINX%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="Nginx 采用 Master-Worker 的多进程模型。 Nginx 启动后，Master 进程会去加载配置文件，建立好需要 Listen 的 Socket(Listenfd) 之后，然后 Fork 出多个 Worker 进程，Master 进程负责管理Worker 进程以及接收来自外接的信号，向各个 Worker 进程发送信号，监控 Worker 进程的运行状态，如有 Worker 异常退出">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-13T08:07:36.799Z">
+<meta property="article:published_time" content="2018-10-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:15:38.397Z">
+<meta property="article:author" content="anitazc">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="NGINX">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NGINX架构模型">
-<meta name="twitter:description" content="Nginx 采用 Master-Worker 的多进程模型。 Nginx 启动后，Master 进程会去加载配置文件，建立好需要 Listen 的 Socket(Listenfd) 之后，然后 Fork 出多个 Worker 进程，Master 进程负责管理Worker 进程以及接收来自外接的信号，向各个 Worker 进程发送信号，监控 Worker 进程的运行状态，如有 Worker 异常退出">
 
-<link rel="canonical" href="http://yoursite.com/2018/10/10/NGINX架构模型/">
+<link rel="canonical" href="http://yoursite.com/2018/10/10/NGINX%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B/">
 
 
 <script id="page-configurations">
@@ -161,16 +161,16 @@
     
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/NGINX架构模型/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/NGINX%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
@@ -192,15 +192,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-13 16:07:36" itemprop="dateModified" datetime="2021-03-13T16:07:36+08:00">2021-03-13</time>
+                <time title="修改时间：2021-03-22 17:15:38" itemprop="dateModified" datetime="2021-03-22T17:15:38+08:00">2021-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/服务器/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
                 </span>
             </span>
 
@@ -244,12 +244,22 @@
 <li><p>s轮询（默认）/ 加权轮询</p>
 <p>轮询：Nginx 根据请求次数，将每次请求均匀分配到每台服务器，如果每台服务器的性能都一样，那么在一定程度上是可以使用这种模式的。</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">192.168.0.100:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">192.168.0.101:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> example.com:<span class="number">8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://web1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>加权轮询：如果在 <code>upstream 中的 server</code> 参数最后面加上 weight=n ，就变成了加权轮询：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">    <span class="attribute">server</span> <span class="number">192.168.1.2:8080</span> weight=<span class="number">1</span>; <span class="comment"># 分担 1/6 的请求</span></span><br><span class="line">    <span class="attribute">server</span> <span class="number">192.168.1.3:8080</span> weight=<span class="number">2</span>; <span class="comment"># 分担 2/6 的请求</span></span><br><span class="line">    <span class="attribute">server</span> test.com weight=<span class="number">3</span>;  <span class="comment"># 分担 3/6 的请求</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p> 除了 <code>weight</code> 还支持其他的一些参数比如下面这条语句：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1&#123;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.2:8080</span> weight=<span class="number">2</span> max_fails=<span class="number">3</span> fail_timeout=<span class="number">15</span>;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.10:8080</span> backup;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一条<code>server</code> 语句的意思是 <code>192.168.1.2:8080</code> 这台服务器的权重是2，如果出现了 3 次请求失败，就等待 15 秒后再请求。</p>
+
+<p>第一条<code>server</code> 语句的意思是 <code>192.168.1.2:8080</code> 这台服务器的权重是2，如果出现了 3 次请求失败，就等待 15 秒后再重新检测节点健康状态。</p>
 <p>第二条 <code>server</code> 语句的意思是 <code>192.168.1.10:8080</code> 这台服务器作为备份机，所有服务器挂了之后才会生效。</p>
+<p>即使请求转发到了不可用的节点，此次请求也不会丢失，因为 Nginx 会把此次请求转发到另一个可用节点，如果节点全部不可用，Nginx 会返回最后一个节点返回的信息响应给客户端。</p>
+<p>请求失败的定义：与服务端建立连接、向服务端发送请求或者解析服务端响应头时，发生异常或超时被认为是通信失败，服务端返回的响应为空或不合法会被认为是通信失败，如果配置了 http_500、http_502、http_503、http_504 和 http_429，服务端返回这些状态码会被认为是通信失败，服务端返回 http_403、 http_404 永远不会被认为通信失败。</p>
+<p>upstream 存在一些问题： </p>
+<ul>
+<li>无法主动感知服务器状态</li>
+<li>配置不灵活，无法自定义通信失败判断头条（仅提供少数定义好的状态码可供使用）</li>
+</ul>
 <blockquote>
 <p><code>backup</code>: 备份机，所有服务器挂了之后才会生效</p>
 <p><code>max_fails</code>: 默认为1，某台 Server 允许请求失败的次数，超过最大次数后，在 fail_timeout 时间内，新的请求将不会分配给这台机器。如果设置为0，Nginx 会将这台 Server 置为永久无效状态，然后将请求发送到其他 handler 来处理这次的错误请求。</p>
@@ -268,6 +278,9 @@
 <li><p>URL_Hash</p>
 <p>在1.7.2版本之后，加入了 url_hash 策略，按照请求 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，服务器做缓存时比较有效。</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> web1 &#123;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.3:8080</span>;</span><br><span class="line">  <span class="attribute">server</span> <span class="number">192.168.1.4:8080</span>;</span><br><span class="line">  <span class="attribute">hash</span> <span class="variable">$request_uri</span>;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 <p><a href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html#server" target="_blank" rel="noopener">Nginx 官方配置参数</a></p>
@@ -275,6 +288,30 @@
 <h3 id="fair"><a href="#fair" class="headerlink" title="fair"></a>fair</h3><p>根据服务器的响应时间来分配请求，响应时间短的优先分配，即负载压力小的优先会分配。</p>
 <p>使用第三方模块时，我们需要在编译 <code>Nginx</code> 源码时，将其添加到 <code>Nginx</code> 模块中，具体方法可以查看第三方模块 README。</p>
 <p><a href="https://github.com/gnosek/nginx-upstream-fair" target="_blank" rel="noopener">nginx-upstream-fair Github地址</a></p>
+<h2 id="Nginx-心跳检测"><a href="#Nginx-心跳检测" class="headerlink" title="Nginx 心跳检测"></a>Nginx 心跳检测</h2><ul>
+<li><p><strong>nginx_upstream_check_module</strong></p>
+<p>这个模块时由淘宝开发，后端服务器健康检查状态都存在于共享内存中，共享内存的大小需要根据服务器数量进行设置</p>
+</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">check_shm_size</span> <span class="number">1M</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="attribute">upstream</span> springboot &#123;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">10.3.73.223:8080</span>;</span><br><span class="line">        <span class="attribute">server</span> <span class="number">10.3.73.223:8090</span>;</span><br><span class="line">        <span class="attribute">check</span> interval=<span class="number">3000</span> rise=<span class="number">2</span> fall=<span class="number">5</span> timeout=<span class="number">1000</span> type=http;</span><br><span class="line">        <span class="attribute">check_keepalive_requests</span> <span class="number">1</span>;</span><br><span class="line">        <span class="attribute">check_http_send</span> <span class="string">"GET /test HTTP/1.0\r\n\r\n"</span>;</span><br><span class="line">        <span class="attribute">check_http_expect_alive</span> http_2xx;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span>  localhost;</span><br><span class="line"> </span><br><span class="line">        <span class="attribute">location</span> /test &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://springboot;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="attribute">location</span> /status &#123;</span><br><span class="line">            check_status;</span><br><span class="line">            <span class="attribute">access_log</span>   <span class="literal">off</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>check_shm_size: 共享内存大小</li>
+<li>interval：向后端服务器发送健康检测的间隔时间</li>
+<li>fall：连续失败的次数叨叨fall_count，服务器被认为是 down 状态</li>
+<li>rise：连续成功次数达到 rise_count，服务器被认为是 up 状态</li>
+<li>timeout：健康检查请求超时时间</li>
+<li>default_down：设定初始服务器的状态，如果是 true，服务器默认是 down 状态，如果是 false，服务器默认是 up 状态，默认值是 true，也就是一开始服务器都被认为不可用，要等健康检查请求达到一定成功次数以后才会被认为是健康的。</li>
+<li>type：健康检查请求协议类型，支持 TCP、HTTP、SSL_HELLO、MySQL 和 AJP</li>
+<li>PORT：健康检查请求发送端口，可以与后端服务器服务端口不同</li>
+<li>check_keepalive_requests：一个连接可发送的请求数，默认值为1，表示完成1次请求后即关闭连接</li>
+<li>check_http_send：HTTP 接口健康检查发送的请求内容，为了减少传输数据量，推荐采用 HEAD 方法。默认值 “GET / HTTP/1.0 \r\n\r\n”</li>
+<li>check_http_expect_alive：HTTP 接口健康检查成功状态码，默认值 http_2xx | http+3xx</li>
+<li>后端服务器状态查询页面，提供三种展示方式，语法： check_status [html |csv |json]，默认值 html</li>
+<li>check_http_send 发送到 TOMCAT服务器，可能需要配置 HOST，否则可能一直发送心跳检测，一直判定为失败</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> xx&#123;</span><br><span class="line">     <span class="attribute">check_http_send</span> <span class="string">"GET /admin/health_check.htm HTTP/1.0\r\nHost: 127.0.0.1\r\n\r\n"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="Nginx-正向代理和反向代理的区别"><a href="#Nginx-正向代理和反向代理的区别" class="headerlink" title="Nginx 正向代理和反向代理的区别"></a>Nginx 正向代理和反向代理的区别</h2><h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>请求到 Nginx 后， Nginx 帮你去请求你的目标地址，目标地址把请求响应发送给 Nginx，Nginx 再重新组装包返回给客户端。这样可以隐藏客户端的IP地址。</p>
 <h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>请求到 Nginx 后， Nginx 将请求分发给后端服务器进行处理，后端服务器再将响应返回给Nginx，再由 Nginx 将响应做一些修改后，返回给客户端。在这个过程中， 后端真实服务器地址对客户端是不可见的。</p>
 
@@ -296,11 +333,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/10/08/使用docker构建HTTP2服务/" rel="prev" title="使用Docker构建 HTTP2 服务">
+    <a href="/2018/10/08/%E4%BD%BF%E7%94%A8docker%E6%9E%84%E5%BB%BAHTTP2%E6%9C%8D%E5%8A%A1/" rel="prev" title="使用Docker构建 HTTP2 服务">
       <i class="fa fa-chevron-left"></i> 使用Docker构建 HTTP2 服务
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/10/12/Python垃圾回收机制/" rel="next" title="Python垃圾回收机制">
+    <a href="/2018/10/12/Python%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" rel="next" title="Python垃圾回收机制">
       Python垃圾回收机制 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -361,12 +398,12 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-如何热部署"><span class="nav-number">1.</span> <span class="nav-text">Nginx 如何热部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡"><span class="nav-number">2.</span> <span class="nav-text">Nginx 负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fair"><span class="nav-number">2.1.</span> <span class="nav-text">fair</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-正向代理和反向代理的区别"><span class="nav-number">3.</span> <span class="nav-text">Nginx 正向代理和反向代理的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理"><span class="nav-number">3.1.</span> <span class="nav-text">正向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">3.2.</span> <span class="nav-text">反向代理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-如何热部署"><span class="nav-number">1.</span> <span class="nav-text">Nginx 如何热部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-负载均衡"><span class="nav-number">2.</span> <span class="nav-text">Nginx 负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fair"><span class="nav-number">2.1.</span> <span class="nav-text">fair</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-心跳检测"><span class="nav-number">3.</span> <span class="nav-text">Nginx 心跳检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx-正向代理和反向代理的区别"><span class="nav-number">4.</span> <span class="nav-text">Nginx 正向代理和反向代理的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理"><span class="nav-number">4.1.</span> <span class="nav-text">正向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">4.2.</span> <span class="nav-text">反向代理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -375,20 +412,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -421,7 +458,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -441,9 +478,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

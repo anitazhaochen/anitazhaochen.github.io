@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.8.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -26,10 +26,8 @@
 <meta property="og:url" content="http://yoursite.com/page/5/index.html">
 <meta property="og:site_name" content="我们不能失去信仰">
 <meta property="og:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="anitazc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我们不能失去信仰">
-<meta name="twitter:description" content="大学↓独立开发及运营基于OpenWrt开发校内路由器及微信公众号实习↓去了我热爱的网络安全公司(知道创宇)正式工作↓网易游戏">
 
 <link rel="canonical" href="http://yoursite.com/page/5/">
 
@@ -158,22 +156,410 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/老毛子固件justmysocket之obfs-local设置/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/14/Python%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/17/老毛子固件justmysocket之obfs-local设置/" class="post-title-link" itemprop="url">老毛子固件justmysocket之obfs-local设置</a>
+            <a href="/2020/07/14/Python%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Python常用的测试方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-14 17:13:59" itemprop="dateCreated datePublished" datetime="2020-07-14T17:13:59+08:00">2020-07-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="doctest"><a href="#doctest" class="headerlink" title="doctest"></a>doctest</h2><p>简介： doctest 是 Python 自带的一个模块，可以嵌入到 Python 源码中，或者放到独立文件中进行测试。</p>
+<ul>
+<li>嵌入到 Python 源码中</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这是一个测试案例</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">&lt;!--more --&gt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        a:</span></span><br><span class="line"><span class="string">        b:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; mutiply(4, 3)</span></span><br><span class="line"><span class="string">    12</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; mutiply(4, 3)</span></span><br><span class="line"><span class="string">    13</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> a * b</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">import</span> doctest</span><br><span class="line">    <span class="comment"># verbose 表示在执行测试的时候会输出详细信息, 包括成功案例 ,设为 False, 只输出失败案例</span></span><br><span class="line">    doctest.testmod(verbose=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>放到单独的文件中</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># file_name test.txt</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> start <span class="keyword">import</span> multiply</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>multiply(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>multiply(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line"><span class="number">13</span></span><br></pre></td></tr></table></figure>
+
+<p>目前，这种测试方法，我用的比较多的地方是在写算法的时候，或者写一个比较简单的函数的时候，可以直接将 测试语句写到函数声明下面来验证函数的对错。</p>
+<h2 id="Pytest"><a href="#Pytest" class="headerlink" title="Pytest"></a>Pytest</h2><p>目前较为流行的单元测试框架，上手容易。</p>
+<ul>
+<li><p>安装</p>
+<p><code>pip install pytest</code></p>
+</li>
+<li><p>规则</p>
+<p>测试文件以 test_ 开头（或以 _test 结尾）</p>
+<p>测试类以 Test 开头，并且不能带有 <code>__init__</code> 方法</p>
+<p>测试函数以 test_ 开头</p>
+<p>断言使用基本的 assert 即可</p>
+</li>
+<li><p>使用方法</p>
+<p><strong>作用域方面：</strong></p>
+<p>fixture 的 scope 参数</p>
+<p>scope 参数有四种</p>
+<p>function: 每个 test 都运行，默认是 function 的 scope</p>
+<p>class: 每个 class 的所有 test 只运行一次</p>
+<p>module： 每个 module 的所有 test 只运行一次</p>
+<p>session： 每个 session 只运行一次</p>
+<p><strong>执行前和执行后的操作</strong></p>
+<p>setup 和 teardown 操作</p>
+<p>setup： 在测试函数或类之前执行，完成准备工作</p>
+<p>teardown，在测试函数或者类之后执行，完成收尾工作</p>
+<ul>
+<li>执行方法</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pytest # run all tests below current dir</span><br><span class="line">pytest test_mod.py # run tests in module file test_mod.py</span><br><span class="line">pytest somepath # run all tests below somepath like ./tests/</span><br><span class="line">pytest -k stringexpr # only run tests with names that match the</span><br><span class="line"><span class="meta">#</span><span class="bash"> the <span class="string">"string expression"</span>, e.g. <span class="string">"MyClass and not method"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> will select TestMyClass.test_something</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> but not TestMyClass.test_method_simple</span></span><br><span class="line">pytest test_mod.py::test_func # only run tests that match the "node ID",</span><br><span class="line"><span class="meta">#</span><span class="bash"> e.g <span class="string">"test_mod.py::test_func"</span> will be selected</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> only run test_func <span class="keyword">in</span> test_mod.py</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>其他用法</p>
+<p>通过@pytest.mark控制需要执行哪些feature的test，例如在执行test前增加修饰@pytest.mark.website</p>
+<p>执行的时候，可以通过 -m 执行所有标记的方法</p>
+<p>-m “website”  表示执行所有 website 标记的test方法</p>
+<p>-m “not website” 表示执行没有 website 标记的 test 方法</p>
+</li>
+<li><p>代码实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture(scope='function')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_function</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">teardown_function</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">'teardown_function called.'</span>)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'setup_function called'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.fixture(scope='module')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup_module</span><span class="params">(request)</span>:</span></span><br><span class="line">    print(<span class="string">'setup_module called.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.website</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_1</span><span class="params">(setup_function)</span>:</span></span><br><span class="line">    print(<span class="string">'Test_1 called.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_2</span><span class="params">(setup_module)</span>:</span></span><br><span class="line">    print(<span class="string">'Test_2 called.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_3</span><span class="params">(setup_module)</span>:</span></span><br><span class="line">    print(<span class="string">'Test_3 called.'</span>)</span><br><span class="line">    <span class="keyword">assert</span> <span class="number">2</span> == <span class="number">1</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="Unittest"><a href="#Unittest" class="headerlink" title="Unittest"></a>Unittest</h2><p>在 Flask 项目中，使用的是 Flask 官方推荐的测试框架，其底层基于  Werkzeug，我们可以使用 Unittest 进行封装后，实现 GET、POST 方法进行模拟发送请求，进行测试。</p>
+<p>这种测试方式，这种测试很方便， 但是也仅仅适用于对接口的测试。必要时候，还是需要使用 Jmeter 进行带有逻辑的测试。</p>
+<p>单元测试方面，对于小型项目使用 Unittest 封装就可以在 view 层进行单元测试。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/Python%E8%A7%A3%E6%9E%90Protobuf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/13/Python%E8%A7%A3%E6%9E%90Protobuf/" class="post-title-link" itemprop="url">Python解析Protobuf</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-13 20:12:19" itemprop="dateCreated datePublished" datetime="2020-07-13T20:12:19+08:00">2020-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="测试之-Protobuf"><a href="#测试之-Protobuf" class="headerlink" title="测试之 Protobuf"></a>测试之 Protobuf</h2><p>目前一般的web服务测试中，是使用 Json 对服务器进行请求，服务器也是通过 json 进行返回，Json 很容易读懂，这就对测试带来了极大的方便， 但是 Json 是纯字符，如果数据量较大，加上网络的延迟，就会使请求变得慢。 大家都知道，计算机 IO 的速度是很慢的，而 CPU 的速度是巨快的，就是因为要缩小 IO 和 CPU 之间的速度不协调问题，有了内存、一级缓存、二级缓存、三级缓存等等。</p>
+<p>网络延迟我们无法控制，但是缩小传输数据的体积我们是可以做的，既然 CPU 快，那么我们就让它多干点活。</p>
+<p>Protobuf 是Google旗下的一种数据传输格式，类似于 Json，但不同于json之处在于，它使用的是二进制进行传输，因为数据结构不一样，所以它的体积一般是比 Json 小的。在某些对延迟要求较高的系统上比较常用，如实时竞价系统。但是它的缺点就是人类无法看懂，需要进行解析成 Json 才可以方便我们查阅。</p>
+<h2 id="Protobuf-之-Python-解析"><a href="#Protobuf-之-Python-解析" class="headerlink" title="Protobuf 之 Python 解析"></a>Protobuf 之 Python 解析</h2><p>每次对接新的 adx 时，如果对方使用了 protobuf 来包装数据，即使我们手中拿到了原始的 json 数据，也不太容易在本地调试进行测试，因为我们的 rtb 服务器接收的是包装后的数据，所以我们需要手动将 json 转换为 protobuf 在进行发送。</p>
+<p>我本身从事程序化广告这部分业务，我们这里有使用 Json 的，也有使用 Protobuf 进行传输的，这个系统较为复杂，每次测试的时候，要么自己在本地伪造投放数据，要么直接在测试服测试，而我本人倾向于直接在测试服测试，因为这样就不需要弄一些投放信息，就不需要牵扯 DMP 那块的业务，因为测试服上面都有。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/Python%E8%A7%A3%E6%9E%90Protobuf/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/" class="post-title-link" itemprop="url">review代码引发的悲剧之git删除分支</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-30 17:37:17" itemprop="dateCreated datePublished" datetime="2020-06-30T17:37:17+08:00">2020-06-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="关于学习的一些思考"><a href="#关于学习的一些思考" class="headerlink" title="关于学习的一些思考"></a>关于学习的一些思考</h2><p>有些操作也许永远都不会用，或者看到它的第一眼就觉得，这个用不上。</p>
+<p>或者即使用得上也是做一些弱关联的工作，就是需要的时候就去解决，不需要就不去管它。</p>
+<p>那天，我做完了升级某项功能的 API，代码提交了，并且通过了测试，代码在线上跑着，完全没有问题的样子。<br>而我觉得的问题，而是代码写的不太好的问题，恰好此时又不是下班时间，手中也<br>暂时没有其他什么事情，就准备 review 一下代码。</p>
+<p>看着看着，觉得这里不好，那里冗余，想要精简一下，有时候突然发现，这一看就是 bug，改了改了。</p>
+<p>为什么会有这种心理呢，我认真想了想，觉得，当时一边写代码，一遍调试，而当时，一旦出现bug，就在哪里补上一个几句代码，或者当时思维转的比较快，以至于我后面几乎没什么印象，或者看不懂当时为什么会这样做。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/30/review%E4%BB%A3%E7%A0%81%E5%BC%95%E5%8F%91%E7%9A%84%E6%82%B2%E5%89%A7%E4%B9%8Bgit%E5%88%A0%E9%99%A4%E6%9C%AC%E5%9C%B0%E5%8F%8A%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">iterm配合i2cssh自动登录ssh实现集群管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-25 23:02:21" itemprop="dateCreated datePublished" datetime="2020-05-25T23:02:21+08:00">2020-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iterm/" itemprop="url" rel="index"><span itemprop="name">iterm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="i2cssh"><a href="#i2cssh" class="headerlink" title="i2cssh"></a>i2cssh</h2><h3 id="安装自己的-RUBY"><a href="#安装自己的-RUBY" class="headerlink" title="安装自己的 RUBY"></a>安装自己的 RUBY</h3><p>最好不要用 Mac 自带的 ruby 进行安装，会提示无法写入错误，貌似苹果启用了保护功能，即使加上 sudo 也无法写入。</p>
+<p>首先第一步： 不适用系统的 ruby ，使用自己安装的 ruby 。</p>
+<p><code>brew install ruby</code></p>
+<p>安装完后，注意页面上的提示告诉你执行下面的命令后，才可以更换成你安装的 ruby，否则还是系统默认的。</p>
+<p><code>echo &#39;export PATH=&quot;/usr/local/opt/ruby/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/25/iterm%E9%85%8D%E5%90%88i2cssh%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95ssh%E5%AE%9E%E7%8E%B0%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anitazc">
+      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我们不能失去信仰">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">老毛子固件justmysocket之obfs-local设置</a>
         </h2>
 
         <div class="post-meta">
@@ -190,14 +576,14 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/openwrt/" itemprop="url" rel="index"><span itemprop="name">openwrt</span></a>
                 </span>
             </span>
@@ -217,17 +603,17 @@
 <p>基于小米 AC2100 可以刷机后， 果断放弃了 LEDE 。但是在 LEDE 上面，科学体验还是可以的，就是不支持自动故障切换节点功能，比如走 obfs 的节点，被封了后，每次只能手动上去更改混淆参数。</p>
 <p>换了 老毛子 之后，发现自动故障切换节点功能是有了，但是基于它的设置界面及形式，搞得我晕头转向。最后不得不使用穷举法，一个一个试，看看哪一种参数可以成功访问 obfs。这里特别记录一下。</p>
 <h2 id="页面配置"><a href="#页面配置" class="headerlink" title="页面配置"></a>页面配置</h2><p>在页面上建议，直接点击飞机，然后添加节点那里输入如下参数</p>
-<p><code>-O origin -o plain --plugin obfs-local --plugin-opts &quot;obfs=tls;obfs-host=www.bing.com&quot;</code><br>
+<p><code>-O origin -o plain --plugin obfs-local --plugin-opts &quot;obfs=tls;obfs-host=www.bing.com&quot;</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/05/17/老毛子固件justmysocket之obfs-local设置/#more" rel="contents">
+              <a class="btn" href="/2020/05/17/%E8%80%81%E6%AF%9B%E5%AD%90%E5%9B%BA%E4%BB%B6justmysocket%E4%B9%8Bobfs-local%E8%AE%BE%E7%BD%AE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -243,22 +629,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85B%E5%8F%8C%E7%BD%91%E5%8F%A3%E5%85%A8%E7%B3%BB%E7%99%BD%E5%8A%A0%E7%BD%91%E7%BB%9C%E5%94%A4%E9%86%92/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/" class="post-title-link" itemprop="url">蜗牛星际B双网口全洗白加网络唤醒</a>
+            <a href="/2020/05/13/%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85B%E5%8F%8C%E7%BD%91%E5%8F%A3%E5%85%A8%E7%B3%BB%E7%99%BD%E5%8A%A0%E7%BD%91%E7%BB%9C%E5%94%A4%E9%86%92/" class="post-title-link" itemprop="url">蜗牛星际B双网口全洗白加网络唤醒</a>
         </h2>
 
         <div class="post-meta">
@@ -275,15 +661,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/蜗牛星际/" itemprop="url" rel="index"><span itemprop="name">蜗牛星际</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85/" itemprop="url" rel="index"><span itemprop="name">蜗牛星际</span></a>
                 </span>
             </span>
 
@@ -302,21 +688,20 @@
 <p>前提： </p>
 <ol>
 <li><p>电脑主板支持局域网唤醒 wol</p>
-<pre><code>2. 在操作系统设置好
-</code></pre></li>
+<pre><code>2. 在操作系统设置好</code></pre></li>
 </ol>
 <p>一开始找了一些现有的帖子，都说群辉全洗白了就无法局域网唤醒了，因为 mac 变了，所以很多需要局域网唤醒的就办洗白来实现。</p>
-<p>通过我的实测，发现不管是通过改过mac的那块网卡，还是另一块没有该过的，都是可以实现唤醒开机的。<br>
+<p>通过我的实测，发现不管是通过改过mac的那块网卡，还是另一块没有该过的，都是可以实现唤醒开机的。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/05/13/蜗牛星际B双网口全系白加网络唤醒/#more" rel="contents">
+              <a class="btn" href="/2020/05/13/%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85B%E5%8F%8C%E7%BD%91%E5%8F%A3%E5%85%A8%E7%B3%BB%E7%99%BD%E5%8A%A0%E7%BD%91%E7%BB%9C%E5%94%A4%E9%86%92/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -332,22 +717,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/自动部署测试/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E6%B5%8B%E8%AF%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/13/自动部署测试/" class="post-title-link" itemprop="url">自动部署测试</a>
+            <a href="/2020/05/13/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">自动部署测试</a>
         </h2>
 
         <div class="post-meta">
@@ -364,7 +749,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
 
           
@@ -397,22 +782,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/11/微星GE72-2QF-258XCN黑苹果免驱蓝牙/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/11/%E5%BE%AE%E6%98%9FGE72-2QF-258XCN%E9%BB%91%E8%8B%B9%E6%9E%9C%E5%85%8D%E9%A9%B1%E8%93%9D%E7%89%99/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/11/微星GE72-2QF-258XCN黑苹果免驱蓝牙/" class="post-title-link" itemprop="url">微星GE72-2QF-258XCN黑苹果免驱蓝牙</a>
+            <a href="/2020/05/11/%E5%BE%AE%E6%98%9FGE72-2QF-258XCN%E9%BB%91%E8%8B%B9%E6%9E%9C%E5%85%8D%E9%A9%B1%E8%93%9D%E7%89%99/" class="post-title-link" itemprop="url">微星GE72-2QF-258XCN黑苹果免驱蓝牙</a>
         </h2>
 
         <div class="post-meta">
@@ -429,15 +814,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/黑苹果/" itemprop="url" rel="index"><span itemprop="name">黑苹果</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%BB%91%E8%8B%B9%E6%9E%9C/" itemprop="url" rel="index"><span itemprop="name">黑苹果</span></a>
                 </span>
             </span>
 
@@ -456,17 +841,17 @@
 <p>CPU：英特尔 i7-5700HQ 四核</p>
 <p>主板： MS-1791 （Lynx Point）</p>
 <p>内存：8G + （自己买了块8G的内存） 共 16 G</p>
-<p>硬盘： 128G 固态， 1T 机械硬盘<br>
+<p>硬盘： 128G 固态， 1T 机械硬盘</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/05/11/微星GE72-2QF-258XCN黑苹果免驱蓝牙/#more" rel="contents">
+              <a class="btn" href="/2020/05/11/%E5%BE%AE%E6%98%9FGE72-2QF-258XCN%E9%BB%91%E8%8B%B9%E6%9E%9C%E5%85%8D%E9%A9%B1%E8%93%9D%E7%89%99/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
     
@@ -482,22 +867,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/群晖ssh免密登录问题/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/29/群晖ssh免密登录问题/" class="post-title-link" itemprop="url">群晖ssh免密登录问题.md</a>
+            <a href="/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">群晖ssh免密登录问题.md</a>
         </h2>
 
         <div class="post-meta">
@@ -514,15 +899,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/群晖/" itemprop="url" rel="index"><span itemprop="name">群晖</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BE%A4%E6%99%96/" itemprop="url" rel="index"><span itemprop="name">群晖</span></a>
                 </span>
             </span>
 
@@ -544,14 +929,14 @@
 <p><code>which sshd</code>  使用这个命令先查看 sshd 的绝对路径，我的是 /bin/sshd</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/29/群晖ssh免密登录问题/#more" rel="contents">
+              <a class="btn" href="/2020/04/29/%E7%BE%A4%E6%99%96ssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%97%AE%E9%A2%98/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </div>
 
     
     
@@ -567,22 +952,22 @@
       
   
   
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/群晖GitLab创建https访问/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="anitazc">
       <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="我们不能失去信仰">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/12/群晖GitLab创建https访问/" class="post-title-link" itemprop="url">群晖GitLab创建https访问</a>
+            <a href="/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/" class="post-title-link" itemprop="url">群晖GitLab创建https访问</a>
         </h2>
 
         <div class="post-meta">
@@ -599,15 +984,15 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
+                <time title="修改时间：2021-03-15 10:17:55" itemprop="dateModified" datetime="2021-03-15T10:17:55+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/群晖/" itemprop="url" rel="index"><span itemprop="name">群晖</span></a>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BE%A4%E6%99%96/" itemprop="url" rel="index"><span itemprop="name">群晖</span></a>
                 </span>
             </span>
 
@@ -626,366 +1011,15 @@
 <p>并且http本来就是不安全的，平时在家访问下http没什么事情，但是有时候还是需要在外面访问的，信息安全就得不到保证。</p>
 <h2 id="群晖GitLab-HTTPS-设置"><a href="#群晖GitLab-HTTPS-设置" class="headerlink" title="群晖GitLab HTTPS 设置"></a>群晖GitLab HTTPS 设置</h2><p>这里，演示一下群晖 GitLab 如何设置 HTTPS，其他服务也同理可以参考。</p>
 <p>前言： 我有公网IP，并且路由器可以做端口转发。</p>
-<p>先说下最终实现的功能：<br>
+<p>先说下最终实现的功能：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/12/群晖GitLab创建https访问/#more" rel="contents">
+              <a class="btn" href="/2020/04/12/%E7%BE%A4%E6%99%96GitLab%E5%88%9B%E5%BB%BAhttps%E8%AE%BF%E9%97%AE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/11/群晖搭建gitlab服务器/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/11/群晖搭建gitlab服务器/" class="post-title-link" itemprop="url">群晖搭建gitlab服务器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-11 20:34:48" itemprop="dateCreated datePublished" datetime="2020-04-11T20:34:48+08:00">2020-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/黑群晖/" itemprop="url" rel="index"><span itemprop="name">黑群晖</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>作为一个程序员，在公司基本上都是使用gitlab来对项目代码管理，但是作为一个初级的搬砖工，也就只有简单的push、pull和创建分支，修改wiki 的权限。工作之中考虑到许多代码都是可以复用的，需要用到的时候，又找很久，后面索性不找了，直接重写一遍。</p>
-<p>在一个比较大的项目中，添加某些重复的功能，如果不能把它记下来，就只能一点点看源码，然后再添加，这感觉实在太痛苦。 既然 gitlab 可以管理代码，那写一个自己的工作总结及代码整理，开发流程岂不是挺好。</p>
-<h2 id="蜗牛星际矿渣主机"><a href="#蜗牛星际矿渣主机" class="headerlink" title="蜗牛星际矿渣主机"></a>蜗牛星际矿渣主机</h2><p>首先黑群晖配置是j3455 B款 双网口，8G内存，就是想装 gitlab 和 docker 和虚拟机所以把内存升级到了8G， 拆开机箱，看里面最多也只能插入一条内存条。</p>
-<ul>
-<li><p>黑群晖，拿到蜗牛星际立马安装了黑群晖，考虑到都是工作之中的积累及代码记录，所以还是稳点比较好，准备买四块硬盘，两块做raid 0 两块一个做下载盘，一个做影音盘。</p>
-</li>
-<li><p>黑群晖中 vmm 虚拟机，做软路由。 已经关注了华硕 ac 86u 很久，但是价格一直坚挺，并且家里已经有一个废物的小米路由ac2100，无法刷机，所以再买一个路由还真有点舍不得。以前是在小米路由后面再加一个 斐讯K2， 然后 斐讯 K2 专门给投影仪这样不方便安装科学客户端的设备使用，小米路由是千兆，K2 是百兆，而我家宽带又是200兆的，所以加上光猫，光路由设备就有三台了，考虑到功耗，感觉有必要重新配置一下，就入手了星际蜗牛，使用 vmm 搭建了软路由。</p>
-<p>  具体连接方式：光猫桥接然后光猫连接蜗牛星际其中一个网口，然后蜗牛星际另一个网口连接小米路由器的 wan 端口。这样小米路由器只充当了一个发射无线AP的WIFI的设备。拨号是放在软路由里面做的，科学及一些有用的插件都放到软路由里面。关于软路由lede群晖vmm安装网上已经有很多教程了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/11/群晖搭建gitlab服务器/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/" class="post-title-link" itemprop="url">光猫桥接软路由lede pppoe拨号无法慢速问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-09 19:27:22" itemprop="dateCreated datePublished" datetime="2020-04-09T19:27:22+08:00">2020-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/黑科技/" itemprop="url" rel="index"><span itemprop="name">黑科技</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>购买了一台蜗牛星际B款双网口，装了黑群晖加软路由lede。再上一遍教程中，写了将光猫设置为桥接的方法。一切就绪就等着使用软路由拨号上网了。 </p>
-<h2 id="软路由拨号不如光猫是什么问题"><a href="#软路由拨号不如光猫是什么问题" class="headerlink" title="软路由拨号不如光猫是什么问题"></a>软路由拨号不如光猫是什么问题</h2><p>软路由刚开始设置的时候，拨号一直连不上，总是错误不断，然后就关闭ipv6， 开启ipv6，把某些特殊的设置屏蔽掉，我用的是lede 软路由系统，我第一次拨号，他会显示User Request 错误，不过不用管它，过几十秒他就自己变好了。但是速度巨慢，我家是 200M 的网络，使用光猫拨号随便跑到200多，但是使用软路由拨号成功后去测试，只有 四五十兆左右。 当时做了以下猜测：</p>
-<ul>
-<li><p>蜗牛星际性能不行</p>
-<p>  通过实验进行对比，可以判断不是蜗牛星际的问题。首先光猫拨号，然后连接软路由(蜗牛星际中虚拟机设置的wan端口)，然后蜗牛软路由lan口(蜗牛星际虚拟机中设置为lan的端口)连接千兆路由器，然后电脑通过wifi连接千兆路由器，测试发现网速可以跑到两百多兆，这说明流量在通过这一连串的设备时，并没有因为哪个设备的性能不行导致网速下降的。所以应该不是蜗牛星际的问题。</p>
-</li>
-<li><p>运营商绑定了mac地址，或者对陌生设备拨号做了限制</p>
-<p>  想要证明这点，我直接把端口不连软路由，直接连接千兆路由器，让千兆路由器进行拨号，拨号的结果和光猫拨号速度差不多，所以说应该也不是运营商的问题。期间我还试过把路由器拨号的mac地址改为软路由的地址，发现网速照样很快，那就说明并不是运营商进行了限制，问题出在了软路由这里。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/09/光猫桥接软路由lede-pppoe拨号无法慢速问题/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/07/联通光猫-型号-ZXHN-F677-改桥接/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/07/联通光猫-型号-ZXHN-F677-改桥接/" class="post-title-link" itemprop="url">联通光猫(型号:ZXHN F677 )改桥接</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-07 20:55:54" itemprop="dateCreated datePublished" datetime="2020-04-07T20:55:54+08:00">2020-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li><p>进入光猫管理员登录界面</p>
-<p> <a href="http://192.168.1.1/CU.html" target="_blank" rel="noopener">http://192.168.1.1/CU.html</a></p>
-<p> 然后选择管理员登录</p>
-</li>
-</ol>
-<p><img src="/images/WX20200407-2059152x.png" alt="WX20200407-2059152x"></p>
-<p>我是广州联通，广州联通的默认密码是 cuadmin + 路由器背面的mac地址前6为，把 ‘-’ 去掉，字母小写。</p>
-<p>如果可以成功登录，接下来可以查看自己是公网ip还是内网ip，最简单的方法就是打开  <a href="https://www.ip138.com/" target="_blank" rel="noopener">https://www.ip138.com/</a> 看上面显示的 ip 地址和自己路由器里面的一不一样，一样就是公网ip。</p>
-<p><img src="/images/1586264550012.jpg" alt="1586264550012"><br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/07/联通光猫-型号-ZXHN-F677-改桥接/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope="" itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/Flask之MethodView解析/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anitazc">
-      <meta itemprop="description" content="大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我们不能失去信仰">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/12/Flask之MethodView解析/" class="post-title-link" itemprop="url">Flask之MethodView解析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-12 18:27:16" itemprop="dateCreated datePublished" datetime="2020-03-12T18:27:16+08:00">2020-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-19 14:07:55" itemprop="dateModified" datetime="2020-10-19T14:07:55+08:00">2020-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Flask/" itemprop="url" rel="index"><span itemprop="name">Flask</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="可插拔视图"><a href="#可插拔视图" class="headerlink" title="可插拔视图"></a>可插拔视图</h2><p>MethodView 主要可以实现两个功能：</p>
-<ul>
-<li><p>基于方法调度</p>
-<p>  对于 RSET 式 API 来说，继承 MethodView 后，每个 HTTP 方法都映射到一个同名的函数(函数名称为小写字母)。可以在类里面定义 get、post、delete、put 等方法。使用这种方式，不必提供 methods 属性，它会自动使用相应的类方法。</p>
-</li>
-<li><p>装饰视图</p>
-<p>  自 FLask 0.8 版本开始，新加了一种选择：在视图类中定义装饰的列表：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more --&gt;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">UserAPI</span><span class="params">(MethodView)</span>:</span></span><br><span class="line">      decorators = [user_decorator]</span><br></pre></td></tr></table></figure>
-<p>  请牢记：因为从调用者的角度来看，类的 self 被隐藏了，所以不能在类的方法上单独 使用装饰器。（是这个类里面定义的方法不能使用装饰器吗? 但是我如果继承自 UserAPI 后，新的类里面方法还是可以使用装饰器）</p>
-</li>
-</ul>
-<p><a href="https://dormousehole.readthedocs.io/en/latest/views.html" target="_blank" rel="noopener">官方文档</a></p>
-
       
     </div>
 
@@ -1003,7 +1037,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1060,7 +1094,7 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">anitazc</p>
   <div class="site-description" itemprop="description">大学↓<br>独立开发及运营基于OpenWrt开发校内路由器及微信公众号<br>实习↓<br>去了我热爱的网络安全公司(知道创宇)<br>正式工作↓<br>网易游戏</div>
 </div>
@@ -1069,20 +1103,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">191</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1115,7 +1149,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">anitazc</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
         
@@ -1135,9 +1169,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
